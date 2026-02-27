@@ -1,0 +1,37 @@
+Phase 2: Growth Prediction Model Evaluation
+===========================================
+
+Best Parameters: {'classifier__max_depth': 20, 'classifier__min_samples_split': 2, 'classifier__n_estimators': 200}
+
+Classification Report:
+              precision    recall  f1-score   support
+
+        High       0.86      0.78      0.82        23
+         Low       0.81      0.88      0.84        24
+    Moderate       0.65      0.65      0.65        23
+
+    accuracy                           0.77        70
+   macro avg       0.77      0.77      0.77        70
+weighted avg       0.77      0.77      0.77        70
+
+
+Confusion Matrix:
+[[21  3  0]
+ [ 5 15  3]
+ [ 0  5 18]]
+
+Macro F1-Score: 0.7701
+
+
+Top 10 Feature Importances:
+                          Feature  Importance
+2             Revenue_Growth_Rate    0.268075
+9                Technology_Level    0.112495
+10           GST_Compliance_Score    0.067199
+7            Capacity_Utilization    0.054478
+4                Debt_Outstanding    0.050930
+5           Loan_to_Revenue_Ratio    0.047623
+12  Documentation_Readiness_Score    0.047350
+0              Years_of_Operation    0.045441
+6             Number_of_Employees    0.045159
+3                   Profit_Margin    0.044124
