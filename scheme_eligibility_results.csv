@@ -1,0 +1,466 @@
+MSME_ID,Sector,Category,Location_Type,Scheme_ID,Scheme_Name,Simulation_Type,Before_Annual_Revenue,Before_Employees,Impact_Factor_Revenue,Impact_Factor_Employment,Max_Subsidy_Amount,Subsidy_Applied,New_Jobs_Added,Projected_Revenue,Projected_Employees,Revenue_Increase_Pct,Employment_Increase_Pct
+MSME_0001,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,8222922.7,37,0.2,3.0,200000.0,200000.0,1,8422922.7,38,2.4322,2.7027
+MSME_0003,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,3720053.85,10,0.2,3.0,200000.0,200000.0,0,3920053.85,10,5.3763,0.0
+MSME_0005,Textiles,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,10201151.69,101,0.25,4.0,2000000.0,2000000.0,4,12201151.69,105,19.6056,3.9604
+MSME_0007,Manufacturing,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,3646138.34,123,0.15,2.0,500000.0,500000.0,2,4146138.34,125,13.7131,1.626
+MSME_0007,Manufacturing,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,3646138.34,123,0.1,5.0,1000000.0,364613.83,6,4010752.17,129,10.0,4.878
+MSME_0007,Manufacturing,Small,Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,3646138.34,123,0.25,7.0,1500000.0,914613.83,8,4560752.17,131,25.0845,6.5041
+MSME_0008,IT Services,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,2501462.68,82,0.15,2.0,500000.0,375219.4,2,2876682.08,84,15.0,2.439
+MSME_0009,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,4310505.54,46,0.2,3.0,200000.0,200000.0,1,4510505.54,47,4.6398,2.1739
+MSME_0010,Food Processing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,5947570.26,22,0.25,4.0,2000000.0,1486892.57,1,7434462.83,23,25.0,4.5455
+MSME_0011,Textiles,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,11328828.87,71,0.25,4.0,2000000.0,2000000.0,3,13328828.87,74,17.6541,4.2254
+MSME_0012,Manufacturing,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,14292999.98,87,0.15,2.0,500000.0,500000.0,2,14792999.98,89,3.4982,2.2989
+MSME_0012,Manufacturing,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,14292999.98,87,0.1,5.0,1000000.0,1000000.0,4,15292999.98,91,6.9964,4.5977
+MSME_0012,Manufacturing,Small,Semi-Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,14292999.98,87,0.25,7.0,1500000.0,1500000.0,6,15792999.98,93,10.4946,6.8966
+MSME_0013,Food Processing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,9732666.26,20,0.2,3.0,200000.0,200000.0,1,9932666.26,21,2.0549,5.0
+MSME_0015,Textiles,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,17281974.66,73,0.1,5.0,1000000.0,1000000.0,4,18281974.66,77,5.7864,5.4795
+MSME_0015,Textiles,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,17281974.66,73,0.25,4.0,2000000.0,2000000.0,3,19281974.66,76,11.5728,4.1096
+MSME_0015,Textiles,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,17281974.66,73,0.35,9.0,3000000.0,3000000.0,7,20281974.66,80,17.3591,9.589
+MSME_0016,Food Processing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,48696359.92,36,0.2,3.0,200000.0,200000.0,1,48896359.92,37,0.4107,2.7778
+MSME_0017,Textiles,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,15749009.2,41,0.1,5.0,1000000.0,1000000.0,2,16749009.2,43,6.3496,4.878
+MSME_0017,Textiles,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,15749009.2,41,0.25,4.0,2000000.0,2000000.0,2,17749009.2,43,12.6992,4.878
+MSME_0017,Textiles,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,15749009.2,41,0.35,9.0,3000000.0,3000000.0,4,18749009.2,45,19.0488,9.7561
+MSME_0018,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,11894170.78,18,0.2,3.0,200000.0,200000.0,1,12094170.78,19,1.6815,5.5556
+MSME_0019,Retail,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,48349413.54,22,0.2,3.0,200000.0,200000.0,1,48549413.54,23,0.4137,4.5455
+MSME_0020,IT Services,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,49507665.58,36,0.15,2.0,500000.0,500000.0,1,50007665.58,37,1.0099,2.7778
+MSME_0021,IT Services,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,4538911.93,9,0.15,2.0,500000.0,500000.0,0,5038911.93,9,11.0159,0.0
+MSME_0021,IT Services,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,4538911.93,9,0.2,3.0,200000.0,200000.0,0,4738911.93,9,4.4063,0.0
+MSME_0021,IT Services,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,4538911.93,9,0.35,5.0,700000.0,700000.0,0,5238911.93,9,15.4222,0.0
+MSME_0022,Food Processing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,14683791.98,89,0.25,4.0,2000000.0,2000000.0,4,16683791.98,93,13.6205,4.4944
+MSME_0023,Textiles,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,3058245.2,71,0.25,4.0,2000000.0,764561.3,3,3822806.5,74,25.0,4.2254
+MSME_0024,Textiles,Micro,Rural,SCH_003,Rural Employment Boost,Single_Scheme,48151096.53,2,0.05,8.0,300000.0,300000.0,0,48451096.53,2,0.623,0.0
+MSME_0024,Textiles,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,48151096.53,2,0.2,3.0,200000.0,200000.0,0,48351096.53,2,0.4154,0.0
+MSME_0024,Textiles,Micro,Rural,SCH_003 + SCH_005,Rural Employment Boost + New Enterprise Support,Combined_Multi_Scheme,48151096.53,2,0.25,11.0,500000.0,500000.0,0,48651096.53,2,1.0384,0.0
+MSME_0027,IT Services,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,32342766.81,86,0.15,2.0,500000.0,500000.0,2,32842766.81,88,1.5459,2.3256
+MSME_0029,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,27624608.22,36,0.2,3.0,200000.0,200000.0,1,27824608.22,37,0.724,2.7778
+MSME_0030,Food Processing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,25509992.44,37,0.2,3.0,200000.0,200000.0,1,25709992.44,38,0.784,2.7027
+MSME_0031,Textiles,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,5039355.29,72,0.1,5.0,1000000.0,503935.53,4,5543290.82,76,10.0,5.5556
+MSME_0031,Textiles,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,5039355.29,72,0.25,4.0,2000000.0,1259838.82,3,6299194.11,75,25.0,4.1667
+MSME_0031,Textiles,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,5039355.29,72,0.35,9.0,3000000.0,1889758.23,7,6929113.52,79,37.5,9.7222
+MSME_0034,IT Services,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,13057267.61,80,0.15,2.0,500000.0,500000.0,2,13557267.61,82,3.8293,2.5
+MSME_0035,Textiles,Micro,Rural,SCH_003,Rural Employment Boost,Single_Scheme,22098623.66,48,0.05,8.0,300000.0,300000.0,4,22398623.66,52,1.3576,8.3333
+MSME_0035,Textiles,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,22098623.66,48,0.2,3.0,200000.0,200000.0,1,22298623.66,49,0.905,2.0833
+MSME_0035,Textiles,Micro,Rural,SCH_003 + SCH_005,Rural Employment Boost + New Enterprise Support,Combined_Multi_Scheme,22098623.66,48,0.25,11.0,500000.0,500000.0,5,22598623.66,53,2.2626,10.4167
+MSME_0036,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,34939560.1,17,0.15,2.0,500000.0,500000.0,0,35439560.1,17,1.431,0.0
+MSME_0036,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,34939560.1,17,0.2,3.0,200000.0,200000.0,1,35139560.1,18,0.5724,5.8824
+MSME_0036,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,34939560.1,17,0.35,5.0,700000.0,700000.0,1,35639560.1,18,2.0035,5.8824
+MSME_0039,Food Processing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,34739862.66,42,0.25,4.0,2000000.0,2000000.0,2,36739862.66,44,5.7571,4.7619
+MSME_0040,Manufacturing,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,30505644.41,111,0.1,5.0,1000000.0,1000000.0,6,31505644.41,117,3.2781,5.4054
+MSME_0040,Manufacturing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,30505644.41,111,0.25,4.0,2000000.0,2000000.0,4,32505644.41,115,6.5562,3.6036
+MSME_0040,Manufacturing,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,30505644.41,111,0.35,9.0,3000000.0,3000000.0,10,33505644.41,121,9.8342,9.009
+MSME_0041,Textiles,Micro,Rural,SCH_003,Rural Employment Boost,Single_Scheme,43894353.33,16,0.05,8.0,300000.0,300000.0,1,44194353.33,17,0.6835,6.25
+MSME_0041,Textiles,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,43894353.33,16,0.2,3.0,200000.0,200000.0,0,44094353.33,16,0.4556,0.0
+MSME_0041,Textiles,Micro,Rural,SCH_003 + SCH_005,Rural Employment Boost + New Enterprise Support,Combined_Multi_Scheme,43894353.33,16,0.25,11.0,500000.0,500000.0,1,44394353.33,17,1.1391,6.25
+MSME_0042,IT Services,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,22155008.64,98,0.15,2.0,500000.0,500000.0,2,22655008.64,100,2.2568,2.0408
+MSME_0043,Manufacturing,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,31229881.38,12,0.15,2.0,500000.0,500000.0,0,31729881.38,12,1.601,0.0
+MSME_0043,Manufacturing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,31229881.38,12,0.2,3.0,200000.0,200000.0,0,31429881.38,12,0.6404,0.0
+MSME_0043,Manufacturing,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,31229881.38,12,0.35,5.0,700000.0,700000.0,0,31929881.38,12,2.2414,0.0
+MSME_0044,Manufacturing,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,48668962.29,111,0.1,5.0,1000000.0,1000000.0,6,49668962.29,117,2.0547,5.4054
+MSME_0044,Manufacturing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,48668962.29,111,0.25,4.0,2000000.0,2000000.0,4,50668962.29,115,4.1094,3.6036
+MSME_0044,Manufacturing,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,48668962.29,111,0.35,9.0,3000000.0,3000000.0,10,51668962.29,121,6.1641,9.009
+MSME_0045,Manufacturing,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,2445950.92,31,0.15,2.0,500000.0,366892.64,1,2812843.56,32,15.0,3.2258
+MSME_0045,Manufacturing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,2445950.92,31,0.2,3.0,200000.0,200000.0,1,2645950.92,32,8.1768,3.2258
+MSME_0045,Manufacturing,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,2445950.92,31,0.35,5.0,700000.0,566892.64,2,3012843.56,33,23.1768,6.4516
+MSME_0048,Manufacturing,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,39563976.31,35,0.15,2.0,500000.0,500000.0,1,40063976.31,36,1.2638,2.8571
+MSME_0048,Manufacturing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,39563976.31,35,0.2,3.0,200000.0,200000.0,1,39763976.31,36,0.5055,2.8571
+MSME_0048,Manufacturing,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,39563976.31,35,0.35,5.0,700000.0,700000.0,2,40263976.31,37,1.7693,5.7143
+MSME_0050,Manufacturing,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,20814642.94,94,0.1,5.0,1000000.0,1000000.0,5,21814642.94,99,4.8043,5.3191
+MSME_0050,Manufacturing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,20814642.94,94,0.25,4.0,2000000.0,2000000.0,4,22814642.94,98,9.6086,4.2553
+MSME_0050,Manufacturing,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,20814642.94,94,0.35,9.0,3000000.0,3000000.0,9,23814642.94,103,14.4129,9.5745
+MSME_0051,IT Services,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,42009836.66,39,0.15,2.0,500000.0,500000.0,1,42509836.66,40,1.1902,2.5641
+MSME_0052,Food Processing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,3065265.07,149,0.25,4.0,2000000.0,766316.27,6,3831581.34,155,25.0,4.0268
+MSME_0053,Manufacturing,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,39817327.77,97,0.15,2.0,500000.0,500000.0,2,40317327.77,99,1.2557,2.0619
+MSME_0053,Manufacturing,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,39817327.77,97,0.1,5.0,1000000.0,1000000.0,5,40817327.77,102,2.5115,5.1546
+MSME_0053,Manufacturing,Small,Semi-Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,39817327.77,97,0.25,7.0,1500000.0,1500000.0,7,41317327.77,104,3.7672,7.2165
+MSME_0054,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,10480552.34,15,0.2,3.0,200000.0,200000.0,0,10680552.34,15,1.9083,0.0
+MSME_0055,Food Processing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,25384659.31,72,0.25,4.0,2000000.0,2000000.0,3,27384659.31,75,7.8788,4.1667
+MSME_0056,Food Processing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,31193601.42,57,0.25,4.0,2000000.0,2000000.0,2,33193601.42,59,6.4116,3.5088
+MSME_0059,Manufacturing,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,46163719.37,141,0.1,5.0,1000000.0,1000000.0,7,47163719.37,148,2.1662,4.9645
+MSME_0059,Manufacturing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,46163719.37,141,0.25,4.0,2000000.0,2000000.0,6,48163719.37,147,4.3324,4.2553
+MSME_0059,Manufacturing,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,46163719.37,141,0.35,9.0,3000000.0,3000000.0,13,49163719.37,154,6.4986,9.2199
+MSME_0061,Textiles,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,17644126.72,127,0.25,4.0,2000000.0,2000000.0,5,19644126.72,132,11.3352,3.937
+MSME_0062,Manufacturing,Small,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,33345099.91,137,0.15,2.0,500000.0,500000.0,3,33845099.91,140,1.4995,2.1898
+MSME_0065,Retail,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,13067483.92,48,0.2,3.0,200000.0,200000.0,1,13267483.92,49,1.5305,2.0833
+MSME_0067,Manufacturing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,41342812.91,56,0.25,4.0,2000000.0,2000000.0,2,43342812.91,58,4.8376,3.5714
+MSME_0070,IT Services,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,7430917.66,35,0.15,2.0,500000.0,500000.0,1,7930917.66,36,6.7286,2.8571
+MSME_0070,IT Services,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,7430917.66,35,0.2,3.0,200000.0,200000.0,1,7630917.66,36,2.6915,2.8571
+MSME_0070,IT Services,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,7430917.66,35,0.35,5.0,700000.0,700000.0,2,8130917.66,37,9.4201,5.7143
+MSME_0072,IT Services,Small,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,36762318.81,100,0.15,2.0,500000.0,500000.0,2,37262318.81,102,1.3601,2.0
+MSME_0073,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,35393814.71,38,0.15,2.0,500000.0,500000.0,1,35893814.71,39,1.4127,2.6316
+MSME_0073,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,35393814.71,38,0.2,3.0,200000.0,200000.0,1,35593814.71,39,0.5651,2.6316
+MSME_0073,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,35393814.71,38,0.35,5.0,700000.0,700000.0,2,36093814.71,40,1.9777,5.2632
+MSME_0074,Manufacturing,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,26304383.04,32,0.15,2.0,500000.0,500000.0,1,26804383.04,33,1.9008,3.125
+MSME_0074,Manufacturing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,26304383.04,32,0.2,3.0,200000.0,200000.0,1,26504383.04,33,0.7603,3.125
+MSME_0074,Manufacturing,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,26304383.04,32,0.35,5.0,700000.0,700000.0,2,27004383.04,34,2.6612,6.25
+MSME_0075,Manufacturing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,29619055.97,33,0.25,4.0,2000000.0,2000000.0,1,31619055.97,34,6.7524,3.0303
+MSME_0077,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,33251931.17,45,0.2,3.0,200000.0,200000.0,1,33451931.17,46,0.6015,2.2222
+MSME_0079,Retail,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,23631882.94,38,0.2,3.0,200000.0,200000.0,1,23831882.94,39,0.8463,2.6316
+MSME_0080,Manufacturing,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,39424078.21,65,0.15,2.0,500000.0,500000.0,1,39924078.21,66,1.2683,1.5385
+MSME_0080,Manufacturing,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,39424078.21,65,0.1,5.0,1000000.0,1000000.0,3,40424078.21,68,2.5365,4.6154
+MSME_0080,Manufacturing,Small,Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,39424078.21,65,0.25,7.0,1500000.0,1500000.0,4,40924078.21,69,3.8048,6.1538
+MSME_0081,Textiles,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,6456768.72,22,0.1,5.0,1000000.0,645676.87,1,7102445.59,23,10.0,4.5455
+MSME_0081,Textiles,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,6456768.72,22,0.25,4.0,2000000.0,1614192.18,1,8070960.9,23,25.0,4.5455
+MSME_0081,Textiles,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,6456768.72,22,0.35,9.0,3000000.0,2421288.27,2,8878056.99,24,37.5,9.0909
+MSME_0083,Manufacturing,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,44493029.95,59,0.1,5.0,1000000.0,1000000.0,3,45493029.95,62,2.2475,5.0847
+MSME_0083,Manufacturing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,44493029.95,59,0.25,4.0,2000000.0,2000000.0,2,46493029.95,61,4.4951,3.3898
+MSME_0083,Manufacturing,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,44493029.95,59,0.35,9.0,3000000.0,3000000.0,5,47493029.95,64,6.7426,8.4746
+MSME_0085,Food Processing,Micro,Rural,SCH_003,Rural Employment Boost,Single_Scheme,26302385.45,49,0.05,8.0,300000.0,300000.0,4,26602385.45,53,1.1406,8.1633
+MSME_0085,Food Processing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,26302385.45,49,0.2,3.0,200000.0,200000.0,1,26502385.45,50,0.7604,2.0408
+MSME_0085,Food Processing,Micro,Rural,SCH_003 + SCH_005,Rural Employment Boost + New Enterprise Support,Combined_Multi_Scheme,26302385.45,49,0.25,11.0,500000.0,500000.0,5,26802385.45,54,1.901,10.2041
+MSME_0086,Food Processing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,48085106.77,33,0.2,3.0,200000.0,200000.0,1,48285106.77,34,0.4159,3.0303
+MSME_0088,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,39545945.6,18,0.2,3.0,200000.0,200000.0,1,39745945.6,19,0.5057,5.5556
+MSME_0091,Retail,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,48243763.38,39,0.2,3.0,200000.0,200000.0,1,48443763.38,40,0.4146,2.5641
+MSME_0092,IT Services,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,43496846.81,112,0.15,2.0,500000.0,500000.0,2,43996846.81,114,1.1495,1.7857
+MSME_0093,Manufacturing,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,34435481.72,23,0.15,2.0,500000.0,500000.0,0,34935481.72,23,1.452,0.0
+MSME_0093,Manufacturing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,34435481.72,23,0.2,3.0,200000.0,200000.0,1,34635481.72,24,0.5808,4.3478
+MSME_0093,Manufacturing,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,34435481.72,23,0.35,5.0,700000.0,700000.0,1,35135481.72,24,2.0328,4.3478
+MSME_0096,IT Services,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,6648888.35,32,0.15,2.0,500000.0,500000.0,1,7148888.35,33,7.5201,3.125
+MSME_0096,IT Services,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,6648888.35,32,0.2,3.0,200000.0,200000.0,1,6848888.35,33,3.008,3.125
+MSME_0096,IT Services,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,6648888.35,32,0.35,5.0,700000.0,700000.0,2,7348888.35,34,10.5281,6.25
+MSME_0097,Textiles,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,33210595.86,146,0.1,5.0,1000000.0,1000000.0,7,34210595.86,153,3.0111,4.7945
+MSME_0097,Textiles,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,33210595.86,146,0.25,4.0,2000000.0,2000000.0,6,35210595.86,152,6.0222,4.1096
+MSME_0097,Textiles,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,33210595.86,146,0.35,9.0,3000000.0,3000000.0,13,36210595.86,159,9.0333,8.9041
+MSME_0098,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,11351092.37,33,0.2,3.0,200000.0,200000.0,1,11551092.37,34,1.7619,3.0303
+MSME_0099,Food Processing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,11417775.68,68,0.25,4.0,2000000.0,2000000.0,3,13417775.68,71,17.5165,4.4118
+MSME_0100,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,29144432.72,3,0.2,3.0,200000.0,200000.0,0,29344432.72,3,0.6862,0.0
+MSME_0101,Food Processing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,12171708.65,43,0.2,3.0,200000.0,200000.0,1,12371708.65,44,1.6432,2.3256
+MSME_0102,Textiles,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,33299753.31,47,0.1,5.0,1000000.0,1000000.0,2,34299753.31,49,3.003,4.2553
+MSME_0102,Textiles,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,33299753.31,47,0.25,4.0,2000000.0,2000000.0,2,35299753.31,49,6.0061,4.2553
+MSME_0102,Textiles,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,33299753.31,47,0.35,9.0,3000000.0,3000000.0,4,36299753.31,51,9.0091,8.5106
+MSME_0104,Manufacturing,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,26908840.3,130,0.1,5.0,1000000.0,1000000.0,6,27908840.3,136,3.7163,4.6154
+MSME_0104,Manufacturing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,26908840.3,130,0.25,4.0,2000000.0,2000000.0,5,28908840.3,135,7.4325,3.8462
+MSME_0104,Manufacturing,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,26908840.3,130,0.35,9.0,3000000.0,3000000.0,11,29908840.3,141,11.1488,8.4615
+MSME_0105,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,6544440.74,15,0.2,3.0,200000.0,200000.0,0,6744440.74,15,3.056,0.0
+MSME_0106,IT Services,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,29215555.37,39,0.15,2.0,500000.0,500000.0,1,29715555.37,40,1.7114,2.5641
+MSME_0106,IT Services,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,29215555.37,39,0.2,3.0,200000.0,200000.0,1,29415555.37,40,0.6846,2.5641
+MSME_0106,IT Services,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,29215555.37,39,0.35,5.0,700000.0,700000.0,2,29915555.37,41,2.396,5.1282
+MSME_0108,Manufacturing,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,45974550.95,49,0.15,2.0,500000.0,500000.0,1,46474550.95,50,1.0876,2.0408
+MSME_0108,Manufacturing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,45974550.95,49,0.2,3.0,200000.0,200000.0,1,46174550.95,50,0.435,2.0408
+MSME_0108,Manufacturing,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,45974550.95,49,0.35,5.0,700000.0,700000.0,2,46674550.95,51,1.5226,4.0816
+MSME_0109,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,4978843.92,39,0.15,2.0,500000.0,500000.0,1,5478843.92,40,10.0425,2.5641
+MSME_0109,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,4978843.92,39,0.2,3.0,200000.0,200000.0,1,5178843.92,40,4.017,2.5641
+MSME_0109,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,4978843.92,39,0.35,5.0,700000.0,700000.0,2,5678843.92,41,14.0595,5.1282
+MSME_0111,IT Services,Small,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,31164772.13,67,0.15,2.0,500000.0,500000.0,1,31664772.13,68,1.6044,1.4925
+MSME_0113,Textiles,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,5520331.01,46,0.1,5.0,1000000.0,552033.1,2,6072364.11,48,10.0,4.3478
+MSME_0114,Textiles,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,34215333.77,75,0.1,5.0,1000000.0,1000000.0,4,35215333.77,79,2.9227,5.3333
+MSME_0114,Textiles,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,34215333.77,75,0.25,4.0,2000000.0,2000000.0,3,36215333.77,78,5.8453,4.0
+MSME_0114,Textiles,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,34215333.77,75,0.35,9.0,3000000.0,3000000.0,7,37215333.77,82,8.768,9.3333
+MSME_0115,Textiles,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,47594465.44,45,0.1,5.0,1000000.0,1000000.0,2,48594465.44,47,2.1011,4.4444
+MSME_0116,Manufacturing,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,33543720.01,88,0.1,5.0,1000000.0,1000000.0,4,34543720.01,92,2.9812,4.5455
+MSME_0116,Manufacturing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,33543720.01,88,0.25,4.0,2000000.0,2000000.0,4,35543720.01,92,5.9624,4.5455
+MSME_0116,Manufacturing,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,33543720.01,88,0.35,9.0,3000000.0,3000000.0,8,36543720.01,96,8.9436,9.0909
+MSME_0118,Manufacturing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,5653427.64,55,0.25,4.0,2000000.0,1413356.91,2,7066784.56,57,25.0,3.6364
+MSME_0119,Textiles,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,3961614.48,86,0.1,5.0,1000000.0,396161.45,4,4357775.93,90,10.0,4.6512
+MSME_0120,Manufacturing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,17011692.7,50,0.25,4.0,2000000.0,2000000.0,2,19011692.7,52,11.7566,4.0
+MSME_0121,Manufacturing,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,6431535.6,127,0.15,2.0,500000.0,500000.0,3,6931535.6,130,7.7742,2.3622
+MSME_0121,Manufacturing,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,6431535.6,127,0.1,5.0,1000000.0,643153.56,6,7074689.16,133,10.0,4.7244
+MSME_0121,Manufacturing,Small,Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,6431535.6,127,0.25,7.0,1500000.0,1193153.56,9,7624689.16,136,18.5516,7.0866
+MSME_0122,Manufacturing,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,2289938.84,104,0.15,2.0,500000.0,343490.83,2,2633429.66,106,15.0,1.9231
+MSME_0122,Manufacturing,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,2289938.84,104,0.1,5.0,1000000.0,228993.88,5,2518932.72,109,10.0,4.8077
+MSME_0122,Manufacturing,Small,Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,2289938.84,104,0.25,7.0,1500000.0,606833.79,7,2896772.63,111,26.5,6.7308
+MSME_0123,Textiles,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,39420659.86,31,0.1,5.0,1000000.0,1000000.0,2,40420659.86,33,2.5367,6.4516
+MSME_0127,Food Processing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,49192106.8,134,0.25,4.0,2000000.0,2000000.0,5,51192106.8,139,4.0657,3.7313
+MSME_0130,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,22991678.06,5,0.2,3.0,200000.0,200000.0,0,23191678.06,5,0.8699,0.0
+MSME_0131,IT Services,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,47789066.98,49,0.15,2.0,500000.0,500000.0,1,48289066.98,50,1.0463,2.0408
+MSME_0131,IT Services,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,47789066.98,49,0.2,3.0,200000.0,200000.0,1,47989066.98,50,0.4185,2.0408
+MSME_0131,IT Services,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,47789066.98,49,0.35,5.0,700000.0,700000.0,2,48489066.98,51,1.4648,4.0816
+MSME_0132,Textiles,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,22781159.4,88,0.1,5.0,1000000.0,1000000.0,4,23781159.4,92,4.3896,4.5455
+MSME_0133,Manufacturing,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,47846819.22,47,0.1,5.0,1000000.0,1000000.0,2,48846819.22,49,2.09,4.2553
+MSME_0133,Manufacturing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,47846819.22,47,0.25,4.0,2000000.0,2000000.0,2,49846819.22,49,4.18,4.2553
+MSME_0133,Manufacturing,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,47846819.22,47,0.35,9.0,3000000.0,3000000.0,4,50846819.22,51,6.27,8.5106
+MSME_0134,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,19406012.16,15,0.2,3.0,200000.0,200000.0,0,19606012.16,15,1.0306,0.0
+MSME_0135,IT Services,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,26278023.02,18,0.15,2.0,500000.0,500000.0,0,26778023.02,18,1.9027,0.0
+MSME_0135,IT Services,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,26278023.02,18,0.2,3.0,200000.0,200000.0,1,26478023.02,19,0.7611,5.5556
+MSME_0135,IT Services,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,26278023.02,18,0.35,5.0,700000.0,700000.0,1,26978023.02,19,2.6638,5.5556
+MSME_0136,Manufacturing,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,33961122.64,141,0.15,2.0,500000.0,500000.0,3,34461122.64,144,1.4723,2.1277
+MSME_0136,Manufacturing,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,33961122.64,141,0.1,5.0,1000000.0,1000000.0,7,34961122.64,148,2.9445,4.9645
+MSME_0136,Manufacturing,Small,Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,33961122.64,141,0.25,7.0,1500000.0,1500000.0,10,35461122.64,151,4.4168,7.0922
+MSME_0138,Textiles,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,7958467.33,116,0.1,5.0,1000000.0,795846.73,6,8754314.06,122,10.0,5.1724
+MSME_0138,Textiles,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,7958467.33,116,0.25,4.0,2000000.0,1989616.83,5,9948084.16,121,25.0,4.3103
+MSME_0138,Textiles,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,7958467.33,116,0.35,9.0,3000000.0,2795846.73,11,10754314.06,127,35.1305,9.4828
+MSME_0139,Manufacturing,Small,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,961915.18,123,0.15,2.0,500000.0,144287.28,2,1106202.46,125,15.0,1.626
+MSME_0140,Food Processing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,27934212.45,18,0.2,3.0,200000.0,200000.0,1,28134212.45,19,0.716,5.5556
+MSME_0141,Food Processing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,6673345.82,56,0.25,4.0,2000000.0,1668336.45,2,8341682.27,58,25.0,3.5714
+MSME_0145,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,48992512.39,46,0.15,2.0,500000.0,500000.0,1,49492512.39,47,1.0206,2.1739
+MSME_0145,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,48992512.39,46,0.2,3.0,200000.0,200000.0,1,49192512.39,47,0.4082,2.1739
+MSME_0145,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,48992512.39,46,0.35,5.0,700000.0,700000.0,2,49692512.39,48,1.4288,4.3478
+MSME_0146,Food Processing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,22041429.76,40,0.2,3.0,200000.0,200000.0,1,22241429.76,41,0.9074,2.5
+MSME_0147,Textiles,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,47852423.74,33,0.1,5.0,1000000.0,1000000.0,2,48852423.74,35,2.0898,6.0606
+MSME_0147,Textiles,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,47852423.74,33,0.25,4.0,2000000.0,2000000.0,1,49852423.74,34,4.1795,3.0303
+MSME_0147,Textiles,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,47852423.74,33,0.35,9.0,3000000.0,3000000.0,3,50852423.74,36,6.2693,9.0909
+MSME_0149,IT Services,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,49074205.98,25,0.15,2.0,500000.0,500000.0,0,49574205.98,25,1.0189,0.0
+MSME_0149,IT Services,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,49074205.98,25,0.2,3.0,200000.0,200000.0,1,49274205.98,26,0.4075,4.0
+MSME_0149,IT Services,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,49074205.98,25,0.35,5.0,700000.0,700000.0,1,49774205.98,26,1.4264,4.0
+MSME_0150,Manufacturing,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,12922849.74,35,0.15,2.0,500000.0,500000.0,1,13422849.74,36,3.8691,2.8571
+MSME_0150,Manufacturing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,12922849.74,35,0.2,3.0,200000.0,200000.0,1,13122849.74,36,1.5476,2.8571
+MSME_0150,Manufacturing,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,12922849.74,35,0.35,5.0,700000.0,700000.0,2,13622849.74,37,5.4168,5.7143
+MSME_0151,Manufacturing,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,33377301.77,40,0.15,2.0,500000.0,500000.0,1,33877301.77,41,1.498,2.5
+MSME_0151,Manufacturing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,33377301.77,40,0.2,3.0,200000.0,200000.0,1,33577301.77,41,0.5992,2.5
+MSME_0151,Manufacturing,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,33377301.77,40,0.35,5.0,700000.0,700000.0,2,34077301.77,42,2.0972,5.0
+MSME_0152,Manufacturing,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,38042038.38,98,0.15,2.0,500000.0,500000.0,2,38542038.38,100,1.3143,2.0408
+MSME_0152,Manufacturing,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,38042038.38,98,0.1,5.0,1000000.0,1000000.0,5,39042038.38,103,2.6287,5.102
+MSME_0152,Manufacturing,Small,Semi-Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,38042038.38,98,0.25,7.0,1500000.0,1500000.0,7,39542038.38,105,3.943,7.1429
+MSME_0153,Manufacturing,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,45506400.19,42,0.15,2.0,500000.0,500000.0,1,46006400.19,43,1.0987,2.381
+MSME_0153,Manufacturing,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,45506400.19,42,0.1,5.0,1000000.0,1000000.0,2,46506400.19,44,2.1975,4.7619
+MSME_0153,Manufacturing,Small,Semi-Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,45506400.19,42,0.25,7.0,1500000.0,1500000.0,3,47006400.19,45,3.2962,7.1429
+MSME_0154,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,32312395.55,21,0.2,3.0,200000.0,200000.0,1,32512395.55,22,0.619,4.7619
+MSME_0155,Manufacturing,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,16001518.74,10,0.15,2.0,500000.0,500000.0,0,16501518.74,10,3.1247,0.0
+MSME_0155,Manufacturing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,16001518.74,10,0.2,3.0,200000.0,200000.0,0,16201518.74,10,1.2499,0.0
+MSME_0155,Manufacturing,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,16001518.74,10,0.35,5.0,700000.0,700000.0,0,16701518.74,10,4.3746,0.0
+MSME_0160,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,32831558.13,36,0.2,3.0,200000.0,200000.0,1,33031558.13,37,0.6092,2.7778
+MSME_0162,Manufacturing,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,37821114.23,82,0.1,5.0,1000000.0,1000000.0,4,38821114.23,86,2.644,4.878
+MSME_0162,Manufacturing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,37821114.23,82,0.25,4.0,2000000.0,2000000.0,3,39821114.23,85,5.2881,3.6585
+MSME_0162,Manufacturing,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,37821114.23,82,0.35,9.0,3000000.0,3000000.0,7,40821114.23,89,7.9321,8.5366
+MSME_0164,Retail,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,31495720.49,13,0.2,3.0,200000.0,200000.0,0,31695720.49,13,0.635,0.0
+MSME_0165,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,26499368.0,33,0.2,3.0,200000.0,200000.0,1,26699368.0,34,0.7547,3.0303
+MSME_0166,Manufacturing,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,30550934.15,5,0.15,2.0,500000.0,500000.0,0,31050934.15,5,1.6366,0.0
+MSME_0166,Manufacturing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,30550934.15,5,0.2,3.0,200000.0,200000.0,0,30750934.15,5,0.6546,0.0
+MSME_0166,Manufacturing,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,30550934.15,5,0.35,5.0,700000.0,700000.0,0,31250934.15,5,2.2913,0.0
+MSME_0168,Manufacturing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,30733613.52,68,0.25,4.0,2000000.0,2000000.0,3,32733613.52,71,6.5075,4.4118
+MSME_0170,Food Processing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,46506621.38,91,0.25,4.0,2000000.0,2000000.0,4,48506621.38,95,4.3005,4.3956
+MSME_0171,IT Services,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,32001867.82,48,0.15,2.0,500000.0,500000.0,1,32501867.82,49,1.5624,2.0833
+MSME_0171,IT Services,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,32001867.82,48,0.2,3.0,200000.0,200000.0,1,32201867.82,49,0.625,2.0833
+MSME_0171,IT Services,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,32001867.82,48,0.35,5.0,700000.0,700000.0,2,32701867.82,50,2.1874,4.1667
+MSME_0173,Food Processing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,43748080.38,39,0.2,3.0,200000.0,200000.0,1,43948080.38,40,0.4572,2.5641
+MSME_0174,Manufacturing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,45551664.52,57,0.25,4.0,2000000.0,2000000.0,2,47551664.52,59,4.3906,3.5088
+MSME_0177,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,34569574.67,4,0.2,3.0,200000.0,200000.0,0,34769574.67,4,0.5785,0.0
+MSME_0178,Food Processing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,23196888.94,143,0.25,4.0,2000000.0,2000000.0,6,25196888.94,149,8.6218,4.1958
+MSME_0179,Food Processing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,48551736.61,14,0.2,3.0,200000.0,200000.0,0,48751736.61,14,0.4119,0.0
+MSME_0180,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,17451174.95,2,0.2,3.0,200000.0,200000.0,0,17651174.95,2,1.1461,0.0
+MSME_0184,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,15272528.16,6,0.2,3.0,200000.0,200000.0,0,15472528.16,6,1.3095,0.0
+MSME_0185,IT Services,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,17003662.45,36,0.15,2.0,500000.0,500000.0,1,17503662.45,37,2.9405,2.7778
+MSME_0185,IT Services,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,17003662.45,36,0.2,3.0,200000.0,200000.0,1,17203662.45,37,1.1762,2.7778
+MSME_0185,IT Services,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,17003662.45,36,0.35,5.0,700000.0,700000.0,2,17703662.45,38,4.1168,5.5556
+MSME_0186,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,3916962.27,10,0.15,2.0,500000.0,500000.0,0,4416962.27,10,12.765,0.0
+MSME_0186,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,3916962.27,10,0.2,3.0,200000.0,200000.0,0,4116962.27,10,5.106,0.0
+MSME_0186,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,3916962.27,10,0.35,5.0,700000.0,700000.0,0,4616962.27,10,17.871,0.0
+MSME_0187,Textiles,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,31788446.56,102,0.1,5.0,1000000.0,1000000.0,5,32788446.56,107,3.1458,4.902
+MSME_0187,Textiles,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,31788446.56,102,0.25,4.0,2000000.0,2000000.0,4,33788446.56,106,6.2916,3.9216
+MSME_0187,Textiles,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,31788446.56,102,0.35,9.0,3000000.0,3000000.0,9,34788446.56,111,9.4374,8.8235
+MSME_0188,Textiles,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,33509293.84,139,0.1,5.0,1000000.0,1000000.0,7,34509293.84,146,2.9842,5.036
+MSME_0190,IT Services,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,40295946.12,27,0.15,2.0,500000.0,500000.0,1,40795946.12,28,1.2408,3.7037
+MSME_0191,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,9857456.47,18,0.2,3.0,200000.0,200000.0,1,10057456.47,19,2.0289,5.5556
+MSME_0192,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,13884467.68,16,0.2,3.0,200000.0,200000.0,0,14084467.68,16,1.4405,0.0
+MSME_0193,Retail,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,715981.85,34,0.2,3.0,200000.0,143196.37,1,859178.22,35,20.0,2.9412
+MSME_0195,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,21081976.28,23,0.15,2.0,500000.0,500000.0,0,21581976.28,23,2.3717,0.0
+MSME_0195,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,21081976.28,23,0.2,3.0,200000.0,200000.0,1,21281976.28,24,0.9487,4.3478
+MSME_0195,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,21081976.28,23,0.35,5.0,700000.0,700000.0,1,21781976.28,24,3.3204,4.3478
+MSME_0196,Textiles,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,34268597.09,32,0.1,5.0,1000000.0,1000000.0,2,35268597.09,34,2.9181,6.25
+MSME_0198,Textiles,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,11380364.77,52,0.1,5.0,1000000.0,1000000.0,3,12380364.77,55,8.7871,5.7692
+MSME_0198,Textiles,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,11380364.77,52,0.25,4.0,2000000.0,2000000.0,2,13380364.77,54,17.5741,3.8462
+MSME_0198,Textiles,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,11380364.77,52,0.35,9.0,3000000.0,3000000.0,5,14380364.77,57,26.3612,9.6154
+MSME_0199,Textiles,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,1667950.75,64,0.1,5.0,1000000.0,166795.07,3,1834745.82,67,10.0,4.6875
+MSME_0199,Textiles,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,1667950.75,64,0.25,4.0,2000000.0,416987.69,3,2084938.44,67,25.0,4.6875
+MSME_0199,Textiles,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,1667950.75,64,0.35,9.0,3000000.0,625481.53,6,2293432.28,70,37.5,9.375
+MSME_0201,IT Services,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,16099778.44,5,0.15,2.0,500000.0,500000.0,0,16599778.44,5,3.1056,0.0
+MSME_0201,IT Services,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,16099778.44,5,0.2,3.0,200000.0,200000.0,0,16299778.44,5,1.2423,0.0
+MSME_0201,IT Services,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,16099778.44,5,0.35,5.0,700000.0,700000.0,0,16799778.44,5,4.3479,0.0
+MSME_0202,Textiles,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,34654987.0,124,0.1,5.0,1000000.0,1000000.0,6,35654987.0,130,2.8856,4.8387
+MSME_0202,Textiles,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,34654987.0,124,0.25,4.0,2000000.0,2000000.0,5,36654987.0,129,5.7712,4.0323
+MSME_0202,Textiles,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,34654987.0,124,0.35,9.0,3000000.0,3000000.0,11,37654987.0,135,8.6568,8.871
+MSME_0203,IT Services,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,14097838.84,14,0.15,2.0,500000.0,500000.0,0,14597838.84,14,3.5466,0.0
+MSME_0203,IT Services,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,14097838.84,14,0.2,3.0,200000.0,200000.0,0,14297838.84,14,1.4187,0.0
+MSME_0203,IT Services,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,14097838.84,14,0.35,5.0,700000.0,700000.0,0,14797838.84,14,4.9653,0.0
+MSME_0204,Food Processing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,39760572.26,17,0.2,3.0,200000.0,200000.0,1,39960572.26,18,0.503,5.8824
+MSME_0205,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,46009676.53,7,0.15,2.0,500000.0,500000.0,0,46509676.53,7,1.0867,0.0
+MSME_0205,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,46009676.53,7,0.2,3.0,200000.0,200000.0,0,46209676.53,7,0.4347,0.0
+MSME_0205,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,46009676.53,7,0.35,5.0,700000.0,700000.0,0,46709676.53,7,1.5214,0.0
+MSME_0206,IT Services,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,24106555.27,40,0.15,2.0,500000.0,500000.0,1,24606555.27,41,2.0741,2.5
+MSME_0206,IT Services,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,24106555.27,40,0.2,3.0,200000.0,200000.0,1,24306555.27,41,0.8296,2.5
+MSME_0206,IT Services,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,24106555.27,40,0.35,5.0,700000.0,700000.0,2,24806555.27,42,2.9038,5.0
+MSME_0207,Manufacturing,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,40335279.54,9,0.15,2.0,500000.0,500000.0,0,40835279.54,9,1.2396,0.0
+MSME_0207,Manufacturing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,40335279.54,9,0.2,3.0,200000.0,200000.0,0,40535279.54,9,0.4958,0.0
+MSME_0207,Manufacturing,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,40335279.54,9,0.35,5.0,700000.0,700000.0,0,41035279.54,9,1.7355,0.0
+MSME_0208,IT Services,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,46016785.72,86,0.15,2.0,500000.0,500000.0,2,46516785.72,88,1.0866,2.3256
+MSME_0209,IT Services,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,12924568.47,133,0.15,2.0,500000.0,500000.0,3,13424568.47,136,3.8686,2.2556
+MSME_0210,Food Processing,Micro,Rural,SCH_003,Rural Employment Boost,Single_Scheme,47837844.62,5,0.05,8.0,300000.0,300000.0,0,48137844.62,5,0.6271,0.0
+MSME_0210,Food Processing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,47837844.62,5,0.2,3.0,200000.0,200000.0,0,48037844.62,5,0.4181,0.0
+MSME_0210,Food Processing,Micro,Rural,SCH_003 + SCH_005,Rural Employment Boost + New Enterprise Support,Combined_Multi_Scheme,47837844.62,5,0.25,11.0,500000.0,500000.0,0,48337844.62,5,1.0452,0.0
+MSME_0211,Food Processing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,45235999.8,42,0.25,4.0,2000000.0,2000000.0,2,47235999.8,44,4.4213,4.7619
+MSME_0213,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,27185180.36,42,0.2,3.0,200000.0,200000.0,1,27385180.36,43,0.7357,2.381
+MSME_0215,Food Processing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,19963162.45,50,0.25,4.0,2000000.0,2000000.0,2,21963162.45,52,10.0185,4.0
+MSME_0216,IT Services,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,35863996.12,26,0.15,2.0,500000.0,500000.0,1,36363996.12,27,1.3942,3.8462
+MSME_0216,IT Services,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,35863996.12,26,0.2,3.0,200000.0,200000.0,1,36063996.12,27,0.5577,3.8462
+MSME_0216,IT Services,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,35863996.12,26,0.35,5.0,700000.0,700000.0,2,36563996.12,28,1.9518,7.6923
+MSME_0217,Food Processing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,6693700.23,92,0.25,4.0,2000000.0,1673425.06,4,8367125.29,96,25.0,4.3478
+MSME_0218,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,27690833.69,33,0.2,3.0,200000.0,200000.0,1,27890833.69,34,0.7223,3.0303
+MSME_0219,Manufacturing,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,12131183.55,41,0.15,2.0,500000.0,500000.0,1,12631183.55,42,4.1216,2.439
+MSME_0219,Manufacturing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,12131183.55,41,0.2,3.0,200000.0,200000.0,1,12331183.55,42,1.6486,2.439
+MSME_0219,Manufacturing,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,12131183.55,41,0.35,5.0,700000.0,700000.0,2,12831183.55,43,5.7703,4.878
+MSME_0220,Food Processing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,40535104.24,41,0.25,4.0,2000000.0,2000000.0,2,42535104.24,43,4.934,4.878
+MSME_0222,Manufacturing,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,18114810.58,142,0.15,2.0,500000.0,500000.0,3,18614810.58,145,2.7602,2.1127
+MSME_0222,Manufacturing,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,18114810.58,142,0.1,5.0,1000000.0,1000000.0,7,19114810.58,149,5.5203,4.9296
+MSME_0222,Manufacturing,Small,Semi-Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,18114810.58,142,0.25,7.0,1500000.0,1500000.0,10,19614810.58,152,8.2805,7.0423
+MSME_0223,Food Processing,Micro,Rural,SCH_003,Rural Employment Boost,Single_Scheme,47092986.19,11,0.05,8.0,300000.0,300000.0,1,47392986.19,12,0.637,9.0909
+MSME_0223,Food Processing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,47092986.19,11,0.2,3.0,200000.0,200000.0,0,47292986.19,11,0.4247,0.0
+MSME_0223,Food Processing,Micro,Rural,SCH_003 + SCH_005,Rural Employment Boost + New Enterprise Support,Combined_Multi_Scheme,47092986.19,11,0.25,11.0,500000.0,500000.0,1,47592986.19,12,1.0617,9.0909
+MSME_0224,IT Services,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,26225361.01,36,0.15,2.0,500000.0,500000.0,1,26725361.01,37,1.9066,2.7778
+MSME_0224,IT Services,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,26225361.01,36,0.2,3.0,200000.0,200000.0,1,26425361.01,37,0.7626,2.7778
+MSME_0224,IT Services,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,26225361.01,36,0.35,5.0,700000.0,700000.0,2,26925361.01,38,2.6692,5.5556
+MSME_0225,Food Processing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,5057315.81,72,0.25,4.0,2000000.0,1264328.95,3,6321644.76,75,25.0,4.1667
+MSME_0226,Manufacturing,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,9117042.93,78,0.15,2.0,500000.0,500000.0,2,9617042.93,80,5.4842,2.5641
+MSME_0226,Manufacturing,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,9117042.93,78,0.1,5.0,1000000.0,911704.29,4,10028747.22,82,10.0,5.1282
+MSME_0226,Manufacturing,Small,Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,9117042.93,78,0.25,7.0,1500000.0,1461704.29,6,10578747.22,84,16.0327,7.6923
+MSME_0227,Retail,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,13028526.19,46,0.2,3.0,200000.0,200000.0,1,13228526.19,47,1.5351,2.1739
+MSME_0228,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,13306226.29,29,0.2,3.0,200000.0,200000.0,1,13506226.29,30,1.5031,3.4483
+MSME_0231,Manufacturing,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,13808248.96,22,0.15,2.0,500000.0,500000.0,0,14308248.96,22,3.621,0.0
+MSME_0231,Manufacturing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,13808248.96,22,0.2,3.0,200000.0,200000.0,1,14008248.96,23,1.4484,4.5455
+MSME_0231,Manufacturing,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,13808248.96,22,0.35,5.0,700000.0,700000.0,1,14508248.96,23,5.0694,4.5455
+MSME_0232,Textiles,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,41324790.25,23,0.25,4.0,2000000.0,2000000.0,1,43324790.25,24,4.8397,4.3478
+MSME_0235,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,4343218.41,6,0.15,2.0,500000.0,500000.0,0,4843218.41,6,11.5122,0.0
+MSME_0235,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,4343218.41,6,0.2,3.0,200000.0,200000.0,0,4543218.41,6,4.6049,0.0
+MSME_0235,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,4343218.41,6,0.35,5.0,700000.0,700000.0,0,5043218.41,6,16.1171,0.0
+MSME_0238,Food Processing,Micro,Rural,SCH_003,Rural Employment Boost,Single_Scheme,43637686.86,30,0.05,8.0,300000.0,300000.0,2,43937686.86,32,0.6875,6.6667
+MSME_0238,Food Processing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,43637686.86,30,0.2,3.0,200000.0,200000.0,1,43837686.86,31,0.4583,3.3333
+MSME_0238,Food Processing,Micro,Rural,SCH_003 + SCH_005,Rural Employment Boost + New Enterprise Support,Combined_Multi_Scheme,43637686.86,30,0.25,11.0,500000.0,500000.0,3,44137686.86,33,1.1458,10.0
+MSME_0239,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,17191725.49,6,0.2,3.0,200000.0,200000.0,0,17391725.49,6,1.1634,0.0
+MSME_0240,Manufacturing,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,23975623.54,17,0.15,2.0,500000.0,500000.0,0,24475623.54,17,2.0855,0.0
+MSME_0240,Manufacturing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,23975623.54,17,0.2,3.0,200000.0,200000.0,1,24175623.54,18,0.8342,5.8824
+MSME_0240,Manufacturing,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,23975623.54,17,0.35,5.0,700000.0,700000.0,1,24675623.54,18,2.9196,5.8824
+MSME_0241,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,22839058.59,4,0.2,3.0,200000.0,200000.0,0,23039058.59,4,0.8757,0.0
+MSME_0242,Textiles,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,49094513.45,39,0.1,5.0,1000000.0,1000000.0,2,50094513.45,41,2.0369,5.1282
+MSME_0242,Textiles,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,49094513.45,39,0.25,4.0,2000000.0,2000000.0,2,51094513.45,41,4.0738,5.1282
+MSME_0242,Textiles,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,49094513.45,39,0.35,9.0,3000000.0,3000000.0,4,52094513.45,43,6.1107,10.2564
+MSME_0243,Food Processing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,33008109.49,81,0.25,4.0,2000000.0,2000000.0,3,35008109.49,84,6.0591,3.7037
+MSME_0244,Manufacturing,Small,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,39207018.87,118,0.15,2.0,500000.0,500000.0,2,39707018.87,120,1.2753,1.6949
+MSME_0246,Food Processing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,21530116.72,100,0.25,4.0,2000000.0,2000000.0,4,23530116.72,104,9.2893,4.0
+MSME_0247,Manufacturing,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,46983889.73,141,0.1,5.0,1000000.0,1000000.0,7,47983889.73,148,2.1284,4.9645
+MSME_0247,Manufacturing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,46983889.73,141,0.25,4.0,2000000.0,2000000.0,6,48983889.73,147,4.2568,4.2553
+MSME_0247,Manufacturing,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,46983889.73,141,0.35,9.0,3000000.0,3000000.0,13,49983889.73,154,6.3852,9.2199
+MSME_0248,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,13349034.24,6,0.2,3.0,200000.0,200000.0,0,13549034.24,6,1.4982,0.0
+MSME_0250,Food Processing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,2497365.93,67,0.25,4.0,2000000.0,624341.48,3,3121707.41,70,25.0,4.4776
+MSME_0251,Food Processing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,20415580.28,20,0.2,3.0,200000.0,200000.0,1,20615580.28,21,0.9796,5.0
+MSME_0252,Food Processing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,31837096.35,132,0.25,4.0,2000000.0,2000000.0,5,33837096.35,137,6.282,3.7879
+MSME_0254,Manufacturing,Small,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,33554149.28,131,0.15,2.0,500000.0,500000.0,3,34054149.28,134,1.4901,2.2901
+MSME_0255,Textiles,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,8107706.62,45,0.1,5.0,1000000.0,810770.66,2,8918477.28,47,10.0,4.4444
+MSME_0256,Manufacturing,Small,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,30040432.79,107,0.15,2.0,500000.0,500000.0,2,30540432.79,109,1.6644,1.8692
+MSME_0257,Manufacturing,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,3588506.4,36,0.1,5.0,1000000.0,358850.64,2,3947357.04,38,10.0,5.5556
+MSME_0257,Manufacturing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,3588506.4,36,0.25,4.0,2000000.0,897126.6,1,4485632.99,37,25.0,2.7778
+MSME_0257,Manufacturing,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,3588506.4,36,0.35,9.0,3000000.0,1345689.9,3,4934196.29,39,37.5,8.3333
+MSME_0258,IT Services,Small,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,47147980.97,56,0.15,2.0,500000.0,500000.0,1,47647980.97,57,1.0605,1.7857
+MSME_0262,Textiles,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,6292080.38,108,0.1,5.0,1000000.0,629208.04,5,6921288.42,113,10.0,4.6296
+MSME_0262,Textiles,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,6292080.38,108,0.25,4.0,2000000.0,1573020.1,4,7865100.48,112,25.0,3.7037
+MSME_0262,Textiles,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,6292080.38,108,0.35,9.0,3000000.0,2359530.14,9,8651610.52,117,37.5,8.3333
+MSME_0263,Manufacturing,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,46649976.53,139,0.15,2.0,500000.0,500000.0,3,47149976.53,142,1.0718,2.1583
+MSME_0263,Manufacturing,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,46649976.53,139,0.1,5.0,1000000.0,1000000.0,7,47649976.53,146,2.1436,5.036
+MSME_0263,Manufacturing,Small,Semi-Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,46649976.53,139,0.25,7.0,1500000.0,1500000.0,10,48149976.53,149,3.2154,7.1942
+MSME_0265,Manufacturing,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,13530743.65,39,0.1,5.0,1000000.0,1000000.0,2,14530743.65,41,7.3906,5.1282
+MSME_0265,Manufacturing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,13530743.65,39,0.25,4.0,2000000.0,2000000.0,2,15530743.65,41,14.7812,5.1282
+MSME_0265,Manufacturing,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,13530743.65,39,0.35,9.0,3000000.0,3000000.0,4,16530743.65,43,22.1717,10.2564
+MSME_0268,IT Services,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,31502956.41,48,0.15,2.0,500000.0,500000.0,1,32002956.41,49,1.5872,2.0833
+MSME_0268,IT Services,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,31502956.41,48,0.2,3.0,200000.0,200000.0,1,31702956.41,49,0.6349,2.0833
+MSME_0268,IT Services,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,31502956.41,48,0.35,5.0,700000.0,700000.0,2,32202956.41,50,2.222,4.1667
+MSME_0269,Textiles,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,30611815.25,61,0.1,5.0,1000000.0,1000000.0,3,31611815.25,64,3.2667,4.918
+MSME_0271,Textiles,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,15134899.81,62,0.25,4.0,2000000.0,2000000.0,2,17134899.81,64,13.2145,3.2258
+MSME_0272,Food Processing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,4904990.89,133,0.25,4.0,2000000.0,1226247.72,5,6131238.61,138,25.0,3.7594
+MSME_0274,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,12848181.11,13,0.15,2.0,500000.0,500000.0,0,13348181.11,13,3.8916,0.0
+MSME_0274,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,12848181.11,13,0.2,3.0,200000.0,200000.0,0,13048181.11,13,1.5566,0.0
+MSME_0274,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,12848181.11,13,0.35,5.0,700000.0,700000.0,0,13548181.11,13,5.4482,0.0
+MSME_0276,Manufacturing,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,46611968.26,59,0.1,5.0,1000000.0,1000000.0,3,47611968.26,62,2.1454,5.0847
+MSME_0276,Manufacturing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,46611968.26,59,0.25,4.0,2000000.0,2000000.0,2,48611968.26,61,4.2907,3.3898
+MSME_0276,Manufacturing,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,46611968.26,59,0.35,9.0,3000000.0,3000000.0,5,49611968.26,64,6.4361,8.4746
+MSME_0279,Manufacturing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,18280832.98,27,0.25,4.0,2000000.0,2000000.0,1,20280832.98,28,10.9404,3.7037
+MSME_0282,Textiles,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,11958264.75,80,0.1,5.0,1000000.0,1000000.0,4,12958264.75,84,8.3624,5.0
+MSME_0282,Textiles,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,11958264.75,80,0.25,4.0,2000000.0,2000000.0,3,13958264.75,83,16.7248,3.75
+MSME_0282,Textiles,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,11958264.75,80,0.35,9.0,3000000.0,3000000.0,7,14958264.75,87,25.0873,8.75
+MSME_0284,Food Processing,Micro,Rural,SCH_003,Rural Employment Boost,Single_Scheme,44365997.72,17,0.05,8.0,300000.0,300000.0,1,44665997.72,18,0.6762,5.8824
+MSME_0284,Food Processing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,44365997.72,17,0.2,3.0,200000.0,200000.0,1,44565997.72,18,0.4508,5.8824
+MSME_0284,Food Processing,Micro,Rural,SCH_003 + SCH_005,Rural Employment Boost + New Enterprise Support,Combined_Multi_Scheme,44365997.72,17,0.25,11.0,500000.0,500000.0,2,44865997.72,19,1.127,11.7647
+MSME_0285,Textiles,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,33073721.7,127,0.1,5.0,1000000.0,1000000.0,6,34073721.7,133,3.0235,4.7244
+MSME_0287,Manufacturing,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,22992956.15,33,0.1,5.0,1000000.0,1000000.0,2,23992956.15,35,4.3492,6.0606
+MSME_0287,Manufacturing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,22992956.15,33,0.25,4.0,2000000.0,2000000.0,1,24992956.15,34,8.6983,3.0303
+MSME_0287,Manufacturing,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,22992956.15,33,0.35,9.0,3000000.0,3000000.0,3,25992956.15,36,13.0475,9.0909
+MSME_0290,Manufacturing,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,36692288.55,67,0.1,5.0,1000000.0,1000000.0,3,37692288.55,70,2.7254,4.4776
+MSME_0290,Manufacturing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,36692288.55,67,0.25,4.0,2000000.0,2000000.0,3,38692288.55,70,5.4507,4.4776
+MSME_0290,Manufacturing,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,36692288.55,67,0.35,9.0,3000000.0,3000000.0,6,39692288.55,73,8.1761,8.9552
+MSME_0291,Food Processing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,19048737.54,62,0.25,4.0,2000000.0,2000000.0,2,21048737.54,64,10.4994,3.2258
+MSME_0292,IT Services,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,43599078.55,46,0.15,2.0,500000.0,500000.0,1,44099078.55,47,1.1468,2.1739
+MSME_0292,IT Services,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,43599078.55,46,0.2,3.0,200000.0,200000.0,1,43799078.55,47,0.4587,2.1739
+MSME_0292,IT Services,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,43599078.55,46,0.35,5.0,700000.0,700000.0,2,44299078.55,48,1.6055,4.3478
+MSME_0293,Textiles,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,40368900.3,89,0.1,5.0,1000000.0,1000000.0,4,41368900.3,93,2.4772,4.4944
+MSME_0294,IT Services,Small,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,13361492.83,57,0.15,2.0,500000.0,500000.0,1,13861492.83,58,3.7421,1.7544
+MSME_0296,Manufacturing,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,49266140.48,79,0.1,5.0,1000000.0,1000000.0,4,50266140.48,83,2.0298,5.0633
+MSME_0296,Manufacturing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,49266140.48,79,0.25,4.0,2000000.0,2000000.0,3,51266140.48,82,4.0596,3.7975
+MSME_0296,Manufacturing,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,49266140.48,79,0.35,9.0,3000000.0,3000000.0,7,52266140.48,86,6.0894,8.8608
+MSME_0298,Textiles,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,33855025.46,132,0.25,4.0,2000000.0,2000000.0,5,35855025.46,137,5.9075,3.7879
+MSME_0299,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,33226463.58,46,0.15,2.0,500000.0,500000.0,1,33726463.58,47,1.5048,2.1739
+MSME_0299,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,33226463.58,46,0.2,3.0,200000.0,200000.0,1,33426463.58,47,0.6019,2.1739
+MSME_0299,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,33226463.58,46,0.35,5.0,700000.0,700000.0,2,33926463.58,48,2.1068,4.3478
+MSME_0300,Manufacturing,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,31325247.97,85,0.15,2.0,500000.0,500000.0,2,31825247.97,87,1.5962,2.3529
+MSME_0300,Manufacturing,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,31325247.97,85,0.1,5.0,1000000.0,1000000.0,4,32325247.97,89,3.1923,4.7059
+MSME_0300,Manufacturing,Small,Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,31325247.97,85,0.25,7.0,1500000.0,1500000.0,6,32825247.97,91,4.7885,7.0588
+MSME_0301,Textiles,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,3935007.25,147,0.1,5.0,1000000.0,393500.73,7,4328507.98,154,10.0,4.7619
+MSME_0301,Textiles,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,3935007.25,147,0.25,4.0,2000000.0,983751.81,6,4918759.07,153,25.0,4.0816
+MSME_0301,Textiles,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,3935007.25,147,0.35,9.0,3000000.0,1475627.72,13,5410634.97,160,37.5,8.8435
+MSME_0302,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,34141842.53,17,0.2,3.0,200000.0,200000.0,1,34341842.53,18,0.5858,5.8824
+MSME_0303,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,28050632.21,42,0.2,3.0,200000.0,200000.0,1,28250632.21,43,0.713,2.381
+MSME_0304,Food Processing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,1174884.18,51,0.25,4.0,2000000.0,293721.05,2,1468605.23,53,25.0,3.9216
+MSME_0305,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,19741954.22,24,0.15,2.0,500000.0,500000.0,0,20241954.22,24,2.5327,0.0
+MSME_0305,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,19741954.22,24,0.2,3.0,200000.0,200000.0,1,19941954.22,25,1.0131,4.1667
+MSME_0305,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,19741954.22,24,0.35,5.0,700000.0,700000.0,1,20441954.22,25,3.5457,4.1667
+MSME_0307,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,43706541.37,14,0.2,3.0,200000.0,200000.0,0,43906541.37,14,0.4576,0.0
+MSME_0310,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,1536238.83,5,0.2,3.0,200000.0,200000.0,0,1736238.83,5,13.0188,0.0
+MSME_0311,IT Services,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,40880585.53,36,0.15,2.0,500000.0,500000.0,1,41380585.53,37,1.2231,2.7778
+MSME_0311,IT Services,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,40880585.53,36,0.2,3.0,200000.0,200000.0,1,41080585.53,37,0.4892,2.7778
+MSME_0311,IT Services,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,40880585.53,36,0.35,5.0,700000.0,700000.0,2,41580585.53,38,1.7123,5.5556
+MSME_0312,Retail,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,509233.14,39,0.2,3.0,200000.0,101846.63,1,611079.77,40,20.0,2.5641
+MSME_0313,Manufacturing,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,26500291.73,45,0.15,2.0,500000.0,500000.0,1,27000291.73,46,1.8868,2.2222
+MSME_0313,Manufacturing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,26500291.73,45,0.2,3.0,200000.0,200000.0,1,26700291.73,46,0.7547,2.2222
+MSME_0313,Manufacturing,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,26500291.73,45,0.35,5.0,700000.0,700000.0,2,27200291.73,47,2.6415,4.4444
+MSME_0315,Food Processing,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,47008645.16,31,0.2,3.0,200000.0,200000.0,1,47208645.16,32,0.4255,3.2258
+MSME_0316,Retail,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,43819114.12,9,0.2,3.0,200000.0,200000.0,0,44019114.12,9,0.4564,0.0
+MSME_0317,Manufacturing,Small,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,39403301.17,95,0.15,2.0,500000.0,500000.0,2,39903301.17,97,1.2689,2.1053
+MSME_0317,Manufacturing,Small,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,39403301.17,95,0.1,5.0,1000000.0,1000000.0,5,40403301.17,100,2.5379,5.2632
+MSME_0317,Manufacturing,Small,Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,39403301.17,95,0.25,7.0,1500000.0,1500000.0,7,40903301.17,102,3.8068,7.3684
+MSME_0319,IT Services,Small,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,39328070.92,138,0.15,2.0,500000.0,500000.0,3,39828070.92,141,1.2714,2.1739
+MSME_0320,IT Services,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,33492837.85,102,0.15,2.0,500000.0,500000.0,2,33992837.85,104,1.4929,1.9608
+MSME_0322,Manufacturing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,41205786.02,29,0.25,4.0,2000000.0,2000000.0,1,43205786.02,30,4.8537,3.4483
+MSME_0323,IT Services,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,3425738.13,14,0.15,2.0,500000.0,500000.0,0,3925738.13,14,14.5954,0.0
+MSME_0323,IT Services,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,3425738.13,14,0.2,3.0,200000.0,200000.0,0,3625738.13,14,5.8382,0.0
+MSME_0323,IT Services,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,3425738.13,14,0.35,5.0,700000.0,700000.0,0,4125738.13,14,20.4336,0.0
+MSME_0324,Food Processing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,21064428.53,86,0.25,4.0,2000000.0,2000000.0,3,23064428.53,89,9.4947,3.4884
+MSME_0326,Manufacturing,Medium,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,30807650.4,111,0.1,5.0,1000000.0,1000000.0,6,31807650.4,117,3.2459,5.4054
+MSME_0326,Manufacturing,Medium,Semi-Urban,SCH_004,Export Excellence Incentive,Single_Scheme,30807650.4,111,0.25,4.0,2000000.0,2000000.0,4,32807650.4,115,6.4919,3.6036
+MSME_0326,Manufacturing,Medium,Semi-Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,30807650.4,111,0.35,9.0,3000000.0,3000000.0,10,33807650.4,121,9.7378,9.009
+MSME_0328,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,10811611.81,24,0.2,3.0,200000.0,200000.0,1,11011611.81,25,1.8499,4.1667
+MSME_0329,Manufacturing,Medium,Urban,SCH_002,Green Tech Subsidy,Single_Scheme,11617820.78,69,0.1,5.0,1000000.0,1000000.0,3,12617820.78,72,8.6075,4.3478
+MSME_0329,Manufacturing,Medium,Urban,SCH_004,Export Excellence Incentive,Single_Scheme,11617820.78,69,0.25,4.0,2000000.0,2000000.0,3,13617820.78,72,17.2149,4.3478
+MSME_0329,Manufacturing,Medium,Urban,SCH_002 + SCH_004,Green Tech Subsidy + Export Excellence Incentive,Combined_Multi_Scheme,11617820.78,69,0.35,9.0,3000000.0,3000000.0,6,14617820.78,75,25.8224,8.6957
+MSME_0330,IT Services,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,7092515.22,42,0.15,2.0,500000.0,500000.0,1,7592515.22,43,7.0497,2.381
+MSME_0330,IT Services,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,7092515.22,42,0.2,3.0,200000.0,200000.0,1,7292515.22,43,2.8199,2.381
+MSME_0330,IT Services,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,7092515.22,42,0.35,5.0,700000.0,700000.0,2,7792515.22,44,9.8696,4.7619
+MSME_0332,Manufacturing,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,31534937.51,10,0.15,2.0,500000.0,500000.0,0,32034937.51,10,1.5855,0.0
+MSME_0332,Manufacturing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,31534937.51,10,0.2,3.0,200000.0,200000.0,0,31734937.51,10,0.6342,0.0
+MSME_0332,Manufacturing,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,31534937.51,10,0.35,5.0,700000.0,700000.0,0,32234937.51,10,2.2198,0.0
+MSME_0333,Manufacturing,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,3835155.14,11,0.15,2.0,500000.0,500000.0,0,4335155.14,11,13.0373,0.0
+MSME_0333,Manufacturing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,3835155.14,11,0.2,3.0,200000.0,200000.0,0,4035155.14,11,5.2149,0.0
+MSME_0333,Manufacturing,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,3835155.14,11,0.35,5.0,700000.0,700000.0,0,4535155.14,11,18.2522,0.0
+MSME_0334,Textiles,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,15029972.23,6,0.2,3.0,200000.0,200000.0,0,15229972.23,6,1.3307,0.0
+MSME_0336,Textiles,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,15973602.23,40,0.2,3.0,200000.0,200000.0,1,16173602.23,41,1.2521,2.5
+MSME_0337,IT Services,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,33749588.53,7,0.15,2.0,500000.0,500000.0,0,34249588.53,7,1.4815,0.0
+MSME_0337,IT Services,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,33749588.53,7,0.2,3.0,200000.0,200000.0,0,33949588.53,7,0.5926,0.0
+MSME_0337,IT Services,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,33749588.53,7,0.35,5.0,700000.0,700000.0,0,34449588.53,7,2.0741,0.0
+MSME_0338,Food Processing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,10332264.89,54,0.25,4.0,2000000.0,2000000.0,2,12332264.89,56,19.3568,3.7037
+MSME_0339,Manufacturing,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,12802721.14,26,0.15,2.0,500000.0,500000.0,1,13302721.14,27,3.9054,3.8462
+MSME_0339,Manufacturing,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,12802721.14,26,0.1,5.0,1000000.0,1000000.0,1,13802721.14,27,7.8108,3.8462
+MSME_0339,Manufacturing,Small,Semi-Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,12802721.14,26,0.25,7.0,1500000.0,1500000.0,2,14302721.14,28,11.7163,7.6923
+MSME_0340,Manufacturing,Small,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,25773235.23,97,0.15,2.0,500000.0,500000.0,2,26273235.23,99,1.94,2.0619
+MSME_0340,Manufacturing,Small,Semi-Urban,SCH_002,Green Tech Subsidy,Single_Scheme,25773235.23,97,0.1,5.0,1000000.0,1000000.0,5,26773235.23,102,3.88,5.1546
+MSME_0340,Manufacturing,Small,Semi-Urban,SCH_001 + SCH_002,Digital MSME Transformation Grant + Green Tech Subsidy,Combined_Multi_Scheme,25773235.23,97,0.25,7.0,1500000.0,1500000.0,7,27273235.23,104,5.82,7.2165
+MSME_0341,Food Processing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,30093079.35,4,0.2,3.0,200000.0,200000.0,0,30293079.35,4,0.6646,0.0
+MSME_0342,Manufacturing,Micro,Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,9865191.72,36,0.15,2.0,500000.0,500000.0,1,10365191.72,37,5.0683,2.7778
+MSME_0342,Manufacturing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,9865191.72,36,0.2,3.0,200000.0,200000.0,1,10065191.72,37,2.0273,2.7778
+MSME_0342,Manufacturing,Micro,Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,9865191.72,36,0.35,5.0,700000.0,700000.0,2,10565191.72,38,7.0957,5.5556
+MSME_0344,Retail,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,3280019.49,19,0.2,3.0,200000.0,200000.0,1,3480019.49,20,6.0975,5.2632
+MSME_0345,Food Processing,Micro,Urban,SCH_005,New Enterprise Support,Single_Scheme,33325739.32,23,0.2,3.0,200000.0,200000.0,1,33525739.32,24,0.6001,4.3478
+MSME_0346,IT Services,Micro,Semi-Urban,SCH_001,Digital MSME Transformation Grant,Single_Scheme,16382299.87,21,0.15,2.0,500000.0,500000.0,0,16882299.87,21,3.0521,0.0
+MSME_0346,IT Services,Micro,Semi-Urban,SCH_005,New Enterprise Support,Single_Scheme,16382299.87,21,0.2,3.0,200000.0,200000.0,1,16582299.87,22,1.2208,4.7619
+MSME_0346,IT Services,Micro,Semi-Urban,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,16382299.87,21,0.35,5.0,700000.0,700000.0,1,17082299.87,22,4.2729,4.7619
+MSME_0347,Manufacturing,Medium,Rural,SCH_004,Export Excellence Incentive,Single_Scheme,42272030.86,129,0.25,4.0,2000000.0,2000000.0,5,44272030.86,134,4.7313,3.876
+MSME_0348,Food Processing,Micro,Rural,SCH_003,Rural Employment Boost,Single_Scheme,5974878.14,24,0.05,8.0,300000.0,298743.91,2,6273622.05,26,5.0,8.3333
+MSME_0348,Food Processing,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,5974878.14,24,0.2,3.0,200000.0,200000.0,1,6174878.14,25,3.3473,4.1667
+MSME_0348,Food Processing,Micro,Rural,SCH_003 + SCH_005,Rural Employment Boost + New Enterprise Support,Combined_Multi_Scheme,5974878.14,24,0.25,11.0,500000.0,498743.91,3,6473622.05,27,8.3473,12.5
+MSME_0349,Retail,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,43933880.27,35,0.2,3.0,200000.0,200000.0,1,44133880.27,36,0.4552,2.8571
+MSME_0350,IT Services,Micro,Rural,SCH_001,Digital MSME Transformation Grant,Single_Scheme,5319661.24,13,0.15,2.0,500000.0,500000.0,0,5819661.24,13,9.3991,0.0
+MSME_0350,IT Services,Micro,Rural,SCH_005,New Enterprise Support,Single_Scheme,5319661.24,13,0.2,3.0,200000.0,200000.0,0,5519661.24,13,3.7596,0.0
+MSME_0350,IT Services,Micro,Rural,SCH_001 + SCH_005,Digital MSME Transformation Grant + New Enterprise Support,Combined_Multi_Scheme,5319661.24,13,0.35,5.0,700000.0,700000.0,0,6019661.24,13,13.1587,0.0

@@ -1,0 +1,88 @@
+======================================================================
+PHASE 4: BUDGET-CONSTRAINED OPTIMIZATION ENGINE REPORT
+======================================================================
+
+1. POLICY CONFIGURATION
+----------------------------------------
+  Total Budget               : ₹50,000,000
+  Revenue Weight (alpha)     : 0.60
+  Employment Weight (beta)   : 0.40
+  Distribution Mode          : Global Greedy
+  Input MSME-Scheme Pairs    : 354
+
+2. OPTIMIZATION SUMMARY
+----------------------------------------
+  Pairs Selected             : 140
+  Unique MSMEs Funded        : 114
+  Budget Used                : ₹49,859,604.89
+  Budget Unused              : ₹140,395.11
+  Budget Utilization         : 99.72%
+
+3. AGGREGATE BEFORE vs AFTER PROJECTIONS
+----------------------------------------
+  Total Revenue  BEFORE : ₹    2,523,814,505.85
+  Total Revenue  AFTER  : ₹    2,573,674,110.74  (+1.98%)
+  Total Employees BEFORE:                6,073
+  Total Employees AFTER :                6,287  (+3.52%)
+  Total New Jobs Created:                  214
+  Total Subsidy Disbursed: ₹      49,859,604.89
+
+4. PER-SCHEME SELECTION BREAKDOWN
+----------------------------------------
+  Scheme                                    Selected          Subsidy   Jobs  Avg Score
+  -------------------------------------------------------------------------------------
+  New Enterprise Support                          86 ₹    17,045,043     79     0.1857
+  Digital MSME Transformation Grant               19 ₹     8,729,890     20     0.3293
+  Export Excellence Incentive                     14 ₹    14,584,683     43     0.7783
+  Green Tech Subsidy                              14 ₹     7,401,244     57     0.4534
+  Rural Employment Boost                           7 ₹     2,098,744     15     0.3663
+
+5. TOP 10 RANKED SELECTIONS (Best Efficiency)
+----------------------------------------------------------------------
+  Rank MSME_ID      Scheme        Score   Efficiency        Subsidy   Rev+%   Emp+%
+  ---------------------------------------------------------------------------
+     1 MSME_0312    SCH_005      0.5928   0.00000582 ₹     101,847  20.00%   2.56%
+     2 MSME_0193    SCH_005      0.6094   0.00000426 ₹     143,196  20.00%   2.94%
+     3 MSME_0139    SCH_001      0.4315   0.00000299 ₹     144,287  15.00%   1.63%
+     4 MSME_0199    SCH_002      0.4463   0.00000268 ₹     166,795  10.00%   4.69%
+     5 MSME_0304    SCH_004      0.7726   0.00000263 ₹     293,721  25.00%   3.92%
+     6 MSME_0122    SCH_002      0.4515   0.00000197 ₹     228,994  10.00%   4.81%
+     7 MSME_0199    SCH_004      0.8063   0.00000193 ₹     416,988  25.00%   4.69%
+     8 MSME_0344    SCH_005      0.3779   0.00000189 ₹     200,000   6.10%   5.26%
+     9 MSME_0045    SCH_005      0.3382   0.00000169 ₹     200,000   8.18%   3.23%
+    10 MSME_0348    SCH_003      0.4867   0.00000163 ₹     298,744   5.00%   8.33%
+
+6. DECISION JUSTIFICATION (Top 3 Selections)
+----------------------------------------------------------------------
+  Rank #1: MSME_0312 → New Enterprise Support
+    Selected (Efficiency Rank #1 of 354). Revenue impact: 20.00% (weight=0.6), Employment impact: 2.56% (weight=0.4). Composite score: 0.5928. Subsidy ₹101,847 fit within remaining budget ₹50,000,000.
+
+  Rank #2: MSME_0193 → New Enterprise Support
+    Selected (Efficiency Rank #2 of 354). Revenue impact: 20.00% (weight=0.6), Employment impact: 2.94% (weight=0.4). Composite score: 0.6094. Subsidy ₹143,196 fit within remaining budget ₹49,898,153.
+
+  Rank #3: MSME_0139 → Digital MSME Transformation Grant
+    Selected (Efficiency Rank #3 of 354). Revenue impact: 15.00% (weight=0.6), Employment impact: 1.63% (weight=0.4). Composite score: 0.4315. Subsidy ₹144,287 fit within remaining budget ₹49,754,957.
+
+7. POLICY SENSITIVITY ANALYSIS (How alpha shifts selection)
+----------------------------------------------------------------------
+  Varying alpha from 0.1 (employment-heavy) to 0.9 (revenue-heavy):
+
+   Alpha  Beta  Selected    Budget Used                     Top Scheme  Avg Score
+  --------------------------------------------------------------------------------
+     0.1   0.9       139 ₹  49,940,849          New Enterprise Support      0.3979
+     0.3   0.7       138 ₹  49,845,895          New Enterprise Support      0.3538
+     0.5   0.5       142 ₹  49,986,585          New Enterprise Support      0.3092
+     0.7   0.3       130 ₹  49,901,366          New Enterprise Support      0.3116
+     0.9   0.1       105 ₹  49,890,983          New Enterprise Support      0.3694
+
+8. BUDGET UTILIZATION ANALYSIS
+----------------------------------------
+  Total eligible pairs evaluated : 354
+  Pairs funded                   : 140
+  Pairs not funded (budget limit): 214
+  Cost of all eligible pairs     : ₹262,890,983.23
+  Budget coverage                : 19.0% of total demand
+
+======================================================================
+END OF PHASE 4 REPORT
+======================================================================

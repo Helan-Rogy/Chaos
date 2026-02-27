@@ -1,0 +1,82 @@
+======================================================================
+PHASE 3: SCHEME ELIGIBILITY AND IMPACT SIMULATION REPORT
+======================================================================
+
+1. ELIGIBILITY SUMMARY
+----------------------------------------
+Total MSMEs analyzed          : 350
+Total schemes available       : 5
+MSMEs eligible for 0 schemes  : 107
+MSMEs eligible for 1 scheme   : 132
+MSMEs eligible for ≥2 schemes : 111
+Max schemes for one MSME      : 2
+
+Per-Scheme Eligibility Count:
+  SCH_001 (Digital MSME Transformation Grant): 88 MSMEs
+  SCH_002 (Green Tech Subsidy): 62 MSMEs
+  SCH_003 (Rural Employment Boost): 9 MSMEs
+  SCH_004 (Export Excellence Incentive): 76 MSMEs
+  SCH_005 (New Enterprise Support): 119 MSMEs
+
+2. REVENUE IMPACT SIMULATION (Single-Scheme Rows)
+----------------------------------------
+Total single-scheme impact rows : 354
+Avg Subsidy Applied             : ₹742,629.90
+Avg Revenue Increase            : 5.04%
+Max Subsidy Applied             : ₹2,000,000.00
+Min Subsidy Applied             : ₹101,846.63
+Avg Projected Revenue           : ₹26,394,057.91
+
+3. EMPLOYMENT IMPACT SIMULATION (Single-Scheme Rows)
+----------------------------------------
+Total New Jobs Created (all single rows) : 685
+Avg New Jobs per Eligible MSME-Scheme    : 1.94
+Avg Employment Increase                  : 3.05%
+Max New Jobs (single scheme)             : 7
+
+4. MULTI-SCHEME COMBINED IMPACT
+----------------------------------------
+MSMEs with combined simulation rows     : 111
+Avg Combined Subsidy Applied            : ₹1,433,830.31
+Avg Combined Revenue Increase           : 9.35%
+Avg Combined New Jobs Added             : 4.02
+Avg Combined Employment Increase        : 6.12%
+
+5. BEFORE vs AFTER PROJECTION SNAPSHOT (10 Sample MSMEs)
+----------------------------------------------------------------------
+MSME_ID      Scheme     Type                Before Rev (₹)      After Rev (₹)   Rev+% Emp Before  Emp After   Emp+%
+----------------------------------------------------------------------
+MSME_0001    SCH_005    Single_Scheme         8,222,922.70       8,422,922.70   2.43%         37         38   2.70%
+MSME_0003    SCH_005    Single_Scheme         3,720,053.85       3,920,053.85   5.38%         10         10   0.00%
+MSME_0005    SCH_004    Single_Scheme        10,201,151.69      12,201,151.69  19.61%        101        105   3.96%
+MSME_0007    SCH_001    Single_Scheme         3,646,138.34       4,146,138.34  13.71%        123        125   1.63%
+MSME_0007    SCH_002    Single_Scheme         3,646,138.34       4,010,752.17  10.00%        123        129   4.88%
+MSME_0007    SCH_001 + SCH_002 Combined_Multi_Scheme       3,646,138.34       4,560,752.17  25.08%        123        131   6.50%
+MSME_0008    SCH_001    Single_Scheme         2,501,462.68       2,876,682.08  15.00%         82         84   2.44%
+MSME_0009    SCH_005    Single_Scheme         4,310,505.54       4,510,505.54   4.64%         46         47   2.17%
+MSME_0010    SCH_004    Single_Scheme         5,947,570.26       7,434,462.83  25.00%         22         23   4.55%
+MSME_0011    SCH_004    Single_Scheme        11,328,828.87      13,328,828.87  17.65%         71         74   4.23%
+
+6. MATHEMATICAL VERIFICATION (Spot-Check)
+----------------------------------------
+  MSME: MSME_0001  |  Scheme: SCH_005
+    Revenue:       8,222,922.70  ×  0.2  →  Subsidy = 200,000.00  (capped at 200,000)
+    Projected Revenue = 8,222,922.70 + 200,000.00 = 8,422,922.70  ✓ (stored: 8,422,922.70)
+    Rev Increase % = 2.4322%  ✓ (stored: 2.4322%)
+    Employees: 37 × 3.0% = +1 jobs → 38 total  ✓ (stored: 38)
+
+  MSME: MSME_0003  |  Scheme: SCH_005
+    Revenue:       3,720,053.85  ×  0.2  →  Subsidy = 200,000.00  (capped at 200,000)
+    Projected Revenue = 3,720,053.85 + 200,000.00 = 3,920,053.85  ✓ (stored: 3,920,053.85)
+    Rev Increase % = 5.3763%  ✓ (stored: 5.3763%)
+    Employees: 10 × 3.0% = +0 jobs → 10 total  ✓ (stored: 10)
+
+  MSME: MSME_0005  |  Scheme: SCH_004
+    Revenue:      10,201,151.69  ×  0.25  →  Subsidy = 2,000,000.00  (capped at 2,000,000)
+    Projected Revenue = 10,201,151.69 + 2,000,000.00 = 12,201,151.69  ✓ (stored: 12,201,151.69)
+    Rev Increase % = 19.6056%  ✓ (stored: 19.6056%)
+    Employees: 101 × 4.0% = +4 jobs → 105 total  ✓ (stored: 105)
+
+======================================================================
+END OF PHASE 3 EVALUATION REPORT
+======================================================================
