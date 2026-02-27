@@ -40,7 +40,9 @@ CATEGORY_BUDGET_SHARES = {
 # ---------------------------------------------------------------------------
 
 def load_eligibility_data(json_mode=False) -> pd.DataFrame:
-    path = "scheme_eligibility_results.csv"
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    path = os.path.join(base_dir, "data", "scheme_eligibility_results.csv")
+    
     if not os.path.exists(path):
         raise FileNotFoundError(
             f"'{path}' not found. Run scheme_eligibility.py (Phase 3) first."
@@ -457,7 +459,8 @@ def main():
         return
 
     # 6. Save results CSV
-    csv_path = f"{prefix}optimization_results.csv"
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    csv_path = os.path.join(base_dir, "data", f"{prefix}optimization_results.csv")
     out_df.to_csv(csv_path, index=False)
     print(f"Results saved to '{csv_path}'.")
 
@@ -466,7 +469,7 @@ def main():
     print()
     print(report)
 
-    report_path = f"{prefix}phase4_evaluation.txt"
+    report_path = os.path.join(base_dir, "reports", f"{prefix}phase4_evaluation.txt")
     with open(report_path, "w", encoding="utf-8") as f:
         f.write(report)
     print(f"\nEvaluation report saved to '{report_path}'.")

@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Path to the python script (assuming backend is inside ChaosZen folder)
-const SCRIPT_PATH = path.join(__dirname, '..', 'optimization_engine.py');
+const SCRIPT_PATH = path.join(__dirname, '..', 'engine', 'optimization_engine.py');
 const PYTHON_CMD = process.platform === 'win32' ? 'python' : 'python3';
 
 // Health check

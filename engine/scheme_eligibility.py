@@ -21,8 +21,9 @@ np.random.seed(42)
 # ---------------------------------------------------------------------------
 
 def load_data():
-    msme_path = "msme_data.csv"
-    scheme_path = "schemes_data.csv"
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    msme_path = os.path.join(base_dir, "data", "msme_data.csv")
+    scheme_path = os.path.join(base_dir, "data", "schemes_data.csv")
 
     if not os.path.exists(msme_path):
         raise FileNotFoundError(f"Cannot find {msme_path}. Run data_generator.py first.")
@@ -396,7 +397,8 @@ def main():
     print()
 
     # Save results CSV
-    output_csv = "scheme_eligibility_results.csv"
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    output_csv = os.path.join(base_dir, "data", "scheme_eligibility_results.csv")
     results_df.to_csv(output_csv, index=False)
     print(f"Results saved to '{output_csv}' ({len(results_df)} rows).")
 
@@ -405,7 +407,7 @@ def main():
     print()
     print(report)
 
-    report_path = "phase3_evaluation.txt"
+    report_path = os.path.join(base_dir, "reports", "phase3_evaluation.txt")
     with open(report_path, "w", encoding="utf-8") as f:
         f.write(report)
     print(f"\nEvaluation report saved to '{report_path}'.")

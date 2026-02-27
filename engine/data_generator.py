@@ -125,11 +125,16 @@ def generate_scheme_data():
     return pd.DataFrame(schemes)
 
 if __name__ == "__main__":
+    # Ensure the data directory exists
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    data_dir = os.path.join(base_dir, 'data')
+    os.makedirs(data_dir, exist_ok=True)
+    
     msme_df = generate_msme_data(350)
-    msme_df.to_csv('msme_data.csv', index=False)
+    msme_df.to_csv(os.path.join(data_dir, 'msme_data.csv'), index=False)
     
     scheme_df = generate_scheme_data()
-    scheme_df.to_csv('schemes_data.csv', index=False)
+    scheme_df.to_csv(os.path.join(data_dir, 'schemes_data.csv'), index=False)
     
     print("Phase 1 Data Validation Summary:")
     print(f"- MSME Records: {len(msme_df)}")

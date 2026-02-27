@@ -16,7 +16,9 @@ def main():
     print("Starting Phase 2: Growth Prediction Model Training...")
     
     # 1. Load Data
-    data_path = 'msme_data.csv'
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    data_path = os.path.join(base_dir, 'data', 'msme_data.csv')
+    
     if not os.path.exists(data_path):
         print(f"Error: {data_path} not found.")
         return
@@ -87,7 +89,8 @@ def main():
     print(report)
     print("\nMacro F1-Score:", f1)
 
-    with open('phase2_evaluation.txt', 'w') as f:
+    report_path = os.path.join(base_dir, 'reports', 'phase2_evaluation.txt')
+    with open(report_path, 'w') as f:
         f.write("Phase 2: Growth Prediction Model Evaluation\n")
         f.write("===========================================\n\n")
         f.write(f"Best Parameters: {grid_search.best_params_}\n\n")
@@ -106,8 +109,9 @@ def main():
     all_preds_encoded = best_model.predict(X)
     df['Predicted_Growth_Category'] = le.inverse_transform(all_preds_encoded)
 
-    df.to_csv('msme_predictions.csv', index=False)
-    print(f"Predictions and Growth Scores saved to 'msme_predictions.csv'")
+    predictions_path = os.path.join(base_dir, 'data', 'msme_predictions.csv')
+    df.to_csv(predictions_path, index=False)
+    print(f"Predictions and Growth Scores saved to '{predictions_path}'")
 
     # 8. Feature Importance
     # Accessing feature names after OneHotEncoding
@@ -121,7 +125,7 @@ def main():
     print("\nTop 10 Feature Importances:")
     print(feat_imp.head(10))
     
-    with open('phase2_evaluation.txt', 'a') as f:
+    with open(report_path, 'a') as f:
         f.write("\n\nTop 10 Feature Importances:\n")
         f.write(feat_imp.head(10).to_string())
 
@@ -133,14 +137,15 @@ def main():
         X_test_transformed = best_model.named_steps['preprocessor'].transform(X_test)
         explainer = shap.TreeExplainer(best_model.named_steps['classifier'])
         # Store explainer for later use in advisory interface
-        with open('model_artifacts/shap_explainer.pkl', 'wb') as f:
+        explainer_path = os.path.join(base_dir, 'model_artifacts', 'shap_explainer.pkl')
+        with open(explainer_path, 'wb') as f:
             pickle.dump(explainer, f)
-        print("SHAP explainer saved.")
+        print(f"SHAP explainer saved to {explainer_path}")
     except ImportError:
         print("\nWarning: 'shap' library not found. Skipping SHAP artifact generation.")
 
     # 10. Save Artifacts
-    artifacts_dir = 'model_artifacts'
+    artifacts_dir = os.path.join(base_dir, 'model_artifacts')
     if not os.path.exists(artifacts_dir):
         os.makedirs(artifacts_dir)
 
