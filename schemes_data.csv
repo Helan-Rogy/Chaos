@@ -1,0 +1,6 @@
+Scheme_ID,Scheme_Name,Eligible_Sectors,Max_Subsidy_Amount,Target_Category,Location_Criteria,Impact_Factor_Revenue,Impact_Factor_Employment
+SCH_001,Digital MSME Transformation Grant,"IT Services, Manufacturing",500000,"Micro, Small",All,0.15,2
+SCH_002,Green Tech Subsidy,"Manufacturing, Textiles",1000000,"Small, Medium","Urban, Semi-Urban",0.1,5
+SCH_003,Rural Employment Boost,"Food Processing, Textiles",300000,Micro,Rural,0.05,8
+SCH_004,Export Excellence Incentive,"Manufacturing, Textiles, Food Processing",2000000,Medium,All,0.25,4
+SCH_005,New Enterprise Support,All,200000,Micro,All,0.2,3
