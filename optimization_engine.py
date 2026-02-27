@@ -39,7 +39,7 @@ CATEGORY_BUDGET_SHARES = {
 # 1. LOAD & VALIDATE DATA
 # ---------------------------------------------------------------------------
 
-def load_eligibility_data() -> pd.DataFrame:
+def load_eligibility_data(json_mode=False) -> pd.DataFrame:
     path = "scheme_eligibility_results.csv"
     if not os.path.exists(path):
         raise FileNotFoundError(
@@ -49,8 +49,9 @@ def load_eligibility_data() -> pd.DataFrame:
 
     # Use only Single_Scheme rows to avoid double-counting in optimization
     single = df[df["Simulation_Type"] == "Single_Scheme"].copy()
-    print(f"Loaded {len(df)} total rows from Phase 3.")
-    print(f"Using {len(single)} Single_Scheme rows for optimization.\n")
+    if not json_mode:
+        print(f"Loaded {len(df)} total rows from Phase 3.")
+        print(f"Using {len(single)} Single_Scheme rows for optimization.\n")
     return single
 
 
@@ -345,6 +346,10 @@ def parse_args():
         "--output-prefix", type=str, default="",
         help="Optional prefix for output filenames."
     )
+    parser.add_argument(
+        "--json-out", action="store_true",
+        help="Output results as JSON string to stdout (for API integration)."
+    )
     return parser.parse_args()
 
 
@@ -361,22 +366,27 @@ def main():
     equal_dist = args.equal_distribution
     prefix     = args.output_prefix
 
-    print("=" * 60)
-    print("PHASE 4: Budget-Constrained Optimization Engine")
-    print("=" * 60)
-    print(f"  Budget    : ₹{budget:,.0f}")
-    print(f"  Alpha     : {alpha}  (Revenue weight)")
-    print(f"  Beta      : {beta}  (Employment weight)")
-    print(f"  Mode      : {'Category Sub-budgets' if equal_dist else 'Global Greedy'}")
-    print()
+    # Mute standard print statements if json-out is active
+    def log(msg="", end="\n"):
+        if not args.json_out:
+            print(msg, end=end)
+
+    log("=" * 60)
+    log("PHASE 4: Budget-Constrained Optimization Engine")
+    log("=" * 60)
+    log(f"  Budget    : ₹{budget:,.0f}")
+    log(f"  Alpha     : {alpha}  (Revenue weight)")
+    log(f"  Beta      : {beta}  (Employment weight)")
+    log(f"  Mode      : {'Category Sub-budgets' if equal_dist else 'Global Greedy'}")
+    log()
 
     # 1. Load Phase 3 data
-    df = load_eligibility_data()
+    df = load_eligibility_data(json_mode=args.json_out)
 
     # 2. Score every pair
     df_scored = compute_scores(df, alpha)
-    print(f"Composite scores computed. Avg score: {df_scored['Composite_Score'].mean():.4f}")
-    print(f"Score range: {df_scored['Composite_Score'].min():.4f} – {df_scored['Composite_Score'].max():.4f}\n")
+    log(f"Composite scores computed. Avg score: {df_scored['Composite_Score'].mean():.4f}")
+    log(f"Score range: {df_scored['Composite_Score'].min():.4f} – {df_scored['Composite_Score'].max():.4f}\n")
 
     # 3. Run optimization
     if equal_dist:
@@ -385,11 +395,13 @@ def main():
         selected = greedy_select(df_scored, budget)
 
     if selected.empty:
-        print("WARNING: No pairs could be selected within the given budget.")
+        log("WARNING: No pairs could be selected within the given budget.")
+        if args.json_out:
+            print("{}")
         return
 
-    print(f"Optimization complete: {len(selected)} pairs selected.")
-    print(f"Budget used: ₹{selected['Subsidy_Applied'].sum():,.2f} / ₹{budget:,.0f} "
+    log(f"Optimization complete: {len(selected)} pairs selected.")
+    log(f"Budget used: ₹{selected['Subsidy_Applied'].sum():,.2f} / ₹{budget:,.0f} "
           f"({selected['Subsidy_Applied'].sum()/budget*100:.1f}%)\n")
 
     # 4. Add justifications and selection rank
@@ -413,6 +425,37 @@ def main():
     output_cols = [c for c in output_cols if c in selected.columns]
     out_df = selected[output_cols]
 
+    if args.json_out:
+        import json
+        
+        # Determine unselected pairs correctly
+        unselected = df_scored[~df_scored.index.isin(selected.index)].copy()
+        
+        # Calculate reason for not selecting
+        # For simplicity, if not selected, they ran out of budget at their rank
+        unselected = unselected.sort_values("Efficiency", ascending=False).reset_index(drop=True)
+        unselected["Reason"] = f"Budget limits exhausted before Rank {len(selected) + 1} could be funded."
+        
+        # Select key columns for unselected
+        un_cols = ["MSME_ID", "Scheme_Name", "Subsidy_Applied", "Composite_Score", "Efficiency", "Reason"]
+        un_cols = [c for c in un_cols if c in unselected.columns]
+        un_df = unselected[un_cols]
+
+        response = {
+            "budget": budget,
+            "budget_used": float(selected['Subsidy_Applied'].sum()),
+            "utilization_pct": float(selected['Subsidy_Applied'].sum() / budget * 100),
+            "alpha": alpha,
+            "beta": beta,
+            "total_selected": len(selected),
+            "total_jobs_created": float(selected['New_Jobs_Added'].sum()),
+            "total_revenue_gain": float((selected['Projected_Revenue'] - selected['Before_Annual_Revenue']).sum()),
+            "selected": json.loads(out_df.to_json(orient="records")),
+            "unselected": json.loads(un_df.to_json(orient="records"))
+        }
+        print(json.dumps(response))
+        return
+
     # 6. Save results CSV
     csv_path = f"{prefix}optimization_results.csv"
     out_df.to_csv(csv_path, index=False)
@@ -429,16 +472,16 @@ def main():
     print(f"\nEvaluation report saved to '{report_path}'.")
 
     # 8. Final summary
-    print("\n" + "=" * 60)
-    print("FINAL SUMMARY")
-    print("=" * 60)
-    print(f"  Pairs Selected    : {len(selected)}")
-    print(f"  Unique MSMEs      : {selected['MSME_ID'].nunique()}")
-    print(f"  Budget Used       : ₹{selected['Subsidy_Applied'].sum():,.2f}")
-    print(f"  Revenue Gain      : ₹{(selected['Projected_Revenue'] - selected['Before_Annual_Revenue']).sum():,.2f}")
-    print(f"  New Jobs Created  : {int(selected['New_Jobs_Added'].sum()):,}")
-    print(f"  Avg Composite Score : {selected['Composite_Score'].mean():.4f}")
-    print("=" * 60)
+    log("\n" + "=" * 60)
+    log("FINAL SUMMARY")
+    log("=" * 60)
+    log(f"  Pairs Selected    : {len(selected)}")
+    log(f"  Unique MSMEs      : {selected['MSME_ID'].nunique()}")
+    log(f"  Budget Used       : ₹{selected['Subsidy_Applied'].sum():,.2f}")
+    log(f"  Revenue Gain      : ₹{(selected['Projected_Revenue'] - selected['Before_Annual_Revenue']).sum():,.2f}")
+    log(f"  New Jobs Created  : {int(selected['New_Jobs_Added'].sum()):,}")
+    log(f"  Avg Composite Score : {selected['Composite_Score'].mean():.4f}")
+    log("=" * 60)
 
 
 if __name__ == "__main__":
