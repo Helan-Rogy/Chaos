@@ -1,200 +1,126 @@
-# ChaosZen
+<div align="center">
+  
+# 🚀 ChaosZen: MSME Scheme Impact & Optimization Engine
 
-**ChaosZen** is a comprehensive chaos engineering platform designed to help organizations proactively identify and mitigate system vulnerabilities. By simulating controlled failures, ChaosZen empowers teams to build more resilient, reliable, and fault-tolerant applications.
+**An AI-powered, budget-constrained policy optimization platform designed to maximize the socio-economic impact of government schemes on Micro, Small, and Medium Enterprises (MSMEs).**
 
-## 🚀 Key Features
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Node.js 18+](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
+[![React 18](https://img.shields.io/badge/React-18-61DAFB.svg?logo=react)](https://reactjs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-### 🎯 Chaos Engineering
-- **Experiment Management**: Create, schedule, and manage chaos experiments with ease
-- **Fault Injection**: Inject various fault types including network latency, CPU/memory stress, process termination, and more
-- **Experiment Templates**: Pre-defined templates for common failure scenarios (e.g., "Chaos Monkey", "Network Partition")
-- **Advanced Targeting**: Target specific services, pods, or nodes with precision
-
-### 📊 Observability & Analytics
-- **Real-time Dashboards**: Monitor experiment progress and system health in real-time
-- **Historical Analysis**: Track past experiments and identify recurring issues
-- **Failure Patterns**: AI-powered analysis to detect patterns in system failures
-- **Custom Reports**: Generate detailed reports for stakeholders
-
-### 🛡️ Safety & Controls
-- **Blast Radius Control**: Define safe boundaries to prevent uncontrolled failures
-- **Automated Rollback**: Automatic rollback to stable state when thresholds are breached
-- **Approval Workflows**: Multi-level approval for critical experiments
-- **Health Checks**: Pre-experiment validation and post-experiment verification
-
-### 🤖 AI-Powered Insights
-- **Predictive Failure Analysis**: Identify potential failure points before they occur
-- **Root Cause Analysis**: AI-assisted root cause identification for incidents
-- **Experiment Recommendations**: Intelligent suggestions for experiments based on system architecture
-- **Anomaly Detection**: Detect unusual system behavior during experiments
-
-## 🛠️ Tech Stack
-
-### Frontend
-- **Framework**: React 19 with TypeScript
-- **State Management**: Redux Toolkit
-- **UI Components**: Material UI (MUI) v7
-- **Charting**: Recharts
-- **Forms**: React Hook Form + Zod
-
-### Backend
-- **Framework**: FastAPI (Python)
-- **Database**: PostgreSQL
-- **Authentication**: JWT + OAuth2
-- **Background Tasks**: Celery + Redis
-- **Testing**: Pytest
-
-### Infrastructure
-- **Containerization**: Docker
-- **Orchestration**: Kubernetes
-- **Monitoring**: Prometheus + Grafana
-- **Logging**: ELK Stack (Elasticsearch, Logstash, Kibana)
-
-## 📂 Project Structure
-
-```
-ChaosZen/
-├── frontend/              # React frontend application
-│   ├── src/
-│   │   ├── components/    # Reusable UI components
-│   │   ├── features/      # Feature-specific modules
-│   │   ├── store/         # Redux store configuration
-│   │   └── pages/         # Page components
-│   └── package.json
-├── backend/               # FastAPI backend application
-│   ├── app/
-│   │   ├── api/           # API endpoints
-│   │   ├── core/          # Core utilities and config
-│   │   ├── models/        # Database models
-│   │   ├── schemas/       # Pydantic schemas
-│   │   ├── services/      # Business logic
-│   │   └── tasks/         # Celery tasks
-│   ├── tests/             # Unit and integration tests
-│   └── requirements.txt
-├── chaos-agent/           # Kubernetes chaos agent
-├── chaos-operator/        # Kubernetes operator for chaos management
-├── chaos-sdk/             # SDKs for integrating with ChaosZen
-├── docs/                  # Documentation
-├── scripts/               # Utility scripts
-└── docker-compose.yml     # Local development setup
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Docker and Docker Compose
-- Node.js 18+ and npm
-- Python 3.10+
-- Kubernetes cluster (optional, for local testing)
-
-### Local Development
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-org/ChaosZen.git
-   cd ChaosZen
-   ```
-
-2. **Start the backend**
-   ```bash
-   cd backend
-   docker-compose up --build
-   ```
-   The backend will be available at `http://localhost:8000`
-
-3. **Start the frontend**
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
-   The frontend will be available at `http://localhost:3000`
-
-4. **Access the dashboard**
-   Open `http://localhost:3000` in your browser
-   - Default credentials: `admin@example.com` / `password`
-
-### Kubernetes Deployment
-
-1. **Install the Chaos Operator**
-   ```bash
-   kubectl apply -f chaos-operator/deploy/crds.yaml
-   kubectl apply -f chaos-operator/deploy/operator.yaml
-   ```
-
-2. **Deploy the Chaos Agent**
-   ```bash
-   kubectl apply -f chaos-agent/deploy/agent.yaml
-   ```
-
-3. **Deploy the Backend**
-   ```bash
-   kubectl apply -f backend/k8s/deployment.yaml
-   kubectl apply -f backend/k8s/service.yaml
-   ```
-
-4. **Deploy the Frontend**
-   ```bash
-   kubectl apply -f frontend/k8s/deployment.yaml
-   kubectl apply -f frontend/k8s/service.yaml
-   ```
-
-## 📝 Usage
-
-### Creating an Experiment
-
-1. Navigate to **Experiments** > **Create Experiment**
-2. Select an experiment template or create a custom experiment
-3. Configure the experiment parameters:
-   - **Target**: Services, pods, or nodes to target
-   - **Fault Type**: Network, CPU, memory, process, etc.
-   - **Schedule**: One-time or recurring
-   - **Blast Radius**: Define safe boundaries
-4. Review and submit the experiment
-
-### Monitoring Experiments
-
-1. Go to **Dashboard** to view real-time experiment status
-2. Click on an experiment to see detailed metrics:
-   - Success/failure rate
-   - Resource utilization
-   - Network performance
-   - Error logs
-3. Analyze failure patterns and trends
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Code Style
-- **Frontend**: ESLint + Prettier
-- **Backend**: Black + Flake8
-- **Commits**: Conventional Commits
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📞 Support
-
-For issues, questions, or feature requests, please open an issue on the GitHub repository.
-
-## 👥 Team
-
-- [Your Name/Team Name]
-
-## 🔗 Links
-
-- [Project Website](https://your-project-url.com) (if available)
-- [Documentation](https://docs.your-project.com) (if available)
-- [API Documentation](https://api.your-project.com) (if available)
+</div>
 
 ---
 
-**Built with ❤️ for Chaos Engineering**
+## 📖 Overview
+
+Governments allocate hundreds of crores to MSME schemes, but distributing these funds efficiently is a monumental challenge. Allocation based on simple eligibility often results in suboptimal ROI for the economy.
+
+**ChaosZen** solves this by combining **Machine Learning (Growth Prediction)**, **Rules-Based Simulation (Impact Modeling)**, and **Algorithmic Optimization (Greedy Knapsack)** to mathematically prove where every rupee should go to maximize either **Revenue Growth** or **Job Creation**.
+
+This project provides a complete end-to-end pipeline, culminating in a **real-time React dashboard** for policy makers to simulate budget distributions dynamically.
+
+---
+
+## ✨ Core Features & Hackathon Phases
+
+### 🎲 Phase 1: Synthetic Data Generation
+Generates statistically realistic MSME profiles (`msme_data.csv`) featuring complex financials, compliance metrics, and industry sectors, alongside tailored government schemes (`schemes_data.csv`).
+
+### 🧠 Phase 2: AI Growth Prediction Model
+Uses a highly tuned **Random Forest Classifier** to evaluate 17 MSME features and predict their `Growth_Category` (High, Moderate, Low) along with a continuous 0-100 `Growth_Score`. Features SHAP explainability.
+
+### ⚙️ Phase 3: Rules-Based Impact Simulation Engine
+Evaluates every MSME against all available schemes. Simulates the exact mathematical impact (projected revenue lift and new jobs created) both for individual schemes and combined "stacked" schemes, strictly applying subsidy caps.
+
+### 🧮 Phase 4: AI Policy Optimizer (Budget-Constrained Knapsack)
+The core algorithmic brain. Given a strict government budget (e.g., ₹5 Crores), it evaluates all eligible MSME-scheme pairs and selects the absolute most efficient allocations.
+- **Adjustable Policy Weights**: Slide the scale between prioritizing Revenue (`alpha`) vs. Jobs (`beta`).
+- **Explainable AI**: Generates a human-readable justification string for *every single decision made*.
+
+### 📊 Phase 5: Real-Time Policy Dashboard
+A full-stack web application bringing the models to life.
+- **Advisory UI**: Search any MSME to see its growth prediction and recommended schemes.
+- **Policy Simulator**: Drag sliders to adjust total budget and policy priorities, and instantly watch the optimization engine recalculate the entire nation's budget distribution in milliseconds.
+
+---
+
+## 🏗️ Architecture & Tech Stack
+
+- **Frontend (Dashboard)**: React 18, Vite, TailwindCSS, Recharts, Lucide Icons
+- **Backend (Bridge API)**: Node.js, Express.js
+- **Core Engine (ML & Math)**: Python 3, Pandas, Scikit-Learn, NumPy
+
+```text
+ChaosZen/
+├── backend/               # Node.js Express API (Bridge between Python & React)
+├── frontend/              # React + Vite Dashboard (Visual Interface)
+├── engine/                # Core Python ML & Optimization Logic
+│   ├── data_generator.py      # Phase 1
+│   ├── growth_model.py        # Phase 2 
+│   ├── scheme_eligibility.py  # Phase 3 
+│   └── optimization_engine.py # Phase 4 
+├── data/                  # Generated CSV datasets
+├── reports/               # Evaluation criteria & text outputs
+└── model_artifacts/       # Trained ML pipelines (.pkl)
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Requirements
+Ensure you have **Python 3.10+** and **Node.js 18+** installed on your system.
+
+Install Python dependencies:
+```bash
+pip install pandas numpy scikit-learn
+```
+
+### 2. Start the Backend API
+The Node.js server acts as the executor for the Python optimization engine.
+```bash
+cd backend
+npm install
+node server.js
+```
+*Server runs on `http://localhost:5000`*
+
+### 3. Start the Frontend Dashboard
+Open a new terminal window.
+```bash
+cd frontend
+npm install
+npm run dev
+```
+*Dashboard runs on `http://localhost:5174`*
+
+---
+
+## 💻 Manual CLI Usage (Headless Engine)
+
+If you prefer to run the optimization engine directly via the command line instead of the web dashboard:
+
+```bash
+# Run with default settings (₹5 Cr budget, 0.6 Revenue Weight)
+python engine/optimization_engine.py
+
+# Run with custom budget and jobs-heavy policy
+python engine/optimization_engine.py --budget 100000000 --alpha 0.2
+
+# Run with mandatory category sub-budgets (40% Micro, 35% Small, 25% Medium)
+python engine/optimization_engine.py --equal-distribution
+```
+
+---
+
+## 🏆 Hackathon Evaluation Criteria Satisfied
+- **Data Completeness**: Realistic distributions and financial constraint handling.
+- **ML Correctness**: Proper train/test splits, macro-F1 scoring, handle of imbalanced data.
+- **Mathematical Soundness**: Correct compounding behavior in multi-scheme simulation.
+- **Budget Strictness**: Greedy knapsack guarantees 0% budget overruns.
+- **Transparency**: Justification tables rendered for both selected and *rejected* MSMEs.
+
+---
+*Built for the Hackathon. Empowering policymakers with data.*
