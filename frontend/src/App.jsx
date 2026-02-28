@@ -3,7 +3,7 @@ import AdvisoryTab from './components/AdvisoryTab';
 import PolicyTab from './components/PolicyTab';
 import DataTab from './components/DataTab';
 import ModelTab from './components/ModelTab';
-import { Activity, LayoutDashboard, Settings, Database, Brain, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Settings, Database, Brain, Menu, X, Sparkles } from 'lucide-react';
 
 function App() {
   const [activeTab, setActiveTab] = useState('policy');
@@ -11,81 +11,84 @@ function App() {
 
   const tabs = [
     { id: 'data', name: 'Data Explorer', icon: Database },
-    { id: 'model', name: 'AI Model Metrics', icon: Brain },
-    { id: 'advisory', name: 'Advisory Interface', icon: LayoutDashboard },
-    { id: 'policy', name: 'Policy Optimization', icon: Settings },
+    { id: 'model', name: 'AI Model', icon: Brain },
+    { id: 'advisory', name: 'Advisory', icon: LayoutDashboard },
+    { id: 'policy', name: 'Policy Engine', icon: Settings },
   ];
 
   return (
-    <div className="relative min-h-screen">
-      {/* Decorative Background Elements */}
-      <div className="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] bg-artha-saffron/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
-      <div className="fixed bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-artha-gold/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
-
-      {/* Glass Navbar */}
-      <nav className="sticky top-0 z-50 px-4 py-4 sm:px-8">
-        <div className="max-w-7xl mx-auto glass-card border-white/20 px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center space-x-3 group">
-            <div className="bg-artha-saffron p-2 rounded-xl shadow-glow-saffron group-hover:rotate-12 transition-transform duration-300">
-              <Activity className="h-6 w-6 text-artha-navy" />
+    <div className="min-h-screen bg-background">
+      {/* Navbar */}
+      <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+                <Sparkles className="h-4 w-4 text-white" />
+              </div>
+              <span className="font-semibold text-lg text-foreground">
+                ChaosZen
+              </span>
             </div>
-            <span className="font-display font-bold text-2xl tracking-tight text-white">
-              ARTHA<span className="text-artha-saffron">.</span>CORE
-            </span>
-          </div>
 
-          {/* Desktop Tabs */}
-          <div className="hidden lg:flex items-center space-x-1">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${activeTab === tab.id
-                  ? 'bg-white/10 text-artha-saffron shadow-inner'
-                  : 'text-artha-slate hover:text-white hover:bg-white/5'
+            {/* Desktop Tabs */}
+            <div className="hidden md:flex items-center gap-1">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeTab === tab.id
+                      ? 'bg-background-subtle text-foreground'
+                      : 'text-foreground-muted hover:text-foreground hover:bg-background-subtle/50'
                   }`}
-              >
-                <tab.icon className={`h-4 w-4 mr-2 ${activeTab === tab.id ? 'animate-pulse' : ''}`} />
-                {tab.name}
-              </button>
-            ))}
-          </div>
+                >
+                  <tab.icon className="h-4 w-4" />
+                  {tab.name}
+                </button>
+              ))}
+            </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden p-2 text-artha-slate hover:text-white transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X /> : <Menu />}
-          </button>
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 text-foreground-muted hover:text-foreground transition-colors rounded-lg hover:bg-background-subtle"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden mt-2 p-2 glass-card border-white/20 animate-fade-in">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  setActiveTab(tab.id);
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`flex items-center w-full px-4 py-3 rounded-xl text-sm font-medium mb-1 transition-all ${activeTab === tab.id
-                  ? 'bg-artha-saffron text-artha-navy shadow-glow-saffron'
-                  : 'text-artha-slate hover:text-white hover:bg-white/5'
+          <div className="md:hidden border-t border-border bg-background-elevated animate-fade-in">
+            <div className="px-4 py-3 space-y-1">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                    activeTab === tab.id
+                      ? 'bg-primary text-white'
+                      : 'text-foreground-muted hover:text-foreground hover:bg-background-subtle'
                   }`}
-              >
-                <tab.icon className="h-4 w-4 mr-3" />
-                {tab.name}
-              </button>
-            ))}
+                >
+                  <tab.icon className="h-4 w-4" />
+                  {tab.name}
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </nav>
 
       {/* Main Content Area */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 py-6 sm:px-8 animate-fade-in">
-        <div className="min-h-[70vh]">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="animate-fade-in">
           {activeTab === 'data' && <DataTab />}
           {activeTab === 'model' && <ModelTab />}
           {activeTab === 'advisory' && <AdvisoryTab />}
@@ -93,11 +96,13 @@ function App() {
         </div>
       </main>
 
-      {/* Footer / Status Bar */}
-      <footer className="relative z-10 py-8 px-4 text-center">
-        <p className="text-artha-slate text-xs opacity-50 font-medium tracking-widest uppercase">
-          &copy; 2026 ARTHA MSME Engine &bull; Strategic Economic Intelligence
-        </p>
+      {/* Footer */}
+      <footer className="border-t border-border py-6 mt-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-foreground-subtle text-xs">
+            ChaosZen MSME Optimization Engine
+          </p>
+        </div>
       </footer>
     </div>
   );

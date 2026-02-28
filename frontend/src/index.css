@@ -1,72 +1,141 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-artha-navy: #0B1F3B;
-  --color-artha-saffron: #F4A300;
-  --color-artha-gold: #C89B3C;
-  --color-artha-ivory: #F8F6F1;
-  --color-artha-slate: #5B6675;
-  --color-artha-navy-light: #1A3A5F;
-  --color-artha-navy-dark: #051226;
+  /* Core Color Palette - Clean, Professional Dark Theme */
+  --color-background: #0a0a0a;
+  --color-background-elevated: #111111;
+  --color-background-subtle: #171717;
+  --color-background-muted: #1f1f1f;
+  
+  --color-foreground: #fafafa;
+  --color-foreground-muted: #a1a1aa;
+  --color-foreground-subtle: #71717a;
+  
+  --color-border: #27272a;
+  --color-border-subtle: #1f1f1f;
+  --color-border-hover: #3f3f46;
+  
+  /* Primary - Professional Blue */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #60a5fa;
+  --color-primary-muted: rgba(59, 130, 246, 0.15);
+  
+  /* Success - Teal/Green */
+  --color-success: #10b981;
+  --color-success-muted: rgba(16, 185, 129, 0.15);
+  
+  /* Warning - Amber */
+  --color-warning: #f59e0b;
+  --color-warning-muted: rgba(245, 158, 11, 0.15);
+  
+  /* Destructive - Red */
+  --color-destructive: #ef4444;
+  --color-destructive-muted: rgba(239, 68, 68, 0.15);
 
+  /* Fonts */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --shadow-glow-saffron: 0 0 15px rgba(244, 163, 0, 0.3);
-  --shadow-glow-navy: 0 0 20px rgba(11, 31, 59, 0.5);
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-glow-primary: 0 0 20px rgba(59, 130, 246, 0.3);
+  --shadow-glow-success: 0 0 20px rgba(16, 185, 129, 0.3);
 }
 
 @layer base {
   body {
-    @apply bg-artha-navy-dark text-artha-ivory font-sans antialiased;
-    background: radial-gradient(circle at top right, var(--color-artha-navy-light) 0%, var(--color-artha-navy) 50%, var(--color-artha-navy-dark) 100%);
-    background-attachment: fixed;
+    @apply bg-background text-foreground font-sans antialiased;
     min-height: 100vh;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-display;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-glass transition-all duration-300;
+  /* Card Components */
+  .card {
+    @apply bg-background-elevated border border-border rounded-xl transition-all duration-200;
   }
 
-  .glass-card-hover {
-    @apply hover:bg-white/10 hover:border-white/20 hover:scale-[1.01] active:scale-[0.99];
+  .card-hover {
+    @apply hover:bg-background-subtle hover:border-border-hover;
   }
 
-  .premium-button {
-    @apply bg-artha-saffron text-artha-navy font-bold py-3 px-6 rounded-xl shadow-glow-saffron transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100 uppercase tracking-wider text-sm flex items-center justify-center;
+  /* Button Components */
+  .btn-primary {
+    @apply bg-primary text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2;
   }
 
-  .search-input {
-    @apply bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-artha-saffron/50 transition-all w-full;
+  .btn-secondary {
+    @apply bg-background-subtle border border-border text-foreground font-medium py-2.5 px-5 rounded-lg transition-all duration-200 hover:bg-background-muted hover:border-border-hover flex items-center justify-center gap-2;
   }
 
-  .accent-text-gold {
-    color: var(--color-artha-gold);
-    text-shadow: 0 0 8px rgba(200, 155, 60, 0.5);
+  /* Input Components */
+  .input {
+    @apply bg-background-subtle border border-border rounded-lg px-4 py-3 text-foreground placeholder-foreground-subtle focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all w-full;
   }
 
-  .accent-text-saffron {
-    color: var(--color-artha-saffron);
-    text-shadow: 0 0 8px rgba(244, 163, 0, 0.5);
+  /* Badge Components */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium;
+  }
+  
+  .badge-primary {
+    @apply bg-primary-muted text-primary border border-primary/20;
+  }
+  
+  .badge-success {
+    @apply bg-success-muted text-success border border-success/20;
+  }
+  
+  .badge-warning {
+    @apply bg-warning-muted text-warning border border-warning/20;
+  }
+  
+  .badge-destructive {
+    @apply bg-destructive-muted text-destructive border border-destructive/20;
+  }
+
+  .badge-neutral {
+    @apply bg-background-muted text-foreground-muted border border-border;
+  }
+
+  /* Table Components */
+  .table-header {
+    @apply px-4 py-3 text-left text-xs font-semibold text-foreground-muted uppercase tracking-wider;
+  }
+
+  .table-cell {
+    @apply px-4 py-3 text-sm;
+  }
+
+  .table-row {
+    @apply border-b border-border-subtle hover:bg-background-subtle/50 transition-colors;
+  }
+
+  /* Metric Card */
+  .metric-card {
+    @apply card p-5 space-y-3;
+  }
+
+  .metric-label {
+    @apply text-xs font-medium text-foreground-subtle uppercase tracking-wider;
+  }
+
+  .metric-value {
+    @apply text-2xl font-bold text-foreground;
   }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -74,46 +143,75 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+  @apply bg-border rounded-full hover:bg-border-hover transition-colors;
 }
 
-.tab-active {
-  @apply border-artha-saffron text-white;
-}
-
-.tab-inactive {
-  @apply border-transparent text-artha-slate hover:text-white/70;
-}
-
-/* Animations using standard CSS since v4 theme animation support via @apply in CSS is slightly different */
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Range Input Styling */
+input[type="range"] {
+  @apply appearance-none bg-transparent cursor-pointer;
+}
+
+input[type="range"]::-webkit-slider-track {
+  @apply h-1.5 rounded-full bg-background-muted;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 rounded-full bg-primary border-2 border-background cursor-pointer;
+  margin-top: -5px;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  @apply bg-primary-hover;
+}
+
+input[type="range"]::-moz-range-track {
+  @apply h-1.5 rounded-full bg-background-muted;
+}
+
+input[type="range"]::-moz-range-thumb {
+  @apply w-4 h-4 rounded-full bg-primary border-2 border-background cursor-pointer;
 }

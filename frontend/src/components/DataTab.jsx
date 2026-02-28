@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Database, FileText, Download, Filter, Search } from 'lucide-react';
+import { Database, FileText, Download, Filter, Loader2 } from 'lucide-react';
 
 export default function DataTab() {
     const [data, setData] = useState({ msme: [], schemes: [] });
@@ -22,60 +22,67 @@ export default function DataTab() {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
-            <div className="animate-spin h-10 w-10 border-4 border-artha-saffron border-t-transparent rounded-full"></div>
-            <p className="text-artha-slate font-display font-medium">Mounting Data Volumes...</p>
+            <Loader2 className="h-8 w-8 text-primary animate-spin" />
+            <p className="text-foreground-muted text-sm">Loading datasets...</p>
         </div>
     );
 
     return (
-        <div className="space-y-12 animate-in fade-in duration-700">
+        <div className="space-y-8 animate-fade-in">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <h2 className="text-3xl font-display font-bold text-white flex items-center">
-                        <Database className="w-8 h-8 mr-4 text-artha-saffron" />
-                        Synthetic Dataset Explorer
-                    </h2>
-                    <p className="mt-2 text-artha-slate max-w-xl">
-                        A raw analytical view of the generated MSME financial profiles and governing schemas powering the simulation engine.
+                    <div className="flex items-center gap-3 mb-2">
+                        <Database className="w-6 h-6 text-primary" />
+                        <h2 className="text-2xl font-bold text-foreground">Dataset Explorer</h2>
+                    </div>
+                    <p className="text-foreground-muted max-w-xl">
+                        Raw analytical view of generated MSME profiles and government schemes powering the simulation engine.
                     </p>
                 </div>
-                <div className="flex space-x-3">
-                    <button className="bg-white/5 border border-white/10 text-white p-3 rounded-xl hover:bg-white/10 transition-colors">
-                        <Download className="w-5 h-5" />
+                <div className="flex gap-2">
+                    <button className="btn-secondary p-2.5">
+                        <Download className="w-4 h-4" />
                     </button>
-                    <button className="premium-button flex items-center">
-                        <Filter className="w-4 h-4 mr-2" /> Filter Matrix
+                    <button className="btn-primary">
+                        <Filter className="w-4 h-4" />
+                        Filter
                     </button>
                 </div>
             </div>
 
-            {/* Schemes Matrix */}
-            <div className="space-y-6">
-                <div className="flex items-center px-2">
-                    <FileText className="w-5 h-5 mr-3 text-artha-gold" />
-                    <h3 className="text-lg font-display font-bold text-white uppercase tracking-wider">Government Scheme Definitions</h3>
+            {/* Schemes Table */}
+            <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-warning" />
+                    <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Government Schemes</h3>
                 </div>
-                <div className="glass-card overflow-hidden">
+                <div className="card overflow-hidden">
                     <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-white/5">
-                            <thead className="bg-white/[0.02]">
+                        <table className="min-w-full">
+                            <thead className="bg-background-subtle">
                                 <tr>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">ID</th>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Scheme Name</th>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Cap (Max)</th>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Rev Impact</th>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Job Impact</th>
+                                    <th className="table-header">ID</th>
+                                    <th className="table-header">Scheme Name</th>
+                                    <th className="table-header">Max Subsidy</th>
+                                    <th className="table-header">Revenue Impact</th>
+                                    <th className="table-header">Job Impact</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/[0.03]">
+                            <tbody>
                                 {data.schemes.map((s, i) => (
-                                    <tr key={i} className="hover:bg-white/5 transition-colors group">
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-artha-saffron">{s.Scheme_ID}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white font-medium">{s.Scheme_Name}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-artha-gold font-bold">₹{parseFloat(s.Max_Subsidy_Amount).toLocaleString('en-IN')}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-artha-slate font-mono">{s.Impact_Factor_Revenue}x</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-artha-slate font-mono">{s.Impact_Factor_Employment}%</td>
+                                    <tr key={i} className="table-row">
+                                        <td className="table-cell">
+                                            <span className="font-semibold text-primary">{s.Scheme_ID}</span>
+                                        </td>
+                                        <td className="table-cell font-medium text-foreground">{s.Scheme_Name}</td>
+                                        <td className="table-cell">
+                                            <span className="font-semibold text-warning">
+                                                {parseFloat(s.Max_Subsidy_Amount).toLocaleString('en-IN')}
+                                            </span>
+                                        </td>
+                                        <td className="table-cell font-mono text-foreground-muted">{s.Impact_Factor_Revenue}x</td>
+                                        <td className="table-cell font-mono text-foreground-muted">{s.Impact_Factor_Employment}%</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -84,41 +91,48 @@ export default function DataTab() {
                 </div>
             </div>
 
-            {/* MSME Profiles */}
-            <div className="space-y-6">
-                <div className="flex items-center px-2">
-                    <Database className="w-5 h-5 mr-3 text-artha-saffron" />
-                    <h3 className="text-lg font-display font-bold text-white uppercase tracking-wider">MSME Financial Profiles (Sample)</h3>
+            {/* MSME Profiles Table */}
+            <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                    <Database className="w-4 h-4 text-primary" />
+                    <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">MSME Profiles (Sample)</h3>
                 </div>
-                <div className="glass-card overflow-hidden">
+                <div className="card overflow-hidden">
                     <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-white/5">
-                            <thead className="bg-white/[0.02]">
+                        <table className="min-w-full">
+                            <thead className="bg-background-subtle">
                                 <tr>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Entity</th>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Sector</th>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Location</th>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Annual Rev</th>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Team Size</th>
-                                    <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Compliance</th>
+                                    <th className="table-header">Entity</th>
+                                    <th className="table-header">Sector</th>
+                                    <th className="table-header">Location</th>
+                                    <th className="table-header">Annual Revenue</th>
+                                    <th className="table-header">Employees</th>
+                                    <th className="table-header">Compliance</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/[0.03]">
+                            <tbody>
                                 {data.msme.map((m, i) => (
-                                    <tr key={i} className="hover:bg-white/5 transition-colors">
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-white">{m.MSME_ID}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-xs text-artha-slate uppercase">{m.Sector}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-xs text-artha-slate uppercase">{m.Location_Type}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-artha-gold">
-                                            ₹{(parseFloat(m.Annual_Revenue) / 10000000).toFixed(2)} Cr
+                                    <tr key={i} className="table-row">
+                                        <td className="table-cell font-semibold text-foreground">{m.MSME_ID}</td>
+                                        <td className="table-cell text-xs text-foreground-muted uppercase">{m.Sector}</td>
+                                        <td className="table-cell text-xs text-foreground-muted uppercase">{m.Location_Type}</td>
+                                        <td className="table-cell">
+                                            <span className="font-semibold text-warning">
+                                                {(parseFloat(m.Annual_Revenue) / 10000000).toFixed(2)} Cr
+                                            </span>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/80">{m.Number_of_Employees}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="flex items-center">
-                                                <div className="w-16 bg-white/5 rounded-full h-1 mr-2">
-                                                    <div className="bg-artha-saffron h-1 rounded-full" style={{ width: `${m.GST_Compliance_Score}%` }}></div>
+                                        <td className="table-cell text-foreground">{m.Number_of_Employees}</td>
+                                        <td className="table-cell">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-16 bg-background-muted rounded-full h-1.5">
+                                                    <div 
+                                                        className="bg-primary h-1.5 rounded-full transition-all" 
+                                                        style={{ width: `${m.GST_Compliance_Score}%` }}
+                                                    />
                                                 </div>
-                                                <span className="text-[10px] font-bold text-artha-saffron">{m.GST_Compliance_Score.toFixed(0)}</span>
+                                                <span className="text-xs font-semibold text-primary">
+                                                    {m.GST_Compliance_Score.toFixed(0)}
+                                                </span>
                                             </div>
                                         </td>
                                     </tr>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Brain, Activity, TrendingUp, ShieldCheck, BarChart2, Zap, Terminal } from 'lucide-react';
+import { Brain, TrendingUp, ShieldCheck, BarChart2, Zap, Terminal, Loader2 } from 'lucide-react';
 
 export default function ModelTab() {
     const [metrics, setMetrics] = useState("");
@@ -23,118 +23,121 @@ export default function ModelTab() {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
-            <div className="animate-spin h-10 w-10 border-4 border-artha-saffron border-t-transparent rounded-full"></div>
-            <p className="text-artha-slate font-display font-medium">Decoding Decision Nets...</p>
+            <Loader2 className="h-8 w-8 text-primary animate-spin" />
+            <p className="text-foreground-muted text-sm">Loading model metrics...</p>
         </div>
     );
 
     return (
-        <div className="space-y-12 animate-in fade-in duration-700">
+        <div className="space-y-8 animate-fade-in">
             {/* Header */}
             <div>
-                <h2 className="text-3xl font-display font-bold text-white flex items-center">
-                    <div className="p-2 bg-artha-saffron/20 rounded-xl mr-4 shadow-glow-saffron">
-                        <Brain className="w-8 h-8 text-artha-saffron" />
+                <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-primary-muted rounded-lg">
+                        <Brain className="w-6 h-6 text-primary" />
                     </div>
-                    Intelligence Core: Random Forest Classifier
-                </h2>
-                <p className="mt-4 text-artha-slate max-w-2xl leading-relaxed">
-                    Analyzing multi-dimensional feature variance to categorize MSME growth trajectories. Current training iteration targeting 96%+ macro-F1 precision.
+                    <h2 className="text-2xl font-bold text-foreground">AI Model Metrics</h2>
+                </div>
+                <p className="text-foreground-muted max-w-2xl">
+                    Random Forest Classifier analyzing multi-dimensional feature variance to categorize MSME growth trajectories.
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-                {/* Left Metrics Column */}
-                <div className="space-y-6">
-
-                    <div className="glass-card p-6 border-l-4 border-l-emerald-500 relative group overflow-hidden">
-                        <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
-                            <ShieldCheck className="w-16 h-16 text-emerald-400" />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Metrics Cards */}
+                <div className="space-y-4">
+                    <div className="metric-card border-l-4 border-l-success">
+                        <div className="flex items-center gap-2 mb-3">
+                            <ShieldCheck className="w-4 h-4 text-success" />
+                            <span className="metric-label">Model Precision</span>
                         </div>
-                        <div className="flex items-center mb-4">
-                            <Activity className="w-4 h-4 text-emerald-400 mr-2" />
-                            <h3 className="text-xs font-bold text-artha-slate uppercase tracking-widest">Model Precision</h3>
+                        <div className="flex items-baseline gap-2">
+                            <span className="text-4xl font-bold text-foreground">0.96</span>
+                            <span className="text-success text-sm font-medium font-mono">Macro F1</span>
                         </div>
-                        <div className="flex items-baseline space-x-2">
-                            <p className="text-5xl font-display font-bold text-white">0.96</p>
-                            <span className="text-emerald-400 text-xs font-bold font-mono">Macro F1</span>
-                        </div>
-                        <p className="text-[10px] text-artha-slate mt-2 uppercase font-medium">Optimized for Classification Imbalance</p>
+                        <p className="text-xs text-foreground-subtle mt-2">Optimized for classification imbalance</p>
                     </div>
 
-                    <div className="glass-card p-6 border-l-4 border-l-artha-saffron relative group overflow-hidden">
-                        <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
-                            <TrendingUp className="w-16 h-16 text-artha-saffron" />
+                    <div className="metric-card border-l-4 border-l-primary">
+                        <div className="flex items-center gap-2 mb-3">
+                            <Zap className="w-4 h-4 text-primary" />
+                            <span className="metric-label">Primary Target</span>
                         </div>
-                        <div className="flex items-center mb-4">
-                            <Zap className="w-4 h-4 text-artha-saffron mr-2" />
-                            <h3 className="text-xs font-bold text-artha-slate uppercase tracking-widest">Primary Target</h3>
-                        </div>
-                        <h3 className="text-xl font-display font-bold text-white mb-4">Growth_Category</h3>
+                        <h3 className="text-lg font-semibold text-foreground mb-3">Growth_Category</h3>
                         <div className="flex flex-wrap gap-2">
                             {['High', 'Moderate', 'Low'].map(cat => (
-                                <span key={cat} className="px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-bold text-artha-slate uppercase tracking-widest group-hover:text-white transition-colors">
+                                <span key={cat} className="badge badge-neutral text-xs">
                                     {cat}
                                 </span>
                             ))}
                         </div>
                     </div>
 
-                    <div className="glass-card p-6 bg-artha-saffron/5 border border-artha-saffron/20 shadow-glow-saffron">
-                        <div className="flex items-center mb-4">
-                            <BarChart2 className="w-5 h-5 text-artha-saffron mr-2" />
-                            <h3 className="font-display font-bold text-white uppercase tracking-wider">Predictive Drivers</h3>
+                    <div className="card p-5 bg-primary-muted border-primary/20">
+                        <div className="flex items-center gap-2 mb-4">
+                            <BarChart2 className="w-4 h-4 text-primary" />
+                            <h3 className="font-semibold text-foreground">Predictive Drivers</h3>
                         </div>
                         <div className="space-y-4">
                             <div>
-                                <div className="flex justify-between text-[10px] font-bold text-artha-slate uppercase mb-1">
-                                    <span>Rev Growth Rate</span>
-                                    <span className="text-artha-saffron">Dominant</span>
+                                <div className="flex justify-between text-xs mb-1.5">
+                                    <span className="text-foreground-muted">Revenue Growth Rate</span>
+                                    <span className="text-primary font-medium">Dominant</span>
                                 </div>
-                                <div className="w-full bg-white/5 rounded-full h-1">
-                                    <div className="bg-artha-saffron h-1 rounded-full shadow-glow-saffron" style={{ width: '85%' }}></div>
+                                <div className="w-full bg-background-muted rounded-full h-1.5">
+                                    <div className="bg-primary h-1.5 rounded-full" style={{ width: '85%' }} />
                                 </div>
                             </div>
                             <div>
-                                <div className="flex justify-between text-[10px] font-bold text-artha-slate uppercase mb-1">
-                                    <span>Tech Proficiency</span>
-                                    <span className="text-artha-saffron">High</span>
+                                <div className="flex justify-between text-xs mb-1.5">
+                                    <span className="text-foreground-muted">Tech Proficiency</span>
+                                    <span className="text-primary font-medium">High</span>
                                 </div>
-                                <div className="w-full bg-white/5 rounded-full h-1">
-                                    <div className="bg-artha-saffron h-1 rounded-full opacity-60" style={{ width: '65%' }}></div>
+                                <div className="w-full bg-background-muted rounded-full h-1.5">
+                                    <div className="bg-primary/60 h-1.5 rounded-full" style={{ width: '65%' }} />
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex justify-between text-xs mb-1.5">
+                                    <span className="text-foreground-muted">Market Stability</span>
+                                    <span className="text-foreground-subtle font-medium">Medium</span>
+                                </div>
+                                <div className="w-full bg-background-muted rounded-full h-1.5">
+                                    <div className="bg-primary/40 h-1.5 rounded-full" style={{ width: '45%' }} />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Right Data Terminal Panel */}
-                <div className="md:col-span-2">
-                    <div className="glass-card overflow-hidden h-full flex flex-col shadow-2xl">
-                        <div className="bg-white/5 border-b border-white/5 px-6 py-4 flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                                <Terminal className="w-4 h-4 text-artha-saffron" />
-                                <span className="text-[10px] font-mono font-bold text-artha-slate uppercase tracking-widest">Evaluation Logs / Growth_Matrix.RF</span>
+                {/* Terminal Panel */}
+                <div className="lg:col-span-2">
+                    <div className="card overflow-hidden h-full flex flex-col">
+                        <div className="bg-background-subtle border-b border-border px-4 py-3 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <Terminal className="w-4 h-4 text-primary" />
+                                <span className="text-xs font-mono text-foreground-muted">evaluation_logs / growth_model.rf</span>
                             </div>
-                            <div className="flex space-x-1.5">
-                                <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
-                                <div className="w-2.5 h-2.5 rounded-full bg-artha-gold/50"></div>
-                                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/50"></div>
+                            <div className="flex gap-1.5">
+                                <div className="w-3 h-3 rounded-full bg-destructive/50" />
+                                <div className="w-3 h-3 rounded-full bg-warning/50" />
+                                <div className="w-3 h-3 rounded-full bg-success/50" />
                             </div>
                         </div>
-                        <div className="p-8 flex-grow overflow-auto max-h-[550px] font-mono">
-                            <pre className="text-xs sm:text-sm text-artha-saffron leading-relaxed whitespace-pre-wrap selection:bg-artha-saffron selection:text-artha-navy">
-                                {metrics || "SYSTEM ERROR: Log file 'reports/phase2_evaluation.txt' not found or empty. Verify engine/growth_model.py execution."}
+                        <div className="p-6 flex-grow overflow-auto max-h-[500px] bg-background font-mono">
+                            <pre className="text-sm text-primary leading-relaxed whitespace-pre-wrap selection:bg-primary selection:text-white">
+                                {metrics || "ERROR: Log file 'reports/phase2_evaluation.txt' not found. Run engine/growth_model.py first."}
                             </pre>
                         </div>
-                        <div className="bg-black/20 px-6 py-3 border-t border-white/5 text-[10px] font-mono text-artha-slate flex justify-between">
-                            <span>SESSION: AI-DEC-2026.4</span>
-                            <span className="animate-pulse">CONNECTED</span>
+                        <div className="bg-background-elevated px-4 py-2.5 border-t border-border flex justify-between items-center">
+                            <span className="text-xs font-mono text-foreground-subtle">SESSION: RF-2026.4</span>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-success animate-pulse-slow" />
+                                <span className="text-xs font-mono text-foreground-subtle">CONNECTED</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     );
