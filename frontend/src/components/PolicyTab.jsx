@@ -1,53 +1,107 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
-import { Settings2, CheckCircle, XCircle, TrendingUp, Users, DollarSign, Percent } from 'lucide-react';
-
-// Mock optimization results
-const mockSelected = [
-    { MSME_ID: 'MSME_0012', Sector: 'Manufacturing', Scheme_Name: 'Export Excellence Incentive', Subsidy_Applied: 2000000, Selection_Rank: 1, Justification: 'High growth potential with 88% growth score and strong export capability' },
-    { MSME_ID: 'MSME_0001', Sector: 'Textiles', Scheme_Name: 'Digital MSME Transformation Grant', Subsidy_Applied: 500000, Selection_Rank: 2, Justification: 'Excellent GST compliance (99%) and high revenue growth trajectory' },
-    { MSME_ID: 'MSME_0003', Sector: 'Retail', Scheme_Name: 'New Enterprise Support', Subsidy_Applied: 200000, Selection_Rank: 3, Justification: 'Micro enterprise with 82% growth score, strong potential' },
-    { MSME_ID: 'MSME_0007', Sector: 'Manufacturing', Scheme_Name: 'Digital MSME Transformation Grant', Subsidy_Applied: 500000, Selection_Rank: 4, Justification: 'Manufacturing sector priority with large employee base (123)' },
-    { MSME_ID: 'MSME_0008', Sector: 'IT Services', Scheme_Name: 'Digital MSME Transformation Grant', Subsidy_Applied: 500000, Selection_Rank: 5, Justification: 'IT sector with moderate growth, digital transformation needed' },
-    { MSME_ID: 'MSME_0017', Sector: 'Textiles', Scheme_Name: 'Green Tech Subsidy', Subsidy_Applied: 1000000, Selection_Rank: 6, Justification: 'Medium enterprise with strong export percentage (58%)' },
-    { MSME_ID: 'MSME_0014', Sector: 'IT Services', Scheme_Name: 'Digital MSME Transformation Grant', Subsidy_Applied: 500000, Selection_Rank: 7, Justification: 'High growth category with 27% revenue growth rate' },
-];
-
-const mockRejected = [
-    { MSME_ID: 'MSME_0005', Sector: 'Textiles', Scheme_Name: 'Rural Employment Boost', Rejection_Reason: 'Low growth score (32%) - below minimum threshold for current budget allocation' },
-    { MSME_ID: 'MSME_0006', Sector: 'Retail', Scheme_Name: 'New Enterprise Support', Rejection_Reason: 'Revenue exceeds scheme eligibility cap for micro enterprise support' },
-    { MSME_ID: 'MSME_0010', Sector: 'Food Processing', Scheme_Name: 'Rural Employment Boost', Rejection_Reason: 'Budget exhausted before reaching this allocation rank' },
-];
+import { Settings2, CheckCircle, XCircle, TrendingUp, Users, DollarSign, Percent, Loader2 } from 'lucide-react';
+import { loadCSV } from '../utils/csvParser';
 
 export default function PolicyTab() {
     const [budget, setBudget] = useState(50000000);
     const [alpha, setAlpha] = useState(0.6);
+    const [predictions, setPredictions] = useState([]);
+    const [eligibility, setEligibility] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchData() {
+            setLoading(true);
+            const [pred, elig] = await Promise.all([
+                loadCSV('/data/msme_predictions.csv'),
+                loadCSV('/data/scheme_eligibility_results.csv')
+            ]);
+            setPredictions(pred);
+            setEligibility(elig);
+            setLoading(false);
+        }
+        fetchData();
+    }, []);
 
     const handleSliderChange = (e) => setAlpha(parseFloat(e.target.value));
     const beta = Math.round((1 - alpha) * 10) / 10;
 
-    // Calculate metrics based on mock data
+    // Calculate optimization results based on actual data
     const data = useMemo(() => {
-        const totalSubsidy = mockSelected.reduce((sum, row) => sum + row.Subsidy_Applied, 0);
-        const utilizationPct = (totalSubsidy / budget) * 100;
-        
-        // Simulate different results based on alpha
-        const revenueMultiplier = alpha;
-        const jobsMultiplier = 1 - alpha;
-        
+        if (predictions.length === 0 || eligibility.length === 0) {
+            return { selected: [], rejected: [], total_selected: 0, total_rejected: 0, utilization_pct: 0, total_revenue_gain: 0, total_jobs_created: 0, budget_used: 0 };
+        }
+
+        // Create a map of MSME details
+        const msmeMap = {};
+        predictions.forEach(p => {
+            msmeMap[p.MSME_ID] = p;
+        });
+
+        // Score each eligibility record based on alpha (revenue) and beta (jobs)
+        const scored = eligibility.map(e => {
+            const msme = msmeMap[e.MSME_ID] || {};
+            const revenueScore = Number(e.Revenue_Increase_Pct) || 0;
+            const jobScore = Number(e.New_Jobs_Added) || 0;
+            const compositeScore = (alpha * revenueScore) + ((1 - alpha) * jobScore * 10);
+            return {
+                ...e,
+                Sector: msme.Sector || 'Unknown',
+                compositeScore,
+                Subsidy_Applied: Number(e.Subsidy_Applied) || Number(e.Max_Subsidy_Amount) || 0
+            };
+        });
+
+        // Sort by composite score and select within budget
+        scored.sort((a, b) => b.compositeScore - a.compositeScore);
+
+        let remainingBudget = budget;
+        const selected = [];
+        const rejected = [];
+
+        scored.forEach((item, idx) => {
+            if (remainingBudget >= item.Subsidy_Applied && selected.length < 50) {
+                remainingBudget -= item.Subsidy_Applied;
+                selected.push({
+                    MSME_ID: item.MSME_ID,
+                    Sector: item.Sector,
+                    Scheme_Name: item.Scheme_Name,
+                    Subsidy_Applied: item.Subsidy_Applied,
+                    Selection_Rank: selected.length + 1,
+                    Revenue_Boost: Number(item.Revenue_Increase_Pct) || 0,
+                    Jobs_Created: Number(item.New_Jobs_Added) || 0,
+                    Justification: `Composite score: ${item.compositeScore.toFixed(1)} | ${item.Predicted_Growth_Category || 'Growth'} potential`
+                });
+            } else if (rejected.length < 20) {
+                rejected.push({
+                    MSME_ID: item.MSME_ID,
+                    Sector: item.Sector,
+                    Scheme_Name: item.Scheme_Name,
+                    Rejection_Reason: remainingBudget < item.Subsidy_Applied 
+                        ? 'Insufficient budget remaining'
+                        : 'Lower priority score in current allocation'
+                });
+            }
+        });
+
+        const totalSubsidy = selected.reduce((sum, row) => sum + row.Subsidy_Applied, 0);
+        const totalRevenueGain = selected.reduce((sum, row) => sum + (row.Subsidy_Applied * row.Revenue_Boost / 100), 0);
+        const totalJobs = selected.reduce((sum, row) => sum + row.Jobs_Created, 0);
+
         return {
-            selected: mockSelected,
-            rejected: mockRejected,
-            total_selected: mockSelected.length,
-            total_rejected: mockRejected.length,
-            utilization_pct: Math.min(utilizationPct, 100),
-            total_revenue_gain: 15800000 * revenueMultiplier + 8000000,
-            total_jobs_created: Math.round(185 * jobsMultiplier + 45),
+            selected,
+            rejected,
+            total_selected: selected.length,
+            total_rejected: rejected.length,
+            utilization_pct: Math.min((totalSubsidy / budget) * 100, 100),
+            total_revenue_gain: totalRevenueGain,
+            total_jobs_created: totalJobs,
             budget_used: totalSubsidy
         };
-    }, [budget, alpha]);
+    }, [predictions, eligibility, budget, alpha]);
 
     const chartData = useMemo(() => {
         const sectorMap = {};
@@ -63,6 +117,15 @@ export default function PolicyTab() {
     }, [data.selected]);
 
     const formatCurrency = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumSignificantDigits: 3 }).format(val);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-96">
+                <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--color-primary)' }} />
+                <span className="ml-3">Loading policy data...</span>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8">
@@ -87,7 +150,9 @@ export default function PolicyTab() {
                         </div>
                         <div>
                             <h2 className="text-xl font-semibold">Policy Optimization Engine</h2>
-                            <p className="text-sm" style={{ color: 'var(--color-foreground-muted)' }}>Simulate strategic budget allocation with adjustable priority weights.</p>
+                            <p className="text-sm" style={{ color: 'var(--color-foreground-muted)' }}>
+                                Simulate strategic budget allocation across {eligibility.length} eligible scheme applications.
+                            </p>
                         </div>
                     </div>
                     <div 
@@ -109,15 +174,15 @@ export default function PolicyTab() {
                         <input
                             type="range"
                             min="10000000"
-                            max="200000000"
+                            max="500000000"
                             step="5000000"
                             value={budget}
                             onChange={(e) => setBudget(parseFloat(e.target.value))}
                             className="w-full accent-blue-500"
                         />
                         <div className="flex justify-between text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>
-                            <span>1 Cr</span>
-                            <span>20 Cr</span>
+                            <span>₹1 Cr</span>
+                            <span>₹50 Cr</span>
                         </div>
                     </div>
 
@@ -304,7 +369,7 @@ export default function PolicyTab() {
                     <div>
                         <div className="flex items-center gap-2 mb-4">
                             <CheckCircle className="w-5 h-5" style={{ color: 'var(--color-success)' }} />
-                            <h3 className="text-lg font-semibold">Approved Allocations</h3>
+                            <h3 className="text-lg font-semibold">Approved Allocations ({data.total_selected})</h3>
                         </div>
                         <div 
                             className="rounded-xl overflow-hidden"
@@ -323,7 +388,7 @@ export default function PolicyTab() {
                                             <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Rank</th>
                                             <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Entity & Scheme</th>
                                             <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Amount</th>
-                                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Justification</th>
+                                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Impact</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -333,18 +398,39 @@ export default function PolicyTab() {
                                                 className="transition-colors hover:bg-white/5"
                                                 style={{ borderBottom: '1px solid var(--color-border-subtle)' }}
                                             >
-                                                <td className="px-4 py-3 text-sm">
-                                                    <span className="text-xs font-semibold" style={{ color: 'var(--color-warning)' }}>#{row.Selection_Rank}</span>
+                                                <td className="px-4 py-3">
+                                                    <span 
+                                                        className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                                                        style={{
+                                                            backgroundColor: i < 3 ? 'var(--color-primary)' : 'var(--color-background-muted)',
+                                                            color: i < 3 ? 'white' : 'var(--color-foreground-muted)'
+                                                        }}
+                                                    >
+                                                        {row.Selection_Rank}
+                                                    </span>
                                                 </td>
-                                                <td className="px-4 py-3 text-sm">
-                                                    <p className="font-semibold" style={{ color: 'var(--color-primary)' }}>{row.MSME_ID}</p>
-                                                    <p className="text-xs" style={{ color: 'var(--color-foreground-muted)' }}>{row.Scheme_Name}</p>
+                                                <td className="px-4 py-3">
+                                                    <div>
+                                                        <p className="font-semibold text-sm">{row.MSME_ID}</p>
+                                                        <p className="text-xs" style={{ color: 'var(--color-foreground-muted)' }}>{row.Scheme_Name}</p>
+                                                        <span 
+                                                            className="inline-block mt-1 px-1.5 py-0.5 rounded text-[10px]"
+                                                            style={{ backgroundColor: 'var(--color-background-muted)' }}
+                                                        >
+                                                            {row.Sector}
+                                                        </span>
+                                                    </div>
                                                 </td>
-                                                <td className="px-4 py-3 text-sm font-semibold" style={{ color: 'var(--color-success)' }}>
-                                                    {formatCurrency(row.Subsidy_Applied)}
+                                                <td className="px-4 py-3">
+                                                    <span className="text-sm font-semibold" style={{ color: 'var(--color-warning)' }}>
+                                                        {formatCurrency(row.Subsidy_Applied)}
+                                                    </span>
                                                 </td>
-                                                <td className="px-4 py-3 text-sm max-w-xs" style={{ color: 'var(--color-foreground-muted)' }}>
-                                                    {row.Justification}
+                                                <td className="px-4 py-3">
+                                                    <div className="flex gap-3 text-xs">
+                                                        <span style={{ color: 'var(--color-success)' }}>+{row.Revenue_Boost.toFixed(1)}% Rev</span>
+                                                        <span style={{ color: 'var(--color-primary)' }}>+{row.Jobs_Created} Jobs</span>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))}
@@ -355,51 +441,54 @@ export default function PolicyTab() {
                     </div>
 
                     {/* Rejected */}
-                    <div>
-                        <div className="flex items-center gap-2 mb-4">
-                            <XCircle className="w-5 h-5" style={{ color: 'var(--color-error)' }} />
-                            <h3 className="text-lg font-semibold">Rejected Applications</h3>
-                        </div>
-                        <div 
-                            className="rounded-xl overflow-hidden"
-                            style={{
-                                backgroundColor: 'var(--color-background-elevated)',
-                                border: '1px solid var(--color-border)'
-                            }}
-                        >
-                            <div className="overflow-x-auto">
-                                <table className="min-w-full">
-                                    <thead style={{ backgroundColor: 'var(--color-background-subtle)' }}>
-                                        <tr>
-                                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Entity</th>
-                                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Scheme</th>
-                                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Rejection Reason</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {data.rejected.map((row, i) => (
-                                            <tr 
-                                                key={i} 
-                                                className="transition-colors hover:bg-white/5"
-                                                style={{ borderBottom: '1px solid var(--color-border-subtle)' }}
-                                            >
-                                                <td className="px-4 py-3 text-sm">
-                                                    <p className="font-semibold">{row.MSME_ID}</p>
-                                                    <p className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>{row.Sector}</p>
-                                                </td>
-                                                <td className="px-4 py-3 text-sm" style={{ color: 'var(--color-foreground-muted)' }}>
-                                                    {row.Scheme_Name}
-                                                </td>
-                                                <td className="px-4 py-3 text-sm max-w-md" style={{ color: 'var(--color-error)' }}>
-                                                    {row.Rejection_Reason}
-                                                </td>
+                    {data.rejected.length > 0 && (
+                        <div>
+                            <div className="flex items-center gap-2 mb-4">
+                                <XCircle className="w-5 h-5" style={{ color: 'var(--color-error)' }} />
+                                <h3 className="text-lg font-semibold">Not Approved ({data.total_rejected})</h3>
+                            </div>
+                            <div 
+                                className="rounded-xl overflow-hidden"
+                                style={{
+                                    backgroundColor: 'var(--color-background-elevated)',
+                                    border: '1px solid var(--color-border)'
+                                }}
+                            >
+                                <div className="overflow-x-auto max-h-[250px]">
+                                    <table className="min-w-full">
+                                        <thead 
+                                            className="sticky top-0"
+                                            style={{ backgroundColor: 'var(--color-background-subtle)' }}
+                                        >
+                                            <tr>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Entity & Scheme</th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Reason</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            {data.rejected.map((row, i) => (
+                                                <tr 
+                                                    key={i} 
+                                                    className="transition-colors hover:bg-white/5"
+                                                    style={{ borderBottom: '1px solid var(--color-border-subtle)' }}
+                                                >
+                                                    <td className="px-4 py-3">
+                                                        <div>
+                                                            <p className="font-semibold text-sm">{row.MSME_ID}</p>
+                                                            <p className="text-xs" style={{ color: 'var(--color-foreground-muted)' }}>{row.Scheme_Name}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <p className="text-xs" style={{ color: 'var(--color-error)' }}>{row.Rejection_Reason}</p>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>

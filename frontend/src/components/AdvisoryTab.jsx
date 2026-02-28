@@ -1,78 +1,42 @@
-import React, { useState } from 'react';
-import { Search, MapPin, Building, Star, ChevronDown, ChevronUp, TrendingUp } from 'lucide-react';
-
-// Mock MSME data with predictions
-const mockMsmeData = [
-    { 
-        MSME_ID: 'MSME_0001', Sector: 'Textiles', Location_Type: 'Urban', Category: 'Micro',
-        Annual_Revenue: 8222922.70, GST_Compliance_Score: 98.79, Growth_Score: 78,
-        Predicted_Growth_Category: 'High', Number_of_Employees: 37
-    },
-    { 
-        MSME_ID: 'MSME_0003', Sector: 'Retail', Location_Type: 'Urban', Category: 'Micro',
-        Annual_Revenue: 3720053.85, GST_Compliance_Score: 87.36, Growth_Score: 82,
-        Predicted_Growth_Category: 'High', Number_of_Employees: 10
-    },
-    { 
-        MSME_ID: 'MSME_0007', Sector: 'Manufacturing', Location_Type: 'Urban', Category: 'Small',
-        Annual_Revenue: 3646138.33, GST_Compliance_Score: 64.78, Growth_Score: 45,
-        Predicted_Growth_Category: 'Moderate', Number_of_Employees: 123
-    },
-    { 
-        MSME_ID: 'MSME_0008', Sector: 'IT Services', Location_Type: 'Semi-Urban', Category: 'Small',
-        Annual_Revenue: 2501462.68, GST_Compliance_Score: 72.57, Growth_Score: 56,
-        Predicted_Growth_Category: 'Moderate', Number_of_Employees: 82
-    },
-    { 
-        MSME_ID: 'MSME_0012', Sector: 'Manufacturing', Location_Type: 'Semi-Urban', Category: 'Small',
-        Annual_Revenue: 14292999.97, GST_Compliance_Score: 76.41, Growth_Score: 88,
-        Predicted_Growth_Category: 'High', Number_of_Employees: 87
-    },
-    { 
-        MSME_ID: 'MSME_0005', Sector: 'Textiles', Location_Type: 'Rural', Category: 'Medium',
-        Annual_Revenue: 10201151.68, GST_Compliance_Score: 71.23, Growth_Score: 32,
-        Predicted_Growth_Category: 'Low', Number_of_Employees: 101
-    },
-];
-
-// Mock schemes for each MSME
-const mockSchemes = {
-    'MSME_0001': [
-        { Scheme_ID: 'SCH_001', Scheme_Name: 'Digital MSME Transformation Grant', is_recommended: true, expected_revenue_boost: 823000, expected_job_creation: 4, Max_Subsidy_Amount: 500000 },
-        { Scheme_ID: 'SCH_002', Scheme_Name: 'Green Tech Subsidy', is_recommended: false, expected_revenue_boost: 411000, expected_job_creation: 2, Max_Subsidy_Amount: 1000000 },
-    ],
-    'MSME_0003': [
-        { Scheme_ID: 'SCH_005', Scheme_Name: 'New Enterprise Support', is_recommended: true, expected_revenue_boost: 372000, expected_job_creation: 2, Max_Subsidy_Amount: 200000 },
-    ],
-    'MSME_0007': [
-        { Scheme_ID: 'SCH_001', Scheme_Name: 'Digital MSME Transformation Grant', is_recommended: true, expected_revenue_boost: 547000, expected_job_creation: 6, Max_Subsidy_Amount: 500000 },
-        { Scheme_ID: 'SCH_004', Scheme_Name: 'Export Excellence Incentive', is_recommended: false, expected_revenue_boost: 912000, expected_job_creation: 4, Max_Subsidy_Amount: 2000000 },
-    ],
-    'MSME_0008': [
-        { Scheme_ID: 'SCH_001', Scheme_Name: 'Digital MSME Transformation Grant', is_recommended: true, expected_revenue_boost: 375000, expected_job_creation: 3, Max_Subsidy_Amount: 500000 },
-    ],
-    'MSME_0012': [
-        { Scheme_ID: 'SCH_004', Scheme_Name: 'Export Excellence Incentive', is_recommended: true, expected_revenue_boost: 3573000, expected_job_creation: 8, Max_Subsidy_Amount: 2000000 },
-        { Scheme_ID: 'SCH_001', Scheme_Name: 'Digital MSME Transformation Grant', is_recommended: false, expected_revenue_boost: 2144000, expected_job_creation: 4, Max_Subsidy_Amount: 500000 },
-    ],
-    'MSME_0005': [
-        { Scheme_ID: 'SCH_003', Scheme_Name: 'Rural Employment Boost', is_recommended: true, expected_revenue_boost: 510000, expected_job_creation: 8, Max_Subsidy_Amount: 300000 },
-    ],
-};
+import React, { useState, useEffect } from 'react';
+import { Search, MapPin, Building, Star, ChevronDown, ChevronUp, TrendingUp, Loader2 } from 'lucide-react';
+import { loadCSV } from '../utils/csvParser';
 
 export default function AdvisoryTab() {
     const [query, setQuery] = useState("");
     const [expandedMsme, setExpandedMsme] = useState(null);
+    const [msmeData, setMsmeData] = useState([]);
+    const [eligibilityData, setEligibilityData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const filteredResults = mockMsmeData.filter(item => {
+    useEffect(() => {
+        async function fetchData() {
+            setLoading(true);
+            const [predictions, eligibility] = await Promise.all([
+                loadCSV('/data/msme_predictions.csv'),
+                loadCSV('/data/scheme_eligibility_results.csv')
+            ]);
+            setMsmeData(predictions);
+            setEligibilityData(eligibility);
+            setLoading(false);
+        }
+        fetchData();
+    }, []);
+
+    // Get schemes for a specific MSME
+    const getSchemesForMsme = (msmeId) => {
+        return eligibilityData.filter(e => e.MSME_ID === msmeId);
+    };
+
+    const filteredResults = msmeData.filter(item => {
         if (!query) return true;
         const q = query.toLowerCase();
-        return item.MSME_ID.toLowerCase().includes(q) ||
-            item.Sector.toLowerCase().includes(q) ||
-            item.Location_Type.toLowerCase().includes(q) ||
-            item.Category.toLowerCase().includes(q) ||
-            item.Predicted_Growth_Category.toLowerCase().includes(q);
-    });
+        return item.MSME_ID?.toLowerCase().includes(q) ||
+            item.Sector?.toLowerCase().includes(q) ||
+            item.Location_Type?.toLowerCase().includes(q) ||
+            item.Category?.toLowerCase().includes(q) ||
+            item.Predicted_Growth_Category?.toLowerCase().includes(q);
+    }).slice(0, 50); // Limit to 50 results for performance
 
     const toggleMsme = (msmeId) => {
         setExpandedMsme(expandedMsme === msmeId ? null : msmeId);
@@ -80,7 +44,16 @@ export default function AdvisoryTab() {
 
     const formatCurrency = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val);
 
-    const quickFilters = ['Manufacturing', 'IT Services', 'Urban', 'Rural', 'High Growth'];
+    const quickFilters = ['Manufacturing', 'IT Services', 'Urban', 'Rural', 'High'];
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-96">
+                <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--color-primary)' }} />
+                <span className="ml-3">Loading advisory data...</span>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8">
@@ -100,7 +73,7 @@ export default function AdvisoryTab() {
                     Growth Advisory Dashboard
                 </h1>
                 <p style={{ color: 'var(--color-foreground-muted)' }} className="max-w-2xl">
-                    Search and analyze MSME profiles with AI-powered growth predictions and scheme recommendations.
+                    Search and analyze {msmeData.length} MSME profiles with AI-powered growth predictions and scheme recommendations.
                 </p>
             </div>
 
@@ -130,7 +103,7 @@ export default function AdvisoryTab() {
                         <button
                             key={tag}
                             type="button"
-                            onClick={() => setQuery(tag === 'High Growth' ? 'High' : tag)}
+                            onClick={() => setQuery(tag)}
                             className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:opacity-80"
                             style={{
                                 backgroundColor: 'var(--color-background-subtle)',
@@ -159,6 +132,9 @@ export default function AdvisoryTab() {
 
             {/* Results */}
             <div className="space-y-4 min-h-[300px]">
+                <p className="text-sm" style={{ color: 'var(--color-foreground-muted)' }}>
+                    Showing {filteredResults.length} of {msmeData.length} records
+                </p>
                 {filteredResults.length === 0 ? (
                     <div 
                         className="p-12 text-center rounded-xl"
@@ -171,7 +147,9 @@ export default function AdvisoryTab() {
                     </div>
                 ) : (
                     <div className="space-y-3">
-                        {filteredResults.map((item) => (
+                        {filteredResults.map((item) => {
+                            const schemes = getSchemesForMsme(item.MSME_ID);
+                            return (
                             <div 
                                 key={item.MSME_ID} 
                                 className="rounded-xl transition-all duration-200"
@@ -239,13 +217,13 @@ export default function AdvisoryTab() {
                                             <div className="space-y-1">
                                                 <p className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Revenue</p>
                                                 <p className="text-sm font-semibold">
-                                                    {(item.Annual_Revenue / 10000000).toFixed(2)} Cr
+                                                    ₹{(Number(item.Annual_Revenue) / 10000000).toFixed(2)} Cr
                                                 </p>
                                             </div>
                                             <div className="space-y-1">
-                                                <p className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Compliance</p>
-                                                <p className="text-sm font-semibold" style={{ color: 'var(--color-warning)' }}>
-                                                    {Math.round(item.GST_Compliance_Score)}%
+                                                <p className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Employees</p>
+                                                <p className="text-sm font-semibold">
+                                                    {item.Number_of_Employees}
                                                 </p>
                                             </div>
                                             <div className="space-y-1.5 min-w-[120px]">
@@ -254,14 +232,14 @@ export default function AdvisoryTab() {
                                                     <p 
                                                         className="text-xs font-semibold"
                                                         style={{
-                                                            color: parseFloat(item.Growth_Score) > 70 
+                                                            color: Number(item.Growth_Score) > 70 
                                                                 ? 'var(--color-success)' 
-                                                                : parseFloat(item.Growth_Score) > 40 
+                                                                : Number(item.Growth_Score) > 40 
                                                                 ? 'var(--color-warning)' 
                                                                 : 'var(--color-foreground-muted)'
                                                         }}
                                                     >
-                                                        {Math.round(item.Growth_Score)}/100
+                                                        {Math.round(Number(item.Growth_Score))}/100
                                                     </p>
                                                 </div>
                                                 <div 
@@ -272,9 +250,9 @@ export default function AdvisoryTab() {
                                                         className="h-full rounded-full transition-all duration-700"
                                                         style={{ 
                                                             width: `${item.Growth_Score}%`,
-                                                            backgroundColor: parseFloat(item.Growth_Score) > 70 
+                                                            backgroundColor: Number(item.Growth_Score) > 70 
                                                                 ? 'var(--color-success)'
-                                                                : parseFloat(item.Growth_Score) > 40 
+                                                                : Number(item.Growth_Score) > 40 
                                                                 ? 'var(--color-warning)'
                                                                 : 'var(--color-foreground-subtle)'
                                                         }}
@@ -289,7 +267,7 @@ export default function AdvisoryTab() {
                                 </div>
 
                                 {/* Expanded Panel */}
-                                {expandedMsme === item.MSME_ID && mockSchemes[item.MSME_ID] && (
+                                {expandedMsme === item.MSME_ID && schemes.length > 0 && (
                                     <div 
                                         className="p-5"
                                         style={{
@@ -299,51 +277,56 @@ export default function AdvisoryTab() {
                                     >
                                         <div className="flex items-center gap-2 mb-5">
                                             <TrendingUp className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
-                                            <h4 className="text-sm font-semibold">Eligible Scheme Projections</h4>
+                                            <h4 className="text-sm font-semibold">Eligible Scheme Projections ({schemes.length} schemes)</h4>
                                         </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            {mockSchemes[item.MSME_ID].map((scheme) => (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                            {schemes.slice(0, 6).map((scheme, idx) => (
                                                 <div 
-                                                    key={scheme.Scheme_ID} 
+                                                    key={`${scheme.Scheme_ID}-${idx}`} 
                                                     className="relative p-4 rounded-xl"
                                                     style={{
-                                                        backgroundColor: scheme.is_recommended 
+                                                        backgroundColor: idx === 0 
                                                             ? 'var(--color-primary-muted)' 
                                                             : 'var(--color-background-elevated)',
-                                                        border: scheme.is_recommended
+                                                        border: idx === 0
                                                             ? '1px solid rgba(59, 130, 246, 0.3)'
                                                             : '1px solid var(--color-border)'
                                                     }}
                                                 >
-                                                    {scheme.is_recommended && (
+                                                    {idx === 0 && (
                                                         <div 
-                                                            className="absolute top-0 right-0 px-2.5 py-1 text-xs font-medium rounded-bl-lg rounded-tr-xl flex items-center gap-1"
-                                                            style={{ backgroundColor: 'var(--color-primary)', color: 'white' }}
+                                                            className="absolute -top-2 -right-2 p-1.5 rounded-full"
+                                                            style={{ backgroundColor: 'var(--color-warning)' }}
                                                         >
-                                                            <Star className="w-3 h-3" /> Best Match
+                                                            <Star className="w-3 h-3 text-black" fill="currentColor" />
                                                         </div>
                                                     )}
-                                                    <h5 className="font-semibold mb-4 pr-20">{scheme.Scheme_Name}</h5>
-
-                                                    <div className="grid grid-cols-3 gap-4">
-                                                        <div className="space-y-1">
-                                                            <p className="text-xs font-medium" style={{ color: 'var(--color-foreground-subtle)' }}>Revenue Boost</p>
-                                                            <p className="text-sm font-semibold" style={{ color: 'var(--color-success)' }}>
-                                                                +{formatCurrency(scheme.expected_revenue_boost)}
-                                                            </p>
+                                                    <p 
+                                                        className="text-[10px] font-medium uppercase tracking-wider mb-1.5"
+                                                        style={{ color: 'var(--color-foreground-subtle)' }}
+                                                    >
+                                                        {scheme.Scheme_ID}
+                                                    </p>
+                                                    <h5 className="font-semibold text-sm mb-3">{scheme.Scheme_Name}</h5>
+                                                    <div className="space-y-2 text-xs">
+                                                        <div className="flex justify-between">
+                                                            <span style={{ color: 'var(--color-foreground-muted)' }}>Subsidy</span>
+                                                            <span className="font-semibold" style={{ color: 'var(--color-warning)' }}>
+                                                                {formatCurrency(scheme.Subsidy_Applied || scheme.Max_Subsidy_Amount)}
+                                                            </span>
                                                         </div>
-                                                        <div className="space-y-1">
-                                                            <p className="text-xs font-medium" style={{ color: 'var(--color-foreground-subtle)' }}>Jobs Created</p>
-                                                            <p className="text-sm font-semibold" style={{ color: 'var(--color-success)' }}>
-                                                                +{scheme.expected_job_creation}
-                                                            </p>
+                                                        <div className="flex justify-between">
+                                                            <span style={{ color: 'var(--color-foreground-muted)' }}>Revenue Boost</span>
+                                                            <span className="font-semibold" style={{ color: 'var(--color-success)' }}>
+                                                                +{Number(scheme.Revenue_Increase_Pct).toFixed(1)}%
+                                                            </span>
                                                         </div>
-                                                        <div className="space-y-1">
-                                                            <p className="text-xs font-medium" style={{ color: 'var(--color-foreground-subtle)' }}>Max Subsidy</p>
-                                                            <p className="text-sm font-semibold" style={{ color: 'var(--color-warning)' }}>
-                                                                {formatCurrency(scheme.Max_Subsidy_Amount)}
-                                                            </p>
+                                                        <div className="flex justify-between">
+                                                            <span style={{ color: 'var(--color-foreground-muted)' }}>Jobs Added</span>
+                                                            <span className="font-semibold" style={{ color: 'var(--color-primary)' }}>
+                                                                +{scheme.New_Jobs_Added}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -351,8 +334,20 @@ export default function AdvisoryTab() {
                                         </div>
                                     </div>
                                 )}
+
+                                {expandedMsme === item.MSME_ID && schemes.length === 0 && (
+                                    <div 
+                                        className="p-5 text-center"
+                                        style={{
+                                            borderTop: '1px solid var(--color-border)',
+                                            backgroundColor: 'rgba(23, 23, 23, 0.3)'
+                                        }}
+                                    >
+                                        <p style={{ color: 'var(--color-foreground-muted)' }}>No eligible schemes found for this MSME.</p>
+                                    </div>
+                                )}
                             </div>
-                        ))}
+                        )})}
                     </div>
                 )}
             </div>
