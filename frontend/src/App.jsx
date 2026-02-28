@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginPage from './components/LoginPage';
-import AdvisoryTab from './components/AdvisoryTab';
 import PolicyTab from './components/PolicyTab';
 import DataTab from './components/DataTab';
 import ModelTab from './components/ModelTab';
 import SchemeBrowser from './components/msme/SchemeBrowser';
 import ApplicationTracker from './components/msme/ApplicationTracker';
-import { LayoutDashboard, Settings, Database, Brain, Menu, X, Sparkles, LogOut, User, FileSearch, ClipboardList } from 'lucide-react';
+import MyAdvisor from './components/msme/MyAdvisor';
+import BusinessHealth from './components/msme/BusinessHealth';
+import LoanChecker from './components/msme/LoanChecker';
+import { Settings, Database, Brain, Menu, X, Sparkles, LogOut, User, FileSearch, ClipboardList, Lightbulb, Activity, CreditCard } from 'lucide-react';
 
 function Dashboard() {
   const { user, logout, isPolicyMaker, isMSME } = useAuth();
@@ -19,7 +21,6 @@ function Dashboard() {
   const policyMakerTabs = [
     { id: 'data', name: 'Data Explorer', icon: Database },
     { id: 'model', name: 'AI Model', icon: Brain },
-    { id: 'advisory', name: 'Advisory', icon: LayoutDashboard },
     { id: 'policy', name: 'Policy Engine', icon: Settings },
   ];
 
@@ -27,6 +28,9 @@ function Dashboard() {
   const msmeTabs = [
     { id: 'schemes', name: 'Browse Schemes', icon: FileSearch },
     { id: 'applications', name: 'My Applications', icon: ClipboardList },
+    { id: 'advisor', name: 'My Advisor', icon: Lightbulb },
+    { id: 'health', name: 'Business Health', icon: Activity },
+    { id: 'loans', name: 'Loan Eligibility', icon: CreditCard },
   ];
 
   const tabs = isPolicyMaker ? policyMakerTabs : msmeTabs;
@@ -152,12 +156,14 @@ function Dashboard() {
           {/* Policy Maker Views */}
           {user?.role === 'policymaker' && activeTab === 'data' && <DataTab />}
           {user?.role === 'policymaker' && activeTab === 'model' && <ModelTab />}
-          {user?.role === 'policymaker' && activeTab === 'advisory' && <AdvisoryTab />}
           {user?.role === 'policymaker' && activeTab === 'policy' && <PolicyTab />}
           
           {/* MSME Views */}
           {user?.role === 'msme' && activeTab === 'schemes' && <SchemeBrowser />}
           {user?.role === 'msme' && activeTab === 'applications' && <ApplicationTracker />}
+          {user?.role === 'msme' && activeTab === 'advisor' && <MyAdvisor />}
+          {user?.role === 'msme' && activeTab === 'health' && <BusinessHealth />}
+          {user?.role === 'msme' && activeTab === 'loans' && <LoanChecker />}
         </div>
       </main>
 
