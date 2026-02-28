@@ -1,72 +1,103 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-artha-navy: #0B1F3B;
-  --color-artha-saffron: #F4A300;
-  --color-artha-gold: #C89B3C;
-  --color-artha-ivory: #F8F6F1;
-  --color-artha-slate: #5B6675;
-  --color-artha-navy-light: #1A3A5F;
-  --color-artha-navy-dark: #051226;
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
+
+  --color-secondary-50: #f8fafc;
+  --color-secondary-100: #f1f5f9;
+  --color-secondary-200: #e2e8f0;
+  --color-secondary-300: #cbd5e1;
+  --color-secondary-400: #94a3b8;
+  --color-secondary-500: #64748b;
+  --color-secondary-600: #475569;
+  --color-secondary-700: #334155;
+  --color-secondary-800: #1e293b;
+  --color-secondary-900: #0f172a;
+
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
 
-  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --shadow-glow-saffron: 0 0 15px rgba(244, 163, 0, 0.3);
-  --shadow-glow-navy: 0 0 20px rgba(11, 31, 59, 0.5);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
 @layer base {
   body {
-    @apply bg-artha-navy-dark text-artha-ivory font-sans antialiased;
-    background: radial-gradient(circle at top right, var(--color-artha-navy-light) 0%, var(--color-artha-navy) 50%, var(--color-artha-navy-dark) 100%);
+    @apply bg-secondary-900 text-secondary-100 font-sans antialiased;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
     background-attachment: fixed;
     min-height: 100vh;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-glass transition-all duration-300;
+  .card {
+    @apply bg-secondary-800 border border-secondary-700 rounded-lg shadow-lg transition-all duration-200;
   }
 
-  .glass-card-hover {
-    @apply hover:bg-white/10 hover:border-white/20 hover:scale-[1.01] active:scale-[0.99];
+  .card-hover {
+    @apply hover:border-secondary-600 hover:shadow-xl;
   }
 
-  .premium-button {
-    @apply bg-artha-saffron text-artha-navy font-bold py-3 px-6 rounded-xl shadow-glow-saffron transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100 uppercase tracking-wider text-sm flex items-center justify-center;
+  .btn-primary {
+    @apply bg-primary-600 text-white font-semibold py-2.5 px-5 rounded-lg transition-all duration-200 hover:bg-primary-700 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center;
   }
 
-  .search-input {
-    @apply bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-artha-saffron/50 transition-all w-full;
+  .btn-secondary {
+    @apply bg-secondary-700 text-secondary-200 font-semibold py-2.5 px-5 rounded-lg transition-all duration-200 hover:bg-secondary-600 active:scale-95;
   }
 
-  .accent-text-gold {
-    color: var(--color-artha-gold);
-    text-shadow: 0 0 8px rgba(200, 155, 60, 0.5);
+  .input-field {
+    @apply bg-secondary-800 border border-secondary-700 rounded-lg px-4 py-2.5 text-secondary-100 placeholder-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all w-full;
   }
 
-  .accent-text-saffron {
-    color: var(--color-artha-saffron);
-    text-shadow: 0 0 8px rgba(244, 163, 0, 0.5);
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply bg-success-500/10 text-success-500 border border-success-500/20;
+  }
+
+  .badge-warning {
+    @apply bg-warning-500/10 text-warning-500 border border-warning-500/20;
+  }
+
+  .badge-error {
+    @apply bg-error-500/10 text-error-500 border border-error-500/20;
+  }
+
+  .badge-info {
+    @apply bg-primary-500/10 text-primary-400 border border-primary-500/20;
   }
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -74,40 +105,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
-}
-
-.tab-active {
-  @apply border-artha-saffron text-white;
-}
-
-.tab-inactive {
-  @apply border-transparent text-artha-slate hover:text-white/70;
-}
-
-/* Animations using standard CSS since v4 theme animation support via @apply in CSS is slightly different */
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
+  @apply bg-secondary-700 rounded-full hover:bg-secondary-600 transition-colors;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -115,5 +120,5 @@
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 0.4s ease-out forwards;
 }
