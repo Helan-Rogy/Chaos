@@ -261,7 +261,7 @@ export default function AdvisoryTab() {
                                             className="p-5"
                                             style={{
                                                 borderTop: '1px solid var(--color-border)',
-                                                backgroundColor: 'rgba(23, 23, 23, 0.3)'
+                                                backgroundColor: 'rgba(23,23,23,0.3)'
                                             }}
                                         >
                                             <div className="flex items-center gap-2 mb-5">

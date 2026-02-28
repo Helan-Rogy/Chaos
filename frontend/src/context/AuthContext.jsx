@@ -8,12 +8,12 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         // Check for existing session in localStorage
-        const savedUser = localStorage.getItem('chaoszen_user');
+        const savedUser = localStorage.getItem('pragati_user');
         if (savedUser) {
             try {
                 setUser(JSON.parse(savedUser));
             } catch (e) {
-                localStorage.removeItem('chaoszen_user');
+                localStorage.removeItem('pragati_user');
             }
         }
         setLoading(false);
@@ -27,12 +27,12 @@ export function AuthProvider({ children }) {
             loginTime: new Date().toISOString()
         };
         setUser(userData);
-        localStorage.setItem('chaoszen_user', JSON.stringify(userData));
+        localStorage.setItem('pragati_user', JSON.stringify(userData));
     };
 
     const logout = () => {
         setUser(null);
-        localStorage.removeItem('chaoszen_user');
+        localStorage.removeItem('pragati_user');
     };
 
     const value = {

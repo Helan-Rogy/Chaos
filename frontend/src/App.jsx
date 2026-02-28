@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginPage from './components/LoginPage';
-import AdvisoryTab from './components/AdvisoryTab';
 import PolicyTab from './components/PolicyTab';
 import DataTab from './components/DataTab';
 import ModelTab from './components/ModelTab';
 import SchemeBrowser from './components/msme/SchemeBrowser';
 import ApplicationTracker from './components/msme/ApplicationTracker';
-import { LayoutDashboard, Settings, Database, Brain, Menu, X, Sparkles, LogOut, User, FileSearch, ClipboardList } from 'lucide-react';
+import MyAdvisor from './components/msme/MyAdvisor';
+import BusinessHealth from './components/msme/BusinessHealth';
+import LoanChecker from './components/msme/LoanChecker';
+import { Settings, Database, Brain, Menu, X, Sparkles, LogOut, User, FileSearch, ClipboardList, Lightbulb, Activity, CreditCard } from 'lucide-react';
 
 function Dashboard() {
   const { user, logout, isPolicyMaker, isMSME } = useAuth();
-  const [activeTab, setActiveTab] = useState(isPolicyMaker ? 'policy' : 'schemes');
+  const defaultTab = user?.role === 'policymaker' ? 'data' : 'schemes';
+  const [activeTab, setActiveTab] = useState(defaultTab);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Policy Maker tabs
   const policyMakerTabs = [
     { id: 'data', name: 'Data Explorer', icon: Database },
     { id: 'model', name: 'AI Model', icon: Brain },
-    { id: 'advisory', name: 'Advisory', icon: LayoutDashboard },
     { id: 'policy', name: 'Policy Engine', icon: Settings },
   ];
 
@@ -26,6 +28,9 @@ function Dashboard() {
   const msmeTabs = [
     { id: 'schemes', name: 'Browse Schemes', icon: FileSearch },
     { id: 'applications', name: 'My Applications', icon: ClipboardList },
+    { id: 'advisor', name: 'My Advisor', icon: Lightbulb },
+    { id: 'health', name: 'Business Health', icon: Activity },
+    { id: 'loans', name: 'Loan Eligibility', icon: CreditCard },
   ];
 
   const tabs = isPolicyMaker ? policyMakerTabs : msmeTabs;
@@ -51,7 +56,7 @@ function Dashboard() {
                 <Sparkles className="h-4 w-4 text-white" />
               </div>
               <span className="font-semibold text-lg">
-                ChaosZen
+                Pragati
               </span>
               <span 
                 className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
@@ -149,14 +154,16 @@ function Dashboard() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div>
           {/* Policy Maker Views */}
-          {isPolicyMaker && activeTab === 'data' && <DataTab />}
-          {isPolicyMaker && activeTab === 'model' && <ModelTab />}
-          {isPolicyMaker && activeTab === 'advisory' && <AdvisoryTab />}
-          {isPolicyMaker && activeTab === 'policy' && <PolicyTab />}
+          {user?.role === 'policymaker' && activeTab === 'data' && <DataTab />}
+          {user?.role === 'policymaker' && activeTab === 'model' && <ModelTab />}
+          {user?.role === 'policymaker' && activeTab === 'policy' && <PolicyTab />}
           
           {/* MSME Views */}
-          {isMSME && activeTab === 'schemes' && <SchemeBrowser />}
-          {isMSME && activeTab === 'applications' && <ApplicationTracker />}
+          {user?.role === 'msme' && activeTab === 'schemes' && <SchemeBrowser />}
+          {user?.role === 'msme' && activeTab === 'applications' && <ApplicationTracker />}
+          {user?.role === 'msme' && activeTab === 'advisor' && <MyAdvisor />}
+          {user?.role === 'msme' && activeTab === 'health' && <BusinessHealth />}
+          {user?.role === 'msme' && activeTab === 'loans' && <LoanChecker />}
         </div>
       </main>
 
@@ -170,7 +177,7 @@ function Dashboard() {
             className="text-center text-xs"
             style={{ color: 'var(--color-foreground-subtle)' }}
           >
-            ChaosZen MSME Optimization Engine • Logged in as {user?.email}
+            Pragati MSME Optimization Engine • Logged in as {user?.email}
           </p>
         </div>
       </footer>

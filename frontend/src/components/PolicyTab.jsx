@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
-import { Settings2, CheckCircle, XCircle, TrendingUp, Users, DollarSign, Percent, Loader2 } from 'lucide-react';
+import { Settings2, CheckCircle, XCircle, TrendingUp, Users, DollarSign, Percent, Loader2, RefreshCw } from 'lucide-react';
 import { loadCSV } from '../utils/csvParser';
 
 export default function PolicyTab() {
@@ -27,6 +27,9 @@ export default function PolicyTab() {
     }, []);
 
     const beta = Math.round((1 - alpha) * 10) / 10;
+
+    const handleSliderChange = (e) => setAlpha(parseFloat(e.target.value));
+    const fetchSimulation = () => {}; // simulation runs reactively via useMemo
 
     // Calculate optimization results based on actual data
     const data = useMemo(() => {
@@ -227,23 +230,20 @@ export default function PolicyTab() {
                     </div>
                 </div>
 
-                <button
-                    onClick={fetchSimulation}
-                    disabled={loading}
-                    className="btn-primary w-full md:w-auto"
-                >
-                    {loading ? (
-                        <>
-                            <div className="animate-spin mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                            Running Simulation...
-                        </>
-                    ) : (
-                        <>
-                            <Settings className="w-4 h-4 mr-2" />
-                            Run Optimization
-                        </>
-                    )}
-                </button>
+                <div className="px-6 pb-5">
+                    <button
+                        onClick={fetchSimulation}
+                        disabled={loading}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                        style={{
+                            backgroundColor: 'var(--color-primary)',
+                            color: 'white'
+                        }}
+                    >
+                        <RefreshCw className="w-4 h-4" />
+                        Re-run Optimization
+                    </button>
+                </div>
             </div>
 
             {/* Results */}
