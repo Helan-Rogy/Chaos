@@ -52,7 +52,7 @@ function Dashboard() {
                 <Sparkles className="h-4 w-4 text-white" />
               </div>
               <span className="font-semibold text-lg">
-                ChaosZen
+                Pragati
               </span>
               <span 
                 className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
@@ -171,7 +171,7 @@ function Dashboard() {
             className="text-center text-xs"
             style={{ color: 'var(--color-foreground-subtle)' }}
           >
-            ChaosZen MSME Optimization Engine • Logged in as {user?.email}
+            Pragati MSME Optimization Engine • Logged in as {user?.email}
           </p>
         </div>
       </footer>

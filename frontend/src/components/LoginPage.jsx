@@ -69,9 +69,9 @@ export default function LoginPage() {
                             background: 'linear-gradient(135deg, var(--color-primary) 0%, #1d4ed8 100%)'
                         }}
                     >
-                        <span className="text-2xl font-bold text-white">CZ</span>
+                        <span className="text-2xl font-bold text-white">PR</span>
                     </div>
-                    <h1 className="text-2xl font-bold mb-2">Welcome to ChaosZen</h1>
+                    <h1 className="text-2xl font-bold mb-2">Welcome to Pragati</h1>
                     <p style={{ color: 'var(--color-foreground-muted)' }}>
                         MSME Scheme Impact & Optimization Engine
                     </p>
