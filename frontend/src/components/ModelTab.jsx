@@ -23,22 +23,25 @@ export default function ModelTab() {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
-            <Loader2 className="h-8 w-8 text-primary animate-spin" />
-            <p className="text-foreground-muted text-sm">Loading model metrics...</p>
+            <Loader2 className="h-8 w-8 animate-spin" style={{ color: 'var(--color-primary)' }} />
+            <p className="text-sm" style={{ color: 'var(--color-foreground-muted)' }}>Loading model metrics...</p>
         </div>
     );
 
     return (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-8">
             {/* Header */}
             <div>
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-primary-muted rounded-lg">
-                        <Brain className="w-6 h-6 text-primary" />
+                    <div 
+                        className="p-2 rounded-lg"
+                        style={{ backgroundColor: 'var(--color-primary-muted)' }}
+                    >
+                        <Brain className="w-6 h-6" style={{ color: 'var(--color-primary)' }} />
                     </div>
-                    <h2 className="text-2xl font-bold text-foreground">AI Model Metrics</h2>
+                    <h2 className="text-2xl font-bold">AI Model Metrics</h2>
                 </div>
-                <p className="text-foreground-muted max-w-2xl">
+                <p className="max-w-2xl" style={{ color: 'var(--color-foreground-muted)' }}>
                     Random Forest Classifier analyzing multi-dimensional feature variance to categorize MSME growth trajectories.
                 </p>
             </div>
@@ -46,64 +49,92 @@ export default function ModelTab() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Metrics Cards */}
                 <div className="space-y-4">
-                    <div className="metric-card border-l-4 border-l-success">
+                    <div 
+                        className="p-5 rounded-xl"
+                        style={{
+                            backgroundColor: 'var(--color-background-elevated)',
+                            border: '1px solid var(--color-border)',
+                            borderLeft: '4px solid var(--color-success)'
+                        }}
+                    >
                         <div className="flex items-center gap-2 mb-3">
-                            <ShieldCheck className="w-4 h-4 text-success" />
-                            <span className="metric-label">Model Precision</span>
+                            <ShieldCheck className="w-4 h-4" style={{ color: 'var(--color-success)' }} />
+                            <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-foreground-subtle)' }}>Model Precision</span>
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-4xl font-bold text-foreground">0.96</span>
-                            <span className="text-success text-sm font-medium font-mono">Macro F1</span>
+                            <span className="text-4xl font-bold">0.96</span>
+                            <span className="text-sm font-medium font-mono" style={{ color: 'var(--color-success)' }}>Macro F1</span>
                         </div>
-                        <p className="text-xs text-foreground-subtle mt-2">Optimized for classification imbalance</p>
+                        <p className="text-xs mt-2" style={{ color: 'var(--color-foreground-subtle)' }}>Optimized for classification imbalance</p>
                     </div>
 
-                    <div className="metric-card border-l-4 border-l-primary">
+                    <div 
+                        className="p-5 rounded-xl"
+                        style={{
+                            backgroundColor: 'var(--color-background-elevated)',
+                            border: '1px solid var(--color-border)',
+                            borderLeft: '4px solid var(--color-primary)'
+                        }}
+                    >
                         <div className="flex items-center gap-2 mb-3">
-                            <Zap className="w-4 h-4 text-primary" />
-                            <span className="metric-label">Primary Target</span>
+                            <Zap className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
+                            <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-foreground-subtle)' }}>Primary Target</span>
                         </div>
-                        <h3 className="text-lg font-semibold text-foreground mb-3">Growth_Category</h3>
+                        <h3 className="text-lg font-semibold mb-3">Growth_Category</h3>
                         <div className="flex flex-wrap gap-2">
                             {['High', 'Moderate', 'Low'].map(cat => (
-                                <span key={cat} className="badge badge-neutral text-xs">
+                                <span 
+                                    key={cat} 
+                                    className="px-2.5 py-1 rounded-md text-xs font-medium"
+                                    style={{
+                                        backgroundColor: 'var(--color-background-muted)',
+                                        color: 'var(--color-foreground-muted)',
+                                        border: '1px solid var(--color-border)'
+                                    }}
+                                >
                                     {cat}
                                 </span>
                             ))}
                         </div>
                     </div>
 
-                    <div className="card p-5 bg-primary-muted border-primary/20">
+                    <div 
+                        className="p-5 rounded-xl"
+                        style={{
+                            backgroundColor: 'var(--color-primary-muted)',
+                            border: '1px solid rgba(59, 130, 246, 0.2)'
+                        }}
+                    >
                         <div className="flex items-center gap-2 mb-4">
-                            <BarChart2 className="w-4 h-4 text-primary" />
-                            <h3 className="font-semibold text-foreground">Predictive Drivers</h3>
+                            <BarChart2 className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
+                            <h3 className="font-semibold">Predictive Drivers</h3>
                         </div>
                         <div className="space-y-4">
                             <div>
                                 <div className="flex justify-between text-xs mb-1.5">
-                                    <span className="text-foreground-muted">Revenue Growth Rate</span>
-                                    <span className="text-primary font-medium">Dominant</span>
+                                    <span style={{ color: 'var(--color-foreground-muted)' }}>Revenue Growth Rate</span>
+                                    <span className="font-medium" style={{ color: 'var(--color-primary)' }}>Dominant</span>
                                 </div>
-                                <div className="w-full bg-background-muted rounded-full h-1.5">
-                                    <div className="bg-primary h-1.5 rounded-full" style={{ width: '85%' }} />
-                                </div>
-                            </div>
-                            <div>
-                                <div className="flex justify-between text-xs mb-1.5">
-                                    <span className="text-foreground-muted">Tech Proficiency</span>
-                                    <span className="text-primary font-medium">High</span>
-                                </div>
-                                <div className="w-full bg-background-muted rounded-full h-1.5">
-                                    <div className="bg-primary/60 h-1.5 rounded-full" style={{ width: '65%' }} />
+                                <div className="w-full rounded-full h-1.5" style={{ backgroundColor: 'var(--color-background-muted)' }}>
+                                    <div className="h-1.5 rounded-full" style={{ width: '85%', backgroundColor: 'var(--color-primary)' }} />
                                 </div>
                             </div>
                             <div>
                                 <div className="flex justify-between text-xs mb-1.5">
-                                    <span className="text-foreground-muted">Market Stability</span>
-                                    <span className="text-foreground-subtle font-medium">Medium</span>
+                                    <span style={{ color: 'var(--color-foreground-muted)' }}>Tech Proficiency</span>
+                                    <span className="font-medium" style={{ color: 'var(--color-primary)' }}>High</span>
                                 </div>
-                                <div className="w-full bg-background-muted rounded-full h-1.5">
-                                    <div className="bg-primary/40 h-1.5 rounded-full" style={{ width: '45%' }} />
+                                <div className="w-full rounded-full h-1.5" style={{ backgroundColor: 'var(--color-background-muted)' }}>
+                                    <div className="h-1.5 rounded-full" style={{ width: '65%', backgroundColor: 'rgba(59, 130, 246, 0.6)' }} />
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex justify-between text-xs mb-1.5">
+                                    <span style={{ color: 'var(--color-foreground-muted)' }}>Market Stability</span>
+                                    <span className="font-medium" style={{ color: 'var(--color-foreground-subtle)' }}>Medium</span>
+                                </div>
+                                <div className="w-full rounded-full h-1.5" style={{ backgroundColor: 'var(--color-background-muted)' }}>
+                                    <div className="h-1.5 rounded-full" style={{ width: '45%', backgroundColor: 'rgba(59, 130, 246, 0.4)' }} />
                                 </div>
                             </div>
                         </div>
@@ -112,28 +143,52 @@ export default function ModelTab() {
 
                 {/* Terminal Panel */}
                 <div className="lg:col-span-2">
-                    <div className="card overflow-hidden h-full flex flex-col">
-                        <div className="bg-background-subtle border-b border-border px-4 py-3 flex items-center justify-between">
+                    <div 
+                        className="rounded-xl overflow-hidden h-full flex flex-col"
+                        style={{
+                            backgroundColor: 'var(--color-background-elevated)',
+                            border: '1px solid var(--color-border)'
+                        }}
+                    >
+                        <div 
+                            className="px-4 py-3 flex items-center justify-between"
+                            style={{
+                                backgroundColor: 'var(--color-background-subtle)',
+                                borderBottom: '1px solid var(--color-border)'
+                            }}
+                        >
                             <div className="flex items-center gap-2">
-                                <Terminal className="w-4 h-4 text-primary" />
-                                <span className="text-xs font-mono text-foreground-muted">evaluation_logs / growth_model.rf</span>
+                                <Terminal className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
+                                <span className="text-xs font-mono" style={{ color: 'var(--color-foreground-muted)' }}>evaluation_logs / growth_model.rf</span>
                             </div>
                             <div className="flex gap-1.5">
-                                <div className="w-3 h-3 rounded-full bg-destructive/50" />
-                                <div className="w-3 h-3 rounded-full bg-warning/50" />
-                                <div className="w-3 h-3 rounded-full bg-success/50" />
+                                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(239, 68, 68, 0.5)' }} />
+                                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(245, 158, 11, 0.5)' }} />
+                                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(16, 185, 129, 0.5)' }} />
                             </div>
                         </div>
-                        <div className="p-6 flex-grow overflow-auto max-h-[500px] bg-background font-mono">
-                            <pre className="text-sm text-primary leading-relaxed whitespace-pre-wrap selection:bg-primary selection:text-white">
+                        <div 
+                            className="p-6 flex-grow overflow-auto max-h-[500px] font-mono"
+                            style={{ backgroundColor: 'var(--color-background)' }}
+                        >
+                            <pre 
+                                className="text-sm leading-relaxed whitespace-pre-wrap"
+                                style={{ color: 'var(--color-primary)' }}
+                            >
                                 {metrics || "ERROR: Log file 'reports/phase2_evaluation.txt' not found. Run engine/growth_model.py first."}
                             </pre>
                         </div>
-                        <div className="bg-background-elevated px-4 py-2.5 border-t border-border flex justify-between items-center">
-                            <span className="text-xs font-mono text-foreground-subtle">SESSION: RF-2026.4</span>
+                        <div 
+                            className="px-4 py-2.5 flex justify-between items-center"
+                            style={{
+                                backgroundColor: 'var(--color-background-elevated)',
+                                borderTop: '1px solid var(--color-border)'
+                            }}
+                        >
+                            <span className="text-xs font-mono" style={{ color: 'var(--color-foreground-subtle)' }}>SESSION: RF-2026.4</span>
                             <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-success animate-pulse-slow" />
-                                <span className="text-xs font-mono text-foreground-subtle">CONNECTED</span>
+                                <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--color-success)' }} />
+                                <span className="text-xs font-mono" style={{ color: 'var(--color-foreground-subtle)' }}>CONNECTED</span>
                             </div>
                         </div>
                     </div>

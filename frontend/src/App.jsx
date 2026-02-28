@@ -17,17 +17,26 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)' }}>
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
+      <nav 
+        className="sticky top-0 z-50 backdrop-blur-xl"
+        style={{ 
+          backgroundColor: 'rgba(10, 10, 10, 0.8)', 
+          borderBottom: '1px solid var(--color-border)' 
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+              <div 
+                className="w-8 h-8 rounded-lg flex items-center justify-center"
+                style={{ backgroundColor: 'var(--color-primary)' }}
+              >
                 <Sparkles className="h-4 w-4 text-white" />
               </div>
-              <span className="font-semibold text-lg text-foreground">
+              <span className="font-semibold text-lg">
                 ChaosZen
               </span>
             </div>
@@ -38,11 +47,11 @@ function App() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    activeTab === tab.id
-                      ? 'bg-background-subtle text-foreground'
-                      : 'text-foreground-muted hover:text-foreground hover:bg-background-subtle/50'
-                  }`}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+                  style={{
+                    backgroundColor: activeTab === tab.id ? 'var(--color-background-subtle)' : 'transparent',
+                    color: activeTab === tab.id ? 'var(--color-foreground)' : 'var(--color-foreground-muted)'
+                  }}
                 >
                   <tab.icon className="h-4 w-4" />
                   {tab.name}
@@ -52,7 +61,8 @@ function App() {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 text-foreground-muted hover:text-foreground transition-colors rounded-lg hover:bg-background-subtle"
+              className="md:hidden p-2 transition-colors rounded-lg"
+              style={{ color: 'var(--color-foreground-muted)' }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -62,7 +72,13 @@ function App() {
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-border bg-background-elevated animate-fade-in">
+          <div 
+            className="md:hidden"
+            style={{ 
+              backgroundColor: 'var(--color-background-elevated)',
+              borderTop: '1px solid var(--color-border)'
+            }}
+          >
             <div className="px-4 py-3 space-y-1">
               {tabs.map((tab) => (
                 <button
@@ -71,11 +87,11 @@ function App() {
                     setActiveTab(tab.id);
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                    activeTab === tab.id
-                      ? 'bg-primary text-white'
-                      : 'text-foreground-muted hover:text-foreground hover:bg-background-subtle'
-                  }`}
+                  className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm font-medium transition-all"
+                  style={{
+                    backgroundColor: activeTab === tab.id ? 'var(--color-primary)' : 'transparent',
+                    color: activeTab === tab.id ? 'white' : 'var(--color-foreground-muted)'
+                  }}
                 >
                   <tab.icon className="h-4 w-4" />
                   {tab.name}
@@ -88,7 +104,7 @@ function App() {
 
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="animate-fade-in">
+        <div>
           {activeTab === 'data' && <DataTab />}
           {activeTab === 'model' && <ModelTab />}
           {activeTab === 'advisory' && <AdvisoryTab />}
@@ -97,9 +113,15 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border py-6 mt-12">
+      <footer 
+        className="py-6 mt-12"
+        style={{ borderTop: '1px solid var(--color-border)' }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-foreground-subtle text-xs">
+          <p 
+            className="text-center text-xs"
+            style={{ color: 'var(--color-foreground-subtle)' }}
+          >
             ChaosZen MSME Optimization Engine
           </p>
         </div>

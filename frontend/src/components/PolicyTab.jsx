@@ -55,23 +55,36 @@ export default function PolicyTab() {
     const formatCurrency = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumSignificantDigits: 3 }).format(val);
 
     return (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-8">
             {/* Header & Controls */}
-            <div className="card">
-                <div className="px-6 py-5 border-b border-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div 
+                className="rounded-xl"
+                style={{
+                    backgroundColor: 'var(--color-background-elevated)',
+                    border: '1px solid var(--color-border)'
+                }}
+            >
+                <div 
+                    className="px-6 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+                    style={{ borderBottom: '1px solid var(--color-border)' }}
+                >
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-primary-muted rounded-lg">
-                            <Settings2 className="w-5 h-5 text-primary" />
+                        <div 
+                            className="p-2 rounded-lg"
+                            style={{ backgroundColor: 'var(--color-primary-muted)' }}
+                        >
+                            <Settings2 className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
                         </div>
                         <div>
-                            <h2 className="text-xl font-semibold text-foreground">Policy Optimization Engine</h2>
-                            <p className="text-sm text-foreground-muted">Simulate strategic budget allocation with adjustable priority weights.</p>
+                            <h2 className="text-xl font-semibold">Policy Optimization Engine</h2>
+                            <p className="text-sm" style={{ color: 'var(--color-foreground-muted)' }}>Simulate strategic budget allocation with adjustable priority weights.</p>
                         </div>
                     </div>
                     <button
                         onClick={fetchSimulation}
                         disabled={loading}
-                        className="btn-primary min-w-[160px]"
+                        className="min-w-[160px] px-5 py-2.5 rounded-lg font-medium transition-all"
+                        style={{ backgroundColor: 'var(--color-primary)', color: 'white' }}
                     >
                         {loading ? (
                             <div className="flex items-center gap-2">
@@ -86,8 +99,8 @@ export default function PolicyTab() {
                     {/* Budget Slider */}
                     <div className="space-y-4">
                         <div className="flex justify-between items-baseline">
-                            <label className="text-sm font-medium text-foreground-muted">Total Budget</label>
-                            <span className="text-xl font-bold text-foreground">{formatCurrency(budget)}</span>
+                            <label className="text-sm font-medium" style={{ color: 'var(--color-foreground-muted)' }}>Total Budget</label>
+                            <span className="text-xl font-bold">{formatCurrency(budget)}</span>
                         </div>
                         <input
                             type="range"
@@ -98,7 +111,7 @@ export default function PolicyTab() {
                             onChange={(e) => setBudget(parseFloat(e.target.value))}
                             className="w-full"
                         />
-                        <div className="flex justify-between text-xs text-foreground-subtle">
+                        <div className="flex justify-between text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>
                             <span>1 Cr</span>
                             <span>20 Cr</span>
                         </div>
@@ -106,7 +119,7 @@ export default function PolicyTab() {
 
                     {/* Priority Slider */}
                     <div className="space-y-4">
-                        <label className="text-sm font-medium text-foreground-muted">Economic Priority Focus</label>
+                        <label className="text-sm font-medium" style={{ color: 'var(--color-foreground-muted)' }}>Economic Priority Focus</label>
                         <input
                             type="range"
                             min="0.1"
@@ -116,17 +129,29 @@ export default function PolicyTab() {
                             onChange={handleSliderChange}
                             className="w-full"
                         />
-                        <div className="flex justify-between items-center p-3 bg-background-subtle rounded-lg border border-border">
-                            <div className={`transition-all ${beta > 0.5 ? 'opacity-100' : 'opacity-40'}`}>
-                                <span className="text-xs text-foreground-subtle">Employment</span>
-                                <p className={`text-sm font-semibold ${beta > 0.5 ? 'text-success' : 'text-foreground-muted'}`}>
+                        <div 
+                            className="flex justify-between items-center p-3 rounded-lg"
+                            style={{
+                                backgroundColor: 'var(--color-background-subtle)',
+                                border: '1px solid var(--color-border)'
+                            }}
+                        >
+                            <div style={{ opacity: beta > 0.5 ? 1 : 0.4 }}>
+                                <span className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Employment</span>
+                                <p 
+                                    className="text-sm font-semibold"
+                                    style={{ color: beta > 0.5 ? 'var(--color-success)' : 'var(--color-foreground-muted)' }}
+                                >
                                     {(beta * 100).toFixed(0)}%
                                 </p>
                             </div>
-                            <div className="h-6 w-px bg-border" />
-                            <div className={`text-right transition-all ${alpha > 0.5 ? 'opacity-100' : 'opacity-40'}`}>
-                                <span className="text-xs text-foreground-subtle">Revenue</span>
-                                <p className={`text-sm font-semibold ${alpha > 0.5 ? 'text-primary' : 'text-foreground-muted'}`}>
+                            <div className="h-6 w-px" style={{ backgroundColor: 'var(--color-border)' }} />
+                            <div className="text-right" style={{ opacity: alpha > 0.5 ? 1 : 0.4 }}>
+                                <span className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Revenue</span>
+                                <p 
+                                    className="text-sm font-semibold"
+                                    style={{ color: alpha > 0.5 ? 'var(--color-primary)' : 'var(--color-foreground-muted)' }}
+                                >
                                     {(alpha * 100).toFixed(0)}%
                                 </p>
                             </div>
@@ -136,9 +161,15 @@ export default function PolicyTab() {
             </div>
 
             {error && (
-                <div className="flex items-center gap-3 p-4 bg-destructive-muted border border-destructive/20 rounded-xl">
-                    <AlertTriangle className="h-5 w-5 text-destructive flex-shrink-0" />
-                    <p className="text-sm text-destructive">
+                <div 
+                    className="flex items-center gap-3 p-4 rounded-xl"
+                    style={{
+                        backgroundColor: 'var(--color-destructive-muted)',
+                        border: '1px solid rgba(239, 68, 68, 0.2)'
+                    }}
+                >
+                    <AlertTriangle className="h-5 w-5 flex-shrink-0" style={{ color: 'var(--color-destructive)' }} />
+                    <p className="text-sm" style={{ color: 'var(--color-destructive)' }}>
                         <strong>Error:</strong> {error}
                     </p>
                 </div>
@@ -149,56 +180,94 @@ export default function PolicyTab() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* KPI Cards */}
                     <div className="space-y-4">
-                        <div className="metric-card border-l-4 border-l-primary">
+                        <div 
+                            className="p-5 rounded-xl"
+                            style={{
+                                backgroundColor: 'var(--color-background-elevated)',
+                                border: '1px solid var(--color-border)',
+                                borderLeft: '4px solid var(--color-primary)'
+                            }}
+                        >
                             <div className="flex items-center gap-2">
-                                <Percent className="w-4 h-4 text-primary" />
-                                <span className="metric-label">Budget Utilization</span>
+                                <Percent className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
+                                <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-foreground-subtle)' }}>Budget Utilization</span>
                             </div>
                             <div className="flex items-baseline gap-2">
-                                <span className="text-3xl font-bold text-foreground">{data.utilization_pct.toFixed(1)}%</span>
+                                <span className="text-3xl font-bold">{data.utilization_pct.toFixed(1)}%</span>
                             </div>
-                            <div className="w-full bg-background-muted h-1.5 rounded-full mt-2">
+                            <div 
+                                className="w-full h-1.5 rounded-full mt-2"
+                                style={{ backgroundColor: 'var(--color-background-muted)' }}
+                            >
                                 <div
-                                    className="bg-primary h-1.5 rounded-full transition-all duration-700"
-                                    style={{ width: `${data.utilization_pct}%` }}
+                                    className="h-1.5 rounded-full transition-all duration-700"
+                                    style={{ 
+                                        width: `${data.utilization_pct}%`,
+                                        backgroundColor: 'var(--color-primary)'
+                                    }}
                                 />
                             </div>
                         </div>
 
-                        <div className="metric-card border-l-4 border-l-success">
+                        <div 
+                            className="p-5 rounded-xl"
+                            style={{
+                                backgroundColor: 'var(--color-background-elevated)',
+                                border: '1px solid var(--color-border)',
+                                borderLeft: '4px solid var(--color-success)'
+                            }}
+                        >
                             <div className="flex items-center gap-2">
-                                <TrendingUp className="w-4 h-4 text-success" />
-                                <span className="metric-label">MSMEs Selected</span>
+                                <TrendingUp className="w-4 h-4" style={{ color: 'var(--color-success)' }} />
+                                <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-foreground-subtle)' }}>MSMEs Selected</span>
                             </div>
-                            <span className="text-3xl font-bold text-foreground">{data.total_selected}</span>
-                            <p className="text-xs text-foreground-subtle mt-1">Approved for disbursement</p>
+                            <span className="text-3xl font-bold">{data.total_selected}</span>
+                            <p className="text-xs mt-1" style={{ color: 'var(--color-foreground-subtle)' }}>Approved for disbursement</p>
                         </div>
 
                         <div className="grid grid-cols-2 gap-3">
-                            <div className="metric-card">
+                            <div 
+                                className="p-5 rounded-xl"
+                                style={{
+                                    backgroundColor: 'var(--color-background-elevated)',
+                                    border: '1px solid var(--color-border)'
+                                }}
+                            >
                                 <div className="flex items-center gap-1.5 mb-2">
-                                    <Users className="w-3.5 h-3.5 text-success" />
-                                    <span className="metric-label text-[10px]">Jobs Created</span>
+                                    <Users className="w-3.5 h-3.5" style={{ color: 'var(--color-success)' }} />
+                                    <span className="text-[10px] font-medium uppercase tracking-wider" style={{ color: 'var(--color-foreground-subtle)' }}>Jobs Created</span>
                                 </div>
-                                <span className="text-xl font-bold text-foreground">+{Math.round(data.total_jobs_created)}</span>
+                                <span className="text-xl font-bold">+{Math.round(data.total_jobs_created)}</span>
                             </div>
-                            <div className="metric-card">
+                            <div 
+                                className="p-5 rounded-xl"
+                                style={{
+                                    backgroundColor: 'var(--color-background-elevated)',
+                                    border: '1px solid var(--color-border)'
+                                }}
+                            >
                                 <div className="flex items-center gap-1.5 mb-2">
-                                    <DollarSign className="w-3.5 h-3.5 text-warning" />
-                                    <span className="metric-label text-[10px]">Revenue Gain</span>
+                                    <DollarSign className="w-3.5 h-3.5" style={{ color: 'var(--color-warning)' }} />
+                                    <span className="text-[10px] font-medium uppercase tracking-wider" style={{ color: 'var(--color-foreground-subtle)' }}>Revenue Gain</span>
                                 </div>
-                                <span className="text-lg font-bold text-warning">{formatCurrency(data.total_revenue_gain)}</span>
+                                <span className="text-lg font-bold" style={{ color: 'var(--color-warning)' }}>{formatCurrency(data.total_revenue_gain)}</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Chart */}
-                    <div className="lg:col-span-2 card p-6">
+                    <div 
+                        className="lg:col-span-2 p-6 rounded-xl"
+                        style={{
+                            backgroundColor: 'var(--color-background-elevated)',
+                            border: '1px solid var(--color-border)'
+                        }}
+                    >
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-sm font-semibold text-foreground">Sectoral Budget Distribution</h3>
+                            <h3 className="text-sm font-semibold">Sectoral Budget Distribution</h3>
                             <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-primary animate-pulse-slow" />
-                                <span className="text-xs text-foreground-subtle">Live</span>
+                                <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--color-primary)' }} />
+                                <span className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Live</span>
                             </div>
                         </div>
                         <div className="h-64">
@@ -246,35 +315,48 @@ export default function PolicyTab() {
                         {/* Selected */}
                         <div>
                             <div className="flex items-center gap-2 mb-4">
-                                <CheckCircle className="w-5 h-5 text-success" />
-                                <h3 className="text-lg font-semibold text-foreground">Approved Allocations</h3>
+                                <CheckCircle className="w-5 h-5" style={{ color: 'var(--color-success)' }} />
+                                <h3 className="text-lg font-semibold">Approved Allocations</h3>
                             </div>
-                            <div className="card overflow-hidden">
+                            <div 
+                                className="rounded-xl overflow-hidden"
+                                style={{
+                                    backgroundColor: 'var(--color-background-elevated)',
+                                    border: '1px solid var(--color-border)'
+                                }}
+                            >
                                 <div className="overflow-x-auto max-h-[400px]">
                                     <table className="min-w-full">
-                                        <thead className="bg-background-subtle sticky top-0">
+                                        <thead 
+                                            className="sticky top-0"
+                                            style={{ backgroundColor: 'var(--color-background-subtle)' }}
+                                        >
                                             <tr>
-                                                <th className="table-header">Rank</th>
-                                                <th className="table-header">Entity & Scheme</th>
-                                                <th className="table-header">Amount</th>
-                                                <th className="table-header">Justification</th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Rank</th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Entity & Scheme</th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Amount</th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Justification</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {data.selected.map((row, i) => (
-                                                <tr key={i} className="table-row">
-                                                    <td className="table-cell">
-                                                        <span className="text-xs font-semibold text-warning">#{row.Selection_Rank}</span>
+                                                <tr 
+                                                    key={i} 
+                                                    className="transition-colors"
+                                                    style={{ borderBottom: '1px solid var(--color-border-subtle)' }}
+                                                >
+                                                    <td className="px-4 py-3 text-sm">
+                                                        <span className="text-xs font-semibold" style={{ color: 'var(--color-warning)' }}>#{row.Selection_Rank}</span>
                                                     </td>
-                                                    <td className="table-cell">
-                                                        <div className="font-medium text-foreground">{row.MSME_ID}</div>
-                                                        <div className="text-xs text-foreground-subtle mt-0.5">{row.Scheme_Name}</div>
+                                                    <td className="px-4 py-3 text-sm">
+                                                        <div className="font-medium">{row.MSME_ID}</div>
+                                                        <div className="text-xs mt-0.5" style={{ color: 'var(--color-foreground-subtle)' }}>{row.Scheme_Name}</div>
                                                     </td>
-                                                    <td className="table-cell">
-                                                        <span className="font-semibold text-success">{formatCurrency(row.Subsidy_Applied)}</span>
+                                                    <td className="px-4 py-3 text-sm">
+                                                        <span className="font-semibold" style={{ color: 'var(--color-success)' }}>{formatCurrency(row.Subsidy_Applied)}</span>
                                                     </td>
-                                                    <td className="table-cell">
-                                                        <p className="text-xs text-foreground-muted leading-relaxed max-w-lg">
+                                                    <td className="px-4 py-3 text-sm">
+                                                        <p className="text-xs leading-relaxed max-w-lg" style={{ color: 'var(--color-foreground-muted)' }}>
                                                             {row.Decision_Justification}
                                                         </p>
                                                     </td>
@@ -289,33 +371,50 @@ export default function PolicyTab() {
                         {/* Not Selected */}
                         <div>
                             <div className="flex items-center gap-2 mb-4">
-                                <XCircle className="w-5 h-5 text-destructive" />
-                                <h3 className="text-lg font-semibold text-foreground">Budget Exclusions</h3>
+                                <XCircle className="w-5 h-5" style={{ color: 'var(--color-destructive)' }} />
+                                <h3 className="text-lg font-semibold">Budget Exclusions</h3>
                             </div>
-                            <div className="card overflow-hidden opacity-80">
+                            <div 
+                                className="rounded-xl overflow-hidden opacity-80"
+                                style={{
+                                    backgroundColor: 'var(--color-background-elevated)',
+                                    border: '1px solid var(--color-border)'
+                                }}
+                            >
                                 <div className="overflow-x-auto max-h-64">
                                     <table className="min-w-full">
-                                        <thead className="bg-background-subtle sticky top-0">
+                                        <thead 
+                                            className="sticky top-0"
+                                            style={{ backgroundColor: 'var(--color-background-subtle)' }}
+                                        >
                                             <tr>
-                                                <th className="table-header">Entity</th>
-                                                <th className="table-header">Scheme</th>
-                                                <th className="table-header">Efficiency</th>
-                                                <th className="table-header">Reason</th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Entity</th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Scheme</th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Efficiency</th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Reason</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {data.unselected && data.unselected.length > 0 ? data.unselected.map((row, i) => (
-                                                <tr key={i} className="table-row hover:bg-destructive-muted/30">
-                                                    <td className="table-cell font-medium text-foreground/70">{row.MSME_ID}</td>
-                                                    <td className="table-cell text-xs text-foreground-subtle">{row.Scheme_Name}</td>
-                                                    <td className="table-cell font-mono text-xs text-foreground-subtle">{row.Efficiency.toFixed(4)}</td>
-                                                    <td className="table-cell">
-                                                        <span className="text-xs font-medium text-destructive">{row.Reason}</span>
+                                                <tr 
+                                                    key={i} 
+                                                    className="transition-colors"
+                                                    style={{ borderBottom: '1px solid var(--color-border-subtle)' }}
+                                                >
+                                                    <td className="px-4 py-3 text-sm font-medium" style={{ opacity: 0.7 }}>{row.MSME_ID}</td>
+                                                    <td className="px-4 py-3 text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>{row.Scheme_Name}</td>
+                                                    <td className="px-4 py-3 text-xs font-mono" style={{ color: 'var(--color-foreground-subtle)' }}>{row.Efficiency.toFixed(4)}</td>
+                                                    <td className="px-4 py-3 text-sm">
+                                                        <span className="text-xs font-medium" style={{ color: 'var(--color-destructive)' }}>{row.Reason}</span>
                                                     </td>
                                                 </tr>
                                             )) : (
                                                 <tr>
-                                                    <td colSpan="4" className="table-cell text-center py-8 text-foreground-muted">
+                                                    <td 
+                                                        colSpan="4" 
+                                                        className="px-4 py-8 text-center text-sm"
+                                                        style={{ color: 'var(--color-foreground-muted)' }}
+                                                    >
                                                         Maximum efficiency achieved. All mandates satisfied.
                                                     </td>
                                                 </tr>
