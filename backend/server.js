@@ -26,24 +26,24 @@ app.get('/api/data', (req, res) => {
     const schemesResults = [];
     const msmePath = path.join(__dirname, '..', 'data', 'msme_data.csv');
     const schemesPath = path.join(__dirname, '..', 'data', 'schemes_data.csv');
-    
+
     if (!fs.existsSync(msmePath) || !fs.existsSync(schemesPath)) {
         return res.status(404).json({ error: "Data files not found." });
     }
 
     fs.createReadStream(msmePath)
-      .pipe(csv())
-      .on('data', (data) => {
-          if (msmeResults.length < 50) msmeResults.push(data); // Limit to 50 for UI
-      })
-      .on('end', () => {
-          fs.createReadStream(schemesPath)
-            .pipe(csv())
-            .on('data', (data) => schemesResults.push(data))
-            .on('end', () => {
-                res.json({ msme: msmeResults, schemes: schemesResults });
-            });
-      });
+        .pipe(csv())
+        .on('data', (data) => {
+            if (msmeResults.length < 50) msmeResults.push(data); // Limit to 50 for UI
+        })
+        .on('end', () => {
+            fs.createReadStream(schemesPath)
+                .pipe(csv())
+                .on('data', (data) => schemesResults.push(data))
+                .on('end', () => {
+                    res.json({ msme: msmeResults, schemes: schemesResults });
+                });
+        });
 });
 
 // GET model evaluation metrics
@@ -105,6 +105,73 @@ app.post('/api/optimize', (req, res) => {
             res.status(500).json({ error: 'Failed to parse simulation results', output: dataString });
         }
     });
+});
+
+// GET /api/search?q=<query>
+app.get('/api/search', (req, res) => {
+    const query = (req.query.q || '').toLowerCase();
+    const results = [];
+    const predictionsPath = path.join(__dirname, '..', 'data', 'msme_predictions.csv');
+
+    if (!fs.existsSync(predictionsPath)) {
+        return res.status(404).json({ error: "Predictions data not found. Run growth_model.py first." });
+    }
+
+    fs.createReadStream(predictionsPath)
+        .pipe(csv())
+        .on('data', (data) => {
+            const match = !query || query === '*' ||
+                data.MSME_ID.toLowerCase().includes(query) ||
+                data.Sector.toLowerCase().includes(query) ||
+                data.Location_Type.toLowerCase().includes(query) ||
+                data.Predicted_Growth_Category.toLowerCase().includes(query);
+
+            if (match && results.length < 30) {
+                results.push(data);
+            }
+        })
+        .on('end', () => {
+            res.json(results);
+        });
+});
+
+// GET /api/msme/:id/schemes
+app.get('/api/msme/:id/schemes', (req, res) => {
+    const msmeId = req.params.id;
+    const results = [];
+    const eligibilityPath = path.join(__dirname, '..', 'data', 'scheme_eligibility_results.csv');
+
+    if (!fs.existsSync(eligibilityPath)) {
+        return res.status(404).json({ error: "Eligibility data not found. Run scheme_eligibility.py first." });
+    }
+
+    fs.createReadStream(eligibilityPath)
+        .pipe(csv())
+        .on('data', (data) => {
+            if (data.MSME_ID === msmeId && data.Simulation_Type === 'Single_Scheme') {
+                results.push(data);
+            }
+        })
+        .on('end', () => {
+            if (results.length === 0) {
+                return res.json([]);
+            }
+
+            // Flag the recommended one (highest Revenue_Increase_Pct)
+            let maxRevIdx = 0;
+            for (let i = 1; i < results.length; i++) {
+                if (parseFloat(results[i].Revenue_Increase_Pct) > parseFloat(results[maxRevIdx].Revenue_Increase_Pct)) {
+                    maxRevIdx = i;
+                }
+            }
+
+            const processed = results.map((r, i) => ({
+                ...r,
+                is_recommended: i === maxRevIdx
+            }));
+
+            res.json(processed);
+        });
 });
 
 app.listen(PORT, () => {
