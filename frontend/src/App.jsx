@@ -1,20 +1,34 @@
 import React, { useState } from 'react';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import LoginPage from './components/LoginPage';
 import AdvisoryTab from './components/AdvisoryTab';
 import PolicyTab from './components/PolicyTab';
 import DataTab from './components/DataTab';
 import ModelTab from './components/ModelTab';
-import { LayoutDashboard, Settings, Database, Brain, Menu, X, Sparkles } from 'lucide-react';
+import SchemeBrowser from './components/msme/SchemeBrowser';
+import ApplicationTracker from './components/msme/ApplicationTracker';
+import { LayoutDashboard, Settings, Database, Brain, Menu, X, Sparkles, LogOut, User, FileSearch, ClipboardList } from 'lucide-react';
 
-function App() {
-  const [activeTab, setActiveTab] = useState('policy');
+function Dashboard() {
+  const { user, logout, isPolicyMaker, isMSME } = useAuth();
+  const [activeTab, setActiveTab] = useState(isPolicyMaker ? 'policy' : 'schemes');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const tabs = [
+  // Policy Maker tabs
+  const policyMakerTabs = [
     { id: 'data', name: 'Data Explorer', icon: Database },
     { id: 'model', name: 'AI Model', icon: Brain },
     { id: 'advisory', name: 'Advisory', icon: LayoutDashboard },
     { id: 'policy', name: 'Policy Engine', icon: Settings },
   ];
+
+  // MSME tabs
+  const msmeTabs = [
+    { id: 'schemes', name: 'Browse Schemes', icon: FileSearch },
+    { id: 'applications', name: 'My Applications', icon: ClipboardList },
+  ];
+
+  const tabs = isPolicyMaker ? policyMakerTabs : msmeTabs;
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)' }}>
@@ -39,6 +53,15 @@ function App() {
               <span className="font-semibold text-lg">
                 ChaosZen
               </span>
+              <span 
+                className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
+                style={{ 
+                  backgroundColor: isPolicyMaker ? 'var(--color-primary-muted)' : 'var(--color-success-muted)',
+                  color: isPolicyMaker ? 'var(--color-primary)' : 'var(--color-success)'
+                }}
+              >
+                {isPolicyMaker ? 'Policy Maker' : 'MSME'}
+              </span>
             </div>
 
             {/* Desktop Tabs */}
@@ -59,14 +82,34 @@ function App() {
               ))}
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-2 transition-colors rounded-lg"
-              style={{ color: 'var(--color-foreground-muted)' }}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            {/* User Menu */}
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-2 text-sm" style={{ color: 'var(--color-foreground-muted)' }}>
+                <User className="w-4 h-4" />
+                <span className="max-w-[150px] truncate">{user?.email}</span>
+              </div>
+              <button
+                onClick={logout}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all"
+                style={{ 
+                  backgroundColor: 'var(--color-background-subtle)',
+                  color: 'var(--color-foreground-muted)',
+                  border: '1px solid var(--color-border)'
+                }}
+              >
+                <LogOut className="h-4 w-4" />
+                <span className="hidden sm:inline">Logout</span>
+              </button>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden p-2 transition-colors rounded-lg"
+                style={{ color: 'var(--color-foreground-muted)' }}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -105,10 +148,15 @@ function App() {
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div>
-          {activeTab === 'data' && <DataTab />}
-          {activeTab === 'model' && <ModelTab />}
-          {activeTab === 'advisory' && <AdvisoryTab />}
-          {activeTab === 'policy' && <PolicyTab />}
+          {/* Policy Maker Views */}
+          {isPolicyMaker && activeTab === 'data' && <DataTab />}
+          {isPolicyMaker && activeTab === 'model' && <ModelTab />}
+          {isPolicyMaker && activeTab === 'advisory' && <AdvisoryTab />}
+          {isPolicyMaker && activeTab === 'policy' && <PolicyTab />}
+          
+          {/* MSME Views */}
+          {isMSME && activeTab === 'schemes' && <SchemeBrowser />}
+          {isMSME && activeTab === 'applications' && <ApplicationTracker />}
         </div>
       </main>
 
@@ -122,7 +170,7 @@ function App() {
             className="text-center text-xs"
             style={{ color: 'var(--color-foreground-subtle)' }}
           >
-            ChaosZen MSME Optimization Engine
+            ChaosZen MSME Optimization Engine • Logged in as {user?.email}
           </p>
         </div>
       </footer>
@@ -130,4 +178,37 @@ function App() {
   );
 }
 
-export default App;
+function App() {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div 
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: 'var(--color-background)' }}
+      >
+        <div className="text-center">
+          <div 
+            className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+            style={{ backgroundColor: 'var(--color-primary)' }}
+          >
+            <Sparkles className="h-6 w-6 text-white animate-pulse" />
+          </div>
+          <p style={{ color: 'var(--color-foreground-muted)' }}>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return isAuthenticated ? <Dashboard /> : <LoginPage />;
+}
+
+function AppWithAuth() {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+}
+
+export default AppWithAuth;

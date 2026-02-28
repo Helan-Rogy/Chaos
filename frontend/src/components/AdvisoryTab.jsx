@@ -259,7 +259,6 @@ export default function AdvisoryTab() {
                                                         }}
                                                     />
                                                 </div>
-                                                <span className="text-sm font-semibold text-white">{Math.round(item.Growth_Score)}</span>
                                             </div>
                                             <div className="hidden lg:block" style={{ color: 'var(--color-foreground-subtle)' }}>
                                                 {expandedMsme === item.MSME_ID ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
@@ -267,7 +266,6 @@ export default function AdvisoryTab() {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
                                 {/* Expanded Panel */}
                                 {expandedMsme === item.MSME_ID && schemes.length > 0 && (
@@ -282,18 +280,6 @@ export default function AdvisoryTab() {
                                             <TrendingUp className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
                                             <h4 className="text-sm font-semibold">Eligible Scheme Projections ({schemes.length} schemes)</h4>
                                         </div>
-                                    ) : msmeSchemes[item.MSME_ID]?.length === 0 ? (
-                                        <p className="text-sm text-secondary-400 py-4">No eligible schemes found for this MSME profile.</p>
-                                    ) : (
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            {(msmeSchemes[item.MSME_ID] || []).map((scheme) => (
-                                                <div key={scheme.Scheme_ID} className={`p-5 rounded-lg border ${scheme.is_recommended ? 'bg-primary-500/5 border-primary-500/20' : 'bg-secondary-800 border-secondary-700'}`}>
-                                                    {scheme.is_recommended && (
-                                                        <span className="inline-block px-3 py-1 bg-primary-600 text-white text-xs font-semibold rounded-full mb-3">
-                                                            Recommended
-                                                        </span>
-                                                    )}
-                                                    <h5 className="text-white font-semibold mb-4">{scheme.Scheme_Name}</h5>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                             {schemes.slice(0, 6).map((scheme, idx) => (
