@@ -1,167 +1,286 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Search, MapPin, Building, Loader2, ChevronDown, ChevronUp, ArrowRight, Users, DollarSign } from 'lucide-react';
+import { Search, MapPin, Building, Star, ChevronDown, ChevronUp, TrendingUp, Loader2 } from 'lucide-react';
+import { loadCSV } from '../utils/csvParser';
 
 export default function AdvisoryTab() {
     const [query, setQuery] = useState("");
-    const [results, setResults] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [searched, setSearched] = useState(false);
     const [expandedMsme, setExpandedMsme] = useState(null);
-    const [msmeSchemes, setMsmeSchemes] = useState({});
-    const [schemesLoading, setSchemesLoading] = useState(false);
-
-    const handleSearch = async (e) => {
-        if (e) e.preventDefault();
-        setLoading(true);
-        setSearched(true);
-        setExpandedMsme(null);
-        try {
-            const res = await axios.get(`http://localhost:5000/api/search?q=${query}`);
-            setResults(res.data);
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const [msmeData, setMsmeData] = useState([]);
+    const [eligibilityData, setEligibilityData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        handleSearch();
+        async function fetchData() {
+            setLoading(true);
+            const [predictions, eligibility] = await Promise.all([
+                loadCSV('/data/msme_predictions.csv'),
+                loadCSV('/data/scheme_eligibility_results.csv')
+            ]);
+            setMsmeData(predictions);
+            setEligibilityData(eligibility);
+            setLoading(false);
+        }
+        fetchData();
     }, []);
 
-    const fetchSchemes = async (msmeId) => {
-        if (msmeSchemes[msmeId]) return;
-        setSchemesLoading(true);
-        try {
-            const res = await axios.get(`http://localhost:5000/api/msme/${msmeId}/schemes`);
-            setMsmeSchemes(prev => ({ ...prev, [msmeId]: res.data }));
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setSchemesLoading(false);
-        }
+    // Get schemes for a specific MSME
+    const getSchemesForMsme = (msmeId) => {
+        return eligibilityData.filter(e => e.MSME_ID === msmeId);
     };
 
+    const filteredResults = msmeData.filter(item => {
+        if (!query) return true;
+        const q = query.toLowerCase();
+        return item.MSME_ID?.toLowerCase().includes(q) ||
+            item.Sector?.toLowerCase().includes(q) ||
+            item.Location_Type?.toLowerCase().includes(q) ||
+            item.Category?.toLowerCase().includes(q) ||
+            item.Predicted_Growth_Category?.toLowerCase().includes(q);
+    }).slice(0, 50); // Limit to 50 results for performance
+
     const toggleMsme = (msmeId) => {
-        if (expandedMsme === msmeId) {
-            setExpandedMsme(null);
-        } else {
-            setExpandedMsme(msmeId);
-            fetchSchemes(msmeId);
-        }
+        setExpandedMsme(expandedMsme === msmeId ? null : msmeId);
     };
 
     const formatCurrency = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val);
 
-    const getCategoryBadge = (category) => {
-        const badges = {
-            'High': 'badge-success',
-            'Moderate': 'badge-warning',
-            'Low': 'badge-error'
-        };
-        return badges[category] || 'badge-info';
-    };
+    const quickFilters = ['Manufacturing', 'IT Services', 'Urban', 'Rural', 'High'];
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-96">
+                <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--color-primary)' }} />
+                <span className="ml-3">Loading advisory data...</span>
+            </div>
+        );
+    }
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h2 className="text-3xl font-display font-bold text-white mb-2">MSME Growth Advisory</h2>
-                <p className="text-secondary-400">Search and analyze MSME profiles with AI-predicted growth potential</p>
+        <div className="space-y-8">
+            {/* Header */}
+            <div className="space-y-2">
+                <span 
+                    className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium"
+                    style={{ 
+                        backgroundColor: 'var(--color-primary-muted)', 
+                        color: 'var(--color-primary)',
+                        border: '1px solid rgba(59, 130, 246, 0.2)'
+                    }}
+                >
+                    Advisory Intelligence
+                </span>
+                <h1 className="text-2xl sm:text-3xl font-bold">
+                    Growth Advisory Dashboard
+                </h1>
+                <p style={{ color: 'var(--color-foreground-muted)' }} className="max-w-2xl">
+                    Search and analyze {msmeData.length} MSME profiles with AI-powered growth predictions and scheme recommendations.
+                </p>
             </div>
 
-            <form onSubmit={handleSearch} className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-secondary-400" />
+            {/* Search */}
+            <div className="space-y-4">
+                <div className="relative">
+                    <Search 
+                        className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5" 
+                        style={{ color: 'var(--color-foreground-subtle)' }}
+                    />
+                    <input
+                        type="text"
+                        className="w-full pl-12 pr-4 h-14 text-base rounded-lg transition-all focus:outline-none"
+                        style={{
+                            backgroundColor: 'var(--color-background-subtle)',
+                            border: '1px solid var(--color-border)',
+                            color: 'var(--color-foreground)'
+                        }}
+                        placeholder="Search MSME ID, Sector, or Location..."
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                    />
                 </div>
-                <input
-                    type="text"
-                    className="input-field pl-12 h-12"
-                    placeholder="Search by MSME ID, Sector, or Location..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                />
-                <div className="absolute inset-y-0 right-2 flex items-center">
-                    <button type="submit" className="btn-primary h-9">
-                        Search
-                    </button>
-                </div>
-            </form>
 
-            {loading ? (
-                <div className="flex flex-col items-center justify-center py-20">
-                    <Loader2 className="h-12 w-12 text-primary-500 animate-spin" />
-                    <p className="mt-4 text-secondary-400 font-medium">Loading MSME data...</p>
+                <div className="flex flex-wrap gap-2">
+                    {quickFilters.map(tag => (
+                        <button
+                            key={tag}
+                            type="button"
+                            onClick={() => setQuery(tag)}
+                            className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:opacity-80"
+                            style={{
+                                backgroundColor: 'var(--color-background-subtle)',
+                                border: '1px solid var(--color-border)',
+                                color: 'var(--color-foreground-muted)'
+                            }}
+                        >
+                            {tag}
+                        </button>
+                    ))}
+                    {query && (
+                        <button
+                            type="button"
+                            onClick={() => setQuery('')}
+                            className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+                            style={{
+                                backgroundColor: 'var(--color-primary)',
+                                color: 'white'
+                            }}
+                        >
+                            Clear
+                        </button>
+                    )}
                 </div>
-            ) : searched && results.length === 0 ? (
-                <div className="card p-12 text-center">
-                    <p className="text-secondary-400">No MSME records found matching "{query}"</p>
-                </div>
-            ) : (
-                <div className="space-y-4">
-                    {results.map((item) => (
-                        <div key={item.MSME_ID} className={`card card-hover ${expandedMsme === item.MSME_ID ? 'ring-2 ring-primary-500' : ''}`}>
-                            <div className="p-6 cursor-pointer" onClick={() => toggleMsme(item.MSME_ID)}>
-                                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                                    <div className="flex items-start space-x-4 flex-1">
-                                        <div className="p-3 bg-primary-600/10 rounded-lg">
-                                            <Building className="w-6 h-6 text-primary-500" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <h3 className="text-lg font-bold text-white">{item.MSME_ID}</h3>
-                                                <span className={`badge ${getCategoryBadge(item.Predicted_Growth_Category)}`}>
-                                                    {item.Predicted_Growth_Category} Growth
-                                                </span>
+            </div>
+
+            {/* Results */}
+            <div className="space-y-4 min-h-[300px]">
+                <p className="text-sm" style={{ color: 'var(--color-foreground-muted)' }}>
+                    Showing {filteredResults.length} of {msmeData.length} records
+                </p>
+                {filteredResults.length === 0 ? (
+                    <div 
+                        className="p-12 text-center rounded-xl"
+                        style={{
+                            backgroundColor: 'var(--color-background-elevated)',
+                            border: '1px solid var(--color-border)'
+                        }}
+                    >
+                        <p style={{ color: 'var(--color-foreground-muted)' }}>No MSME records found matching "{query}"</p>
+                    </div>
+                ) : (
+                    <div className="space-y-3">
+                        {filteredResults.map((item) => {
+                            const schemes = getSchemesForMsme(item.MSME_ID);
+                            return (
+                            <div 
+                                key={item.MSME_ID} 
+                                className="rounded-xl transition-all duration-200"
+                                style={{
+                                    backgroundColor: 'var(--color-background-elevated)',
+                                    border: expandedMsme === item.MSME_ID 
+                                        ? '1px solid var(--color-primary)' 
+                                        : '1px solid var(--color-border)'
+                                }}
+                            >
+                                {/* Card Header */}
+                                <div 
+                                    className="p-5 cursor-pointer transition-colors" 
+                                    onClick={() => toggleMsme(item.MSME_ID)}
+                                >
+                                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                                        <div className="flex items-start gap-4">
+                                            <div 
+                                                className="p-2.5 rounded-lg"
+                                                style={{
+                                                    backgroundColor: 'var(--color-background-subtle)',
+                                                    border: '1px solid var(--color-border)'
+                                                }}
+                                            >
+                                                <Building className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
                                             </div>
-                                            <div className="flex flex-wrap items-center text-sm text-secondary-400 gap-4">
-                                                <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" /> {item.Location_Type}</span>
-                                                <span>{item.Sector}</span>
-                                                <span>{item.Category}</span>
+                                            <div>
+                                                <div className="flex items-center gap-3 mb-1">
+                                                    <h3 className="text-lg font-semibold">{item.MSME_ID}</h3>
+                                                    <span 
+                                                        className="px-2.5 py-1 rounded-md text-xs font-medium"
+                                                        style={{
+                                                            backgroundColor: item.Predicted_Growth_Category === 'High' 
+                                                                ? 'var(--color-success-muted)'
+                                                                : item.Predicted_Growth_Category === 'Moderate'
+                                                                ? 'var(--color-warning-muted)'
+                                                                : 'var(--color-background-muted)',
+                                                            color: item.Predicted_Growth_Category === 'High'
+                                                                ? 'var(--color-success)'
+                                                                : item.Predicted_Growth_Category === 'Moderate'
+                                                                ? 'var(--color-warning)'
+                                                                : 'var(--color-foreground-muted)'
+                                                        }}
+                                                    >
+                                                        {item.Predicted_Growth_Category} Growth
+                                                    </span>
+                                                </div>
+                                                <div 
+                                                    className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm"
+                                                    style={{ color: 'var(--color-foreground-muted)' }}
+                                                >
+                                                    <span className="flex items-center gap-1">
+                                                        <MapPin className="w-3.5 h-3.5" />
+                                                        {item.Location_Type}
+                                                    </span>
+                                                    <span style={{ color: 'var(--color-border)' }}>|</span>
+                                                    <span>{item.Sector}</span>
+                                                    <span style={{ color: 'var(--color-border)' }}>|</span>
+                                                    <span>{item.Category}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-                                        <div>
-                                            <p className="text-xs text-secondary-400 mb-1">Revenue</p>
-                                            <p className="text-sm font-semibold text-white">₹{(item.Annual_Revenue / 10000000).toFixed(2)} Cr</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-xs text-secondary-400 mb-1">Compliance</p>
-                                            <p className="text-sm font-semibold text-success-500">{Math.round(item.GST_Compliance_Score)}%</p>
-                                        </div>
-                                        <div className="col-span-2 lg:col-span-1">
-                                            <p className="text-xs text-secondary-400 mb-1">Growth Score</p>
-                                            <div className="flex items-center gap-2">
-                                                <div className="flex-1 bg-secondary-700 h-2 rounded-full overflow-hidden">
+                                        <div className="flex items-center gap-8 lg:gap-12">
+                                            <div className="space-y-1">
+                                                <p className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Revenue</p>
+                                                <p className="text-sm font-semibold">
+                                                    ₹{(Number(item.Annual_Revenue) / 10000000).toFixed(2)} Cr
+                                                </p>
+                                            </div>
+                                            <div className="space-y-1">
+                                                <p className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Employees</p>
+                                                <p className="text-sm font-semibold">
+                                                    {item.Number_of_Employees}
+                                                </p>
+                                            </div>
+                                            <div className="space-y-1.5 min-w-[120px]">
+                                                <div className="flex justify-between">
+                                                    <p className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Growth Score</p>
+                                                    <p 
+                                                        className="text-xs font-semibold"
+                                                        style={{
+                                                            color: Number(item.Growth_Score) > 70 
+                                                                ? 'var(--color-success)' 
+                                                                : Number(item.Growth_Score) > 40 
+                                                                ? 'var(--color-warning)' 
+                                                                : 'var(--color-foreground-muted)'
+                                                        }}
+                                                    >
+                                                        {Math.round(Number(item.Growth_Score))}/100
+                                                    </p>
+                                                </div>
+                                                <div 
+                                                    className="w-full h-1.5 rounded-full overflow-hidden"
+                                                    style={{ backgroundColor: 'var(--color-background-muted)' }}
+                                                >
                                                     <div
-                                                        className={`h-full rounded-full ${
-                                                            parseFloat(item.Growth_Score) > 70 ? 'bg-success-500' :
-                                                            parseFloat(item.Growth_Score) > 40 ? 'bg-warning-500' : 'bg-error-500'
-                                                        }`}
-                                                        style={{ width: `${item.Growth_Score}%` }}
-                                                    ></div>
+                                                        className="h-full rounded-full transition-all duration-700"
+                                                        style={{ 
+                                                            width: `${item.Growth_Score}%`,
+                                                            backgroundColor: Number(item.Growth_Score) > 70 
+                                                                ? 'var(--color-success)'
+                                                                : Number(item.Growth_Score) > 40 
+                                                                ? 'var(--color-warning)'
+                                                                : 'var(--color-foreground-subtle)'
+                                                        }}
+                                                    />
                                                 </div>
                                                 <span className="text-sm font-semibold text-white">{Math.round(item.Growth_Score)}</span>
                                             </div>
+                                            <div className="hidden lg:block" style={{ color: 'var(--color-foreground-subtle)' }}>
+                                                {expandedMsme === item.MSME_ID ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div className="lg:pl-4">
-                                        {expandedMsme === item.MSME_ID ? <ChevronUp className="text-secondary-400" /> : <ChevronDown className="text-secondary-400" />}
                                     </div>
                                 </div>
                             </div>
 
-                            {expandedMsme === item.MSME_ID && (
-                                <div className="border-t border-secondary-700 p-6 bg-secondary-900/50">
-                                    <h4 className="text-sm font-semibold text-white mb-4">Eligible Schemes & Impact Projections</h4>
-
-                                    {schemesLoading && !msmeSchemes[item.MSME_ID] ? (
-                                        <div className="flex items-center justify-center py-8">
-                                            <Loader2 className="h-6 w-6 text-primary-500 animate-spin mr-3" />
-                                            <span className="text-sm text-secondary-400">Loading schemes...</span>
+                                {/* Expanded Panel */}
+                                {expandedMsme === item.MSME_ID && schemes.length > 0 && (
+                                    <div 
+                                        className="p-5"
+                                        style={{
+                                            borderTop: '1px solid var(--color-border)',
+                                            backgroundColor: 'rgba(23, 23, 23, 0.3)'
+                                        }}
+                                    >
+                                        <div className="flex items-center gap-2 mb-5">
+                                            <TrendingUp className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
+                                            <h4 className="text-sm font-semibold">Eligible Scheme Projections ({schemes.length} schemes)</h4>
                                         </div>
                                     ) : msmeSchemes[item.MSME_ID]?.length === 0 ? (
                                         <p className="text-sm text-secondary-400 py-4">No eligible schemes found for this MSME profile.</p>
@@ -176,41 +295,77 @@ export default function AdvisoryTab() {
                                                     )}
                                                     <h5 className="text-white font-semibold mb-4">{scheme.Scheme_Name}</h5>
 
-                                                    <div className="grid grid-cols-2 gap-4">
-                                                        <div>
-                                                            <p className="text-xs text-secondary-400 mb-2">Revenue Impact</p>
-                                                            <div className="flex items-center gap-2 text-xs text-secondary-300 mb-1">
-                                                                <span>{formatCurrency(scheme.Before_Annual_Revenue)}</span>
-                                                                <ArrowRight className="w-3 h-3" />
-                                                                <span className="text-success-500 font-semibold">{formatCurrency(scheme.Projected_Revenue)}</span>
-                                                            </div>
-                                                            <p className="text-lg font-bold text-white">+{scheme.Revenue_Increase_Pct}%</p>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                            {schemes.slice(0, 6).map((scheme, idx) => (
+                                                <div 
+                                                    key={`${scheme.Scheme_ID}-${idx}`} 
+                                                    className="relative p-4 rounded-xl"
+                                                    style={{
+                                                        backgroundColor: idx === 0 
+                                                            ? 'var(--color-primary-muted)' 
+                                                            : 'var(--color-background-elevated)',
+                                                        border: idx === 0
+                                                            ? '1px solid rgba(59, 130, 246, 0.3)'
+                                                            : '1px solid var(--color-border)'
+                                                    }}
+                                                >
+                                                    {idx === 0 && (
+                                                        <div 
+                                                            className="absolute -top-2 -right-2 p-1.5 rounded-full"
+                                                            style={{ backgroundColor: 'var(--color-warning)' }}
+                                                        >
+                                                            <Star className="w-3 h-3 text-black" fill="currentColor" />
                                                         </div>
-                                                        <div>
-                                                            <p className="text-xs text-secondary-400 mb-2">Jobs Created</p>
-                                                            <div className="flex items-center gap-2 text-xs text-secondary-300 mb-1">
-                                                                <span>{scheme.Before_Employees}</span>
-                                                                <ArrowRight className="w-3 h-3" />
-                                                                <span className="text-success-500 font-semibold">{scheme.Projected_Employees}</span>
-                                                            </div>
-                                                            <p className="text-lg font-bold text-white">+{scheme.New_Jobs_Added}</p>
+                                                    )}
+                                                    <p 
+                                                        className="text-[10px] font-medium uppercase tracking-wider mb-1.5"
+                                                        style={{ color: 'var(--color-foreground-subtle)' }}
+                                                    >
+                                                        {scheme.Scheme_ID}
+                                                    </p>
+                                                    <h5 className="font-semibold text-sm mb-3">{scheme.Scheme_Name}</h5>
+                                                    <div className="space-y-2 text-xs">
+                                                        <div className="flex justify-between">
+                                                            <span style={{ color: 'var(--color-foreground-muted)' }}>Subsidy</span>
+                                                            <span className="font-semibold" style={{ color: 'var(--color-warning)' }}>
+                                                                {formatCurrency(scheme.Subsidy_Applied || scheme.Max_Subsidy_Amount)}
+                                                            </span>
                                                         </div>
-                                                    </div>
-
-                                                    <div className="mt-4 pt-4 border-t border-secondary-700 flex justify-between items-center text-xs">
-                                                        <span className="text-secondary-400">Max Subsidy: {formatCurrency(scheme.Max_Subsidy_Amount)}</span>
-                                                        <span className="text-primary-400 font-semibold">{formatCurrency(scheme.Subsidy_Applied)}</span>
+                                                        <div className="flex justify-between">
+                                                            <span style={{ color: 'var(--color-foreground-muted)' }}>Revenue Boost</span>
+                                                            <span className="font-semibold" style={{ color: 'var(--color-success)' }}>
+                                                                +{Number(scheme.Revenue_Increase_Pct).toFixed(1)}%
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex justify-between">
+                                                            <span style={{ color: 'var(--color-foreground-muted)' }}>Jobs Added</span>
+                                                            <span className="font-semibold" style={{ color: 'var(--color-primary)' }}>
+                                                                +{scheme.New_Jobs_Added}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             ))}
                                         </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            )}
+                                    </div>
+                                )}
+
+                                {expandedMsme === item.MSME_ID && schemes.length === 0 && (
+                                    <div 
+                                        className="p-5 text-center"
+                                        style={{
+                                            borderTop: '1px solid var(--color-border)',
+                                            backgroundColor: 'rgba(23, 23, 23, 0.3)'
+                                        }}
+                                    >
+                                        <p style={{ color: 'var(--color-foreground-muted)' }}>No eligible schemes found for this MSME.</p>
+                                    </div>
+                                )}
+                            </div>
+                        )})}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

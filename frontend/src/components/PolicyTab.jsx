@@ -1,42 +1,108 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
-import { Settings, AlertTriangle, CheckCircle2, XCircle, TrendingUp, Users, DollarSign } from 'lucide-react';
+import { Settings2, CheckCircle, XCircle, TrendingUp, Users, DollarSign, Percent, Loader2 } from 'lucide-react';
+import { loadCSV } from '../utils/csvParser';
 
 export default function PolicyTab() {
     const [budget, setBudget] = useState(50000000);
     const [alpha, setAlpha] = useState(0.6);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [data, setData] = useState(null);
-
-    const fetchSimulation = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await axios.post('http://localhost:5000/api/optimize', {
-                budget,
-                alpha
-            });
-            setData(response.data);
-        } catch (err) {
-            console.error(err);
-            setError(err.response?.data?.details || err.message || "Failed to fetch simulation");
-        } finally {
-            setLoading(false);
-        }
-    };
+    const [predictions, setPredictions] = useState([]);
+    const [eligibility, setEligibility] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchSimulation();
+        async function fetchData() {
+            setLoading(true);
+            const [pred, elig] = await Promise.all([
+                loadCSV('/data/msme_predictions.csv'),
+                loadCSV('/data/scheme_eligibility_results.csv')
+            ]);
+            setPredictions(pred);
+            setEligibility(elig);
+            setLoading(false);
+        }
+        fetchData();
     }, []);
 
     const beta = Math.round((1 - alpha) * 10) / 10;
 
-    const getChartData = () => {
-        if (!data || !data.selected) return [];
+    // Calculate optimization results based on actual data
+    const data = useMemo(() => {
+        if (predictions.length === 0 || eligibility.length === 0) {
+            return { selected: [], rejected: [], total_selected: 0, total_rejected: 0, utilization_pct: 0, total_revenue_gain: 0, total_jobs_created: 0, budget_used: 0 };
+        }
+
+        // Create a map of MSME details
+        const msmeMap = {};
+        predictions.forEach(p => {
+            msmeMap[p.MSME_ID] = p;
+        });
+
+        // Score each eligibility record based on alpha (revenue) and beta (jobs)
+        const scored = eligibility.map(e => {
+            const msme = msmeMap[e.MSME_ID] || {};
+            const revenueScore = Number(e.Revenue_Increase_Pct) || 0;
+            const jobScore = Number(e.New_Jobs_Added) || 0;
+            const compositeScore = (alpha * revenueScore) + ((1 - alpha) * jobScore * 10);
+            return {
+                ...e,
+                Sector: msme.Sector || 'Unknown',
+                compositeScore,
+                Subsidy_Applied: Number(e.Subsidy_Applied) || Number(e.Max_Subsidy_Amount) || 0
+            };
+        });
+
+        // Sort by composite score and select within budget
+        scored.sort((a, b) => b.compositeScore - a.compositeScore);
+
+        let remainingBudget = budget;
+        const selected = [];
+        const rejected = [];
+
+        scored.forEach((item, idx) => {
+            if (remainingBudget >= item.Subsidy_Applied && selected.length < 50) {
+                remainingBudget -= item.Subsidy_Applied;
+                selected.push({
+                    MSME_ID: item.MSME_ID,
+                    Sector: item.Sector,
+                    Scheme_Name: item.Scheme_Name,
+                    Subsidy_Applied: item.Subsidy_Applied,
+                    Selection_Rank: selected.length + 1,
+                    Revenue_Boost: Number(item.Revenue_Increase_Pct) || 0,
+                    Jobs_Created: Number(item.New_Jobs_Added) || 0,
+                    Justification: `Composite score: ${item.compositeScore.toFixed(1)} | ${item.Predicted_Growth_Category || 'Growth'} potential`
+                });
+            } else if (rejected.length < 20) {
+                rejected.push({
+                    MSME_ID: item.MSME_ID,
+                    Sector: item.Sector,
+                    Scheme_Name: item.Scheme_Name,
+                    Rejection_Reason: remainingBudget < item.Subsidy_Applied 
+                        ? 'Insufficient budget remaining'
+                        : 'Lower priority score in current allocation'
+                });
+            }
+        });
+
+        const totalSubsidy = selected.reduce((sum, row) => sum + row.Subsidy_Applied, 0);
+        const totalRevenueGain = selected.reduce((sum, row) => sum + (row.Subsidy_Applied * row.Revenue_Boost / 100), 0);
+        const totalJobs = selected.reduce((sum, row) => sum + row.Jobs_Created, 0);
+
+        return {
+            selected,
+            rejected,
+            total_selected: selected.length,
+            total_rejected: rejected.length,
+            utilization_pct: Math.min((totalSubsidy / budget) * 100, 100),
+            total_revenue_gain: totalRevenueGain,
+            total_jobs_created: totalJobs,
+            budget_used: totalSubsidy
+        };
+    }, [predictions, eligibility, budget, alpha]);
+
+    const chartData = useMemo(() => {
         const sectorMap = {};
         data.selected.forEach(row => {
             const s = row.Sector;
@@ -47,61 +113,115 @@ export default function PolicyTab() {
             name: sector,
             Budget: sectorMap[sector]
         })).sort((a, b) => b.Budget - a.Budget);
-    };
+    }, [data.selected]);
 
-    const chartData = getChartData();
     const formatCurrency = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumSignificantDigits: 3 }).format(val);
 
-    return (
-        <div className="space-y-6">
-            <div>
-                <h2 className="text-3xl font-display font-bold text-white mb-2">Policy Optimization Engine</h2>
-                <p className="text-secondary-400">Simulate budget allocation strategies and optimize MSME funding decisions</p>
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-96">
+                <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--color-primary)' }} />
+                <span className="ml-3">Loading policy data...</span>
             </div>
+        );
+    }
 
-            <div className="card p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
-                    <div>
-                        <label className="block text-sm font-semibold text-secondary-200 mb-3">
-                            Total Budget: <span className="text-primary-400">{formatCurrency(budget)}</span>
-                        </label>
+    return (
+        <div className="space-y-8">
+            {/* Header & Controls */}
+            <div 
+                className="rounded-xl"
+                style={{
+                    backgroundColor: 'var(--color-background-elevated)',
+                    border: '1px solid var(--color-border)'
+                }}
+            >
+                <div 
+                    className="px-6 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+                    style={{ borderBottom: '1px solid var(--color-border)' }}
+                >
+                    <div className="flex items-center gap-3">
+                        <div 
+                            className="p-2 rounded-lg"
+                            style={{ backgroundColor: 'var(--color-primary-muted)' }}
+                        >
+                            <Settings2 className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-semibold">Policy Optimization Engine</h2>
+                            <p className="text-sm" style={{ color: 'var(--color-foreground-muted)' }}>
+                                Simulate strategic budget allocation across {eligibility.length} eligible scheme applications.
+                            </p>
+                        </div>
+                    </div>
+                    <div 
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                        style={{ backgroundColor: 'var(--color-success-muted)' }}
+                    >
+                        <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--color-success)' }} />
+                        <span className="text-xs font-medium" style={{ color: 'var(--color-success)' }}>Live Simulation</span>
+                    </div>
+                </div>
+
+                <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Budget Slider */}
+                    <div className="space-y-4">
+                        <div className="flex justify-between items-baseline">
+                            <label className="text-sm font-medium" style={{ color: 'var(--color-foreground-muted)' }}>Total Budget</label>
+                            <span className="text-xl font-bold">{formatCurrency(budget)}</span>
+                        </div>
                         <input
                             type="range"
                             min="10000000"
-                            max="200000000"
+                            max="500000000"
                             step="5000000"
                             value={budget}
                             onChange={(e) => setBudget(parseFloat(e.target.value))}
-                            className="w-full h-2 bg-secondary-700 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                            className="w-full accent-blue-500"
                         />
-                        <div className="flex justify-between text-xs text-secondary-500 mt-1">
+                        <div className="flex justify-between text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>
                             <span>₹1 Cr</span>
-                            <span>₹20 Cr</span>
+                            <span>₹50 Cr</span>
                         </div>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-secondary-200 mb-3">
-                            Policy Priority Balance
-                        </label>
+                    {/* Priority Slider */}
+                    <div className="space-y-4">
+                        <label className="text-sm font-medium" style={{ color: 'var(--color-foreground-muted)' }}>Economic Priority Focus</label>
                         <input
                             type="range"
                             min="0.1"
                             max="0.9"
                             step="0.1"
                             value={alpha}
-                            onChange={(e) => setAlpha(parseFloat(e.target.value))}
-                            className="w-full h-2 bg-secondary-700 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                            onChange={handleSliderChange}
+                            className="w-full accent-blue-500"
                         />
-                        <div className="flex justify-between items-center mt-3 gap-4">
-                            <div className="flex-1 text-center">
-                                <p className="text-xs text-secondary-400 mb-1">Employment</p>
-                                <p className={`text-lg font-bold ${beta > 0.5 ? 'text-primary-400' : 'text-secondary-500'}`}>{beta}</p>
+                        <div 
+                            className="flex justify-between items-center p-3 rounded-lg"
+                            style={{
+                                backgroundColor: 'var(--color-background-subtle)',
+                                border: '1px solid var(--color-border)'
+                            }}
+                        >
+                            <div style={{ opacity: beta > 0.5 ? 1 : 0.4 }}>
+                                <span className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Employment</span>
+                                <p 
+                                    className="text-sm font-semibold"
+                                    style={{ color: beta > 0.5 ? 'var(--color-success)' : 'var(--color-foreground-muted)' }}
+                                >
+                                    {(beta * 100).toFixed(0)}%
+                                </p>
                             </div>
-                            <div className="w-px h-10 bg-secondary-700"></div>
-                            <div className="flex-1 text-center">
-                                <p className="text-xs text-secondary-400 mb-1">Revenue</p>
-                                <p className={`text-lg font-bold ${alpha > 0.5 ? 'text-primary-400' : 'text-secondary-500'}`}>{alpha}</p>
+                            <div className="h-6 w-px" style={{ backgroundColor: 'var(--color-border)' }} />
+                            <div className="text-right" style={{ opacity: alpha > 0.5 ? 1 : 0.4 }}>
+                                <span className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Revenue</span>
+                                <p 
+                                    className="text-sm font-semibold"
+                                    style={{ color: alpha > 0.5 ? 'var(--color-primary)' : 'var(--color-foreground-muted)' }}
+                                >
+                                    {(alpha * 100).toFixed(0)}%
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -126,142 +246,268 @@ export default function PolicyTab() {
                 </button>
             </div>
 
-            {error && (
-                <div className="bg-error-500/10 border border-error-500/20 p-4 rounded-lg flex items-center">
-                    <AlertTriangle className="h-5 w-5 text-error-500 mr-3 flex-shrink-0" />
-                    <p className="text-sm text-error-500">{error}</p>
+            {/* Results */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* KPI Cards */}
+                <div className="space-y-4">
+                    <div 
+                        className="p-5 rounded-xl"
+                        style={{
+                            backgroundColor: 'var(--color-background-elevated)',
+                            border: '1px solid var(--color-border)',
+                            borderLeft: '4px solid var(--color-primary)'
+                        }}
+                    >
+                        <div className="flex items-center gap-2">
+                            <Percent className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
+                            <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-foreground-subtle)' }}>Budget Utilization</span>
+                        </div>
+                        <div className="flex items-baseline gap-2">
+                            <span className="text-3xl font-bold">{data.utilization_pct.toFixed(1)}%</span>
+                        </div>
+                        <div 
+                            className="w-full h-1.5 rounded-full mt-2"
+                            style={{ backgroundColor: 'var(--color-background-muted)' }}
+                        >
+                            <div
+                                className="h-1.5 rounded-full transition-all duration-700"
+                                style={{ 
+                                    width: `${data.utilization_pct}%`,
+                                    backgroundColor: 'var(--color-primary)'
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div 
+                        className="p-5 rounded-xl"
+                        style={{
+                            backgroundColor: 'var(--color-background-elevated)',
+                            border: '1px solid var(--color-border)',
+                            borderLeft: '4px solid var(--color-success)'
+                        }}
+                    >
+                        <div className="flex items-center gap-2">
+                            <TrendingUp className="w-4 h-4" style={{ color: 'var(--color-success)' }} />
+                            <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-foreground-subtle)' }}>MSMEs Selected</span>
+                        </div>
+                        <span className="text-3xl font-bold">{data.total_selected}</span>
+                        <p className="text-xs mt-1" style={{ color: 'var(--color-foreground-subtle)' }}>Approved for disbursement</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                        <div 
+                            className="p-5 rounded-xl"
+                            style={{
+                                backgroundColor: 'var(--color-background-elevated)',
+                                border: '1px solid var(--color-border)'
+                            }}
+                        >
+                            <div className="flex items-center gap-1.5 mb-2">
+                                <Users className="w-3.5 h-3.5" style={{ color: 'var(--color-success)' }} />
+                                <span className="text-[10px] font-medium uppercase tracking-wider" style={{ color: 'var(--color-foreground-subtle)' }}>Jobs Created</span>
+                            </div>
+                            <span className="text-xl font-bold">+{data.total_jobs_created}</span>
+                        </div>
+                        <div 
+                            className="p-5 rounded-xl"
+                            style={{
+                                backgroundColor: 'var(--color-background-elevated)',
+                                border: '1px solid var(--color-border)'
+                            }}
+                        >
+                            <div className="flex items-center gap-1.5 mb-2">
+                                <DollarSign className="w-3.5 h-3.5" style={{ color: 'var(--color-warning)' }} />
+                                <span className="text-[10px] font-medium uppercase tracking-wider" style={{ color: 'var(--color-foreground-subtle)' }}>Revenue Gain</span>
+                            </div>
+                            <span className="text-lg font-bold" style={{ color: 'var(--color-warning)' }}>{formatCurrency(data.total_revenue_gain)}</span>
+                        </div>
+                    </div>
                 </div>
-            )}
 
-            {data && !loading && (
-                <>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="card p-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <h3 className="text-sm font-medium text-secondary-400">Budget Used</h3>
-                                <TrendingUp className="h-5 w-5 text-primary-500" />
-                            </div>
-                            <p className="text-3xl font-bold text-white mb-1">{data.utilization_pct.toFixed(1)}%</p>
-                            <div className="w-full bg-secondary-700 rounded-full h-2 mt-3">
-                                <div
-                                    className="bg-primary-600 h-2 rounded-full transition-all duration-1000"
-                                    style={{ width: `${data.utilization_pct}%` }}
-                                ></div>
-                            </div>
-                        </div>
-
-                        <div className="card p-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <h3 className="text-sm font-medium text-secondary-400">MSMEs Funded</h3>
-                                <CheckCircle2 className="h-5 w-5 text-success-500" />
-                            </div>
-                            <p className="text-3xl font-bold text-white">{data.total_selected}</p>
-                            <p className="text-sm text-secondary-500 mt-2">Enterprises approved</p>
-                        </div>
-
-                        <div className="card p-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <h3 className="text-sm font-medium text-secondary-400">Jobs Created</h3>
-                                <Users className="h-5 w-5 text-success-500" />
-                            </div>
-                            <p className="text-3xl font-bold text-white">+{Math.round(data.total_jobs_created)}</p>
-                            <p className="text-sm text-secondary-500 mt-2">New employment</p>
+                {/* Chart */}
+                <div 
+                    className="lg:col-span-2 p-6 rounded-xl"
+                    style={{
+                        backgroundColor: 'var(--color-background-elevated)',
+                        border: '1px solid var(--color-border)'
+                    }}
+                >
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-sm font-semibold">Sectoral Budget Distribution</h3>
+                        <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--color-primary)' }} />
+                            <span className="text-xs" style={{ color: 'var(--color-foreground-subtle)' }}>Live</span>
                         </div>
                     </div>
-
-                    <div className="card p-6">
-                        <h3 className="text-lg font-semibold text-white mb-6">Sectoral Budget Distribution</h3>
-                        <div className="h-80">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={chartData}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                                    <XAxis
-                                        dataKey="name"
-                                        stroke="#94a3b8"
-                                        style={{ fontSize: '12px' }}
-                                    />
-                                    <YAxis
-                                        stroke="#94a3b8"
-                                        style={{ fontSize: '12px' }}
-                                        tickFormatter={(value) => `₹${(value / 10000000).toFixed(1)}Cr`}
-                                    />
-                                    <Tooltip
-                                        contentStyle={{
-                                            backgroundColor: '#1e293b',
-                                            border: '1px solid #334155',
-                                            borderRadius: '8px'
-                                        }}
-                                        formatter={(value) => [formatCurrency(value), 'Allocated']}
-                                    />
-                                    <Bar dataKey="Budget" fill="#0284c7" radius={[6, 6, 0, 0]} />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
+                    <div className="h-64">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                                <defs>
+                                    <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.9} />
+                                        <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.2} />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#27272a" />
+                                <XAxis
+                                    dataKey="name"
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#71717a', fontSize: 11 }}
+                                />
+                                <YAxis
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#71717a', fontSize: 11 }}
+                                    tickFormatter={(value) => `${(value / 10000000).toFixed(1)}Cr`}
+                                />
+                                <Tooltip
+                                    cursor={{ fill: 'rgba(59, 130, 246, 0.05)' }}
+                                    contentStyle={{
+                                        backgroundColor: '#111111',
+                                        borderRadius: '8px',
+                                        border: '1px solid #27272a',
+                                        boxShadow: '0 10px 15px -3px rgba(0,0,0,0.5)'
+                                    }}
+                                    labelStyle={{ color: '#fafafa', fontWeight: 600, marginBottom: '4px' }}
+                                    itemStyle={{ color: '#a1a1aa', fontSize: '12px' }}
+                                    formatter={(value) => [formatCurrency(value), 'Allocated']}
+                                />
+                                <Bar dataKey="Budget" fill="url(#barGradient)" radius={[4, 4, 0, 0]} maxBarSize={50} />
+                            </BarChart>
+                        </ResponsiveContainer>
                     </div>
+                </div>
 
-                    <div className="card p-6">
-                        <div className="flex items-center mb-4">
-                            <CheckCircle2 className="h-5 w-5 text-success-500 mr-2" />
-                            <h3 className="text-lg font-semibold text-white">Selected MSMEs</h3>
-                            <span className="ml-auto text-sm text-secondary-400">{data.selected.length} funded</span>
+                {/* Tables */}
+                <div className="lg:col-span-3 space-y-8">
+                    {/* Selected */}
+                    <div>
+                        <div className="flex items-center gap-2 mb-4">
+                            <CheckCircle className="w-5 h-5" style={{ color: 'var(--color-success)' }} />
+                            <h3 className="text-lg font-semibold">Approved Allocations ({data.total_selected})</h3>
                         </div>
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-secondary-700">
-                                <thead>
-                                    <tr>
-                                        <th className="px-4 py-3 text-left text-xs font-medium text-secondary-400">Rank</th>
-                                        <th className="px-4 py-3 text-left text-xs font-medium text-secondary-400">MSME ID</th>
-                                        <th className="px-4 py-3 text-left text-xs font-medium text-secondary-400">Scheme</th>
-                                        <th className="px-4 py-3 text-left text-xs font-medium text-secondary-400">Subsidy</th>
-                                        <th className="px-4 py-3 text-left text-xs font-medium text-secondary-400">Justification</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-secondary-700/50">
-                                    {data.selected.slice(0, 20).map((row, i) => (
-                                        <tr key={i} className="hover:bg-secondary-700/30">
-                                            <td className="px-4 py-3 text-sm font-semibold text-primary-400">#{row.Selection_Rank}</td>
-                                            <td className="px-4 py-3 text-sm font-medium text-white">{row.MSME_ID}</td>
-                                            <td className="px-4 py-3 text-xs text-secondary-300">{row.Scheme_Name}</td>
-                                            <td className="px-4 py-3 text-sm font-semibold text-success-500">{formatCurrency(row.Subsidy_Applied)}</td>
-                                            <td className="px-4 py-3 text-xs text-secondary-400 max-w-md truncate">{row.Decision_Justification}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    {data.unselected && data.unselected.length > 0 && (
-                        <div className="card p-6">
-                            <div className="flex items-center mb-4">
-                                <XCircle className="h-5 w-5 text-error-500 mr-2" />
-                                <h3 className="text-lg font-semibold text-white">Excluded MSMEs</h3>
-                                <span className="ml-auto text-sm text-secondary-400">{data.unselected.length} not funded</span>
-                            </div>
-                            <div className="overflow-x-auto max-h-64">
-                                <table className="min-w-full divide-y divide-secondary-700">
-                                    <thead>
+                        <div 
+                            className="rounded-xl overflow-hidden"
+                            style={{
+                                backgroundColor: 'var(--color-background-elevated)',
+                                border: '1px solid var(--color-border)'
+                            }}
+                        >
+                            <div className="overflow-x-auto max-h-[400px]">
+                                <table className="min-w-full">
+                                    <thead 
+                                        className="sticky top-0"
+                                        style={{ backgroundColor: 'var(--color-background-subtle)' }}
+                                    >
                                         <tr>
-                                            <th className="px-4 py-3 text-left text-xs font-medium text-secondary-400">MSME ID</th>
-                                            <th className="px-4 py-3 text-left text-xs font-medium text-secondary-400">Scheme</th>
-                                            <th className="px-4 py-3 text-left text-xs font-medium text-secondary-400">Reason</th>
+                                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Rank</th>
+                                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Entity & Scheme</th>
+                                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Amount</th>
+                                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Impact</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-secondary-700/50">
-                                        {data.unselected.slice(0, 15).map((row, i) => (
-                                            <tr key={i} className="hover:bg-secondary-700/30">
-                                                <td className="px-4 py-3 text-sm text-secondary-300">{row.MSME_ID}</td>
-                                                <td className="px-4 py-3 text-xs text-secondary-400">{row.Scheme_Name}</td>
-                                                <td className="px-4 py-3 text-xs text-error-500">{row.Reason}</td>
+                                    <tbody>
+                                        {data.selected.map((row, i) => (
+                                            <tr 
+                                                key={i} 
+                                                className="transition-colors hover:bg-white/5"
+                                                style={{ borderBottom: '1px solid var(--color-border-subtle)' }}
+                                            >
+                                                <td className="px-4 py-3">
+                                                    <span 
+                                                        className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                                                        style={{
+                                                            backgroundColor: i < 3 ? 'var(--color-primary)' : 'var(--color-background-muted)',
+                                                            color: i < 3 ? 'white' : 'var(--color-foreground-muted)'
+                                                        }}
+                                                    >
+                                                        {row.Selection_Rank}
+                                                    </span>
+                                                </td>
+                                                <td className="px-4 py-3">
+                                                    <div>
+                                                        <p className="font-semibold text-sm">{row.MSME_ID}</p>
+                                                        <p className="text-xs" style={{ color: 'var(--color-foreground-muted)' }}>{row.Scheme_Name}</p>
+                                                        <span 
+                                                            className="inline-block mt-1 px-1.5 py-0.5 rounded text-[10px]"
+                                                            style={{ backgroundColor: 'var(--color-background-muted)' }}
+                                                        >
+                                                            {row.Sector}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-3">
+                                                    <span className="text-sm font-semibold" style={{ color: 'var(--color-warning)' }}>
+                                                        {formatCurrency(row.Subsidy_Applied)}
+                                                    </span>
+                                                </td>
+                                                <td className="px-4 py-3">
+                                                    <div className="flex gap-3 text-xs">
+                                                        <span style={{ color: 'var(--color-success)' }}>+{row.Revenue_Boost.toFixed(1)}% Rev</span>
+                                                        <span style={{ color: 'var(--color-primary)' }}>+{row.Jobs_Created} Jobs</span>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Rejected */}
+                    {data.rejected.length > 0 && (
+                        <div>
+                            <div className="flex items-center gap-2 mb-4">
+                                <XCircle className="w-5 h-5" style={{ color: 'var(--color-error)' }} />
+                                <h3 className="text-lg font-semibold">Not Approved ({data.total_rejected})</h3>
+                            </div>
+                            <div 
+                                className="rounded-xl overflow-hidden"
+                                style={{
+                                    backgroundColor: 'var(--color-background-elevated)',
+                                    border: '1px solid var(--color-border)'
+                                }}
+                            >
+                                <div className="overflow-x-auto max-h-[250px]">
+                                    <table className="min-w-full">
+                                        <thead 
+                                            className="sticky top-0"
+                                            style={{ backgroundColor: 'var(--color-background-subtle)' }}
+                                        >
+                                            <tr>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Entity & Scheme</th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-foreground-muted)' }}>Reason</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {data.rejected.map((row, i) => (
+                                                <tr 
+                                                    key={i} 
+                                                    className="transition-colors hover:bg-white/5"
+                                                    style={{ borderBottom: '1px solid var(--color-border-subtle)' }}
+                                                >
+                                                    <td className="px-4 py-3">
+                                                        <div>
+                                                            <p className="font-semibold text-sm">{row.MSME_ID}</p>
+                                                            <p className="text-xs" style={{ color: 'var(--color-foreground-muted)' }}>{row.Scheme_Name}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <p className="text-xs" style={{ color: 'var(--color-error)' }}>{row.Rejection_Reason}</p>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     )}
-                </>
-            )}
+                </div>
+            </div>
         </div>
     );
 }
