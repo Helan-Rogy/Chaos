@@ -3,11 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
-    "dev": "cd frontend && npm run dev",
-    "build": "cd frontend && npm run build",
-    "preview": "cd frontend && npm run preview",
-    "install-frontend": "cd frontend && npm install"
+    "dev": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "preview": "npm run preview --workspace=frontend"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.1.4",
