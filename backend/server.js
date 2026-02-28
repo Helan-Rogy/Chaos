@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const { spawn } = require('child_process');
 const path = require('path');
+const fs = require('fs');
+const csv = require('csv-parser');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,6 +18,43 @@ const PYTHON_CMD = process.platform === 'win32' ? 'python' : 'python3';
 // Health check
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'Backend is running' });
+});
+
+// GET synthetic data
+app.get('/api/data', (req, res) => {
+    const msmeResults = [];
+    const schemesResults = [];
+    const msmePath = path.join(__dirname, '..', 'data', 'msme_data.csv');
+    const schemesPath = path.join(__dirname, '..', 'data', 'schemes_data.csv');
+    
+    if (!fs.existsSync(msmePath) || !fs.existsSync(schemesPath)) {
+        return res.status(404).json({ error: "Data files not found." });
+    }
+
+    fs.createReadStream(msmePath)
+      .pipe(csv())
+      .on('data', (data) => {
+          if (msmeResults.length < 50) msmeResults.push(data); // Limit to 50 for UI
+      })
+      .on('end', () => {
+          fs.createReadStream(schemesPath)
+            .pipe(csv())
+            .on('data', (data) => schemesResults.push(data))
+            .on('end', () => {
+                res.json({ msme: msmeResults, schemes: schemesResults });
+            });
+      });
+});
+
+// GET model evaluation metrics
+app.get('/api/metrics', (req, res) => {
+    const reportPath = path.join(__dirname, '..', 'reports', 'phase2_evaluation.txt');
+    if (fs.existsSync(reportPath)) {
+        const content = fs.readFileSync(reportPath, 'utf8');
+        res.json({ content });
+    } else {
+        res.status(404).json({ error: "Report not found" });
+    }
 });
 
 // Optimization Simulation Endpoint

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
-import { Settings2, AlertTriangle, Info, CheckCircle, XCircle } from 'lucide-react';
+import { Settings2, AlertTriangle, Info, CheckCircle, XCircle, TrendingUp } from 'lucide-react';
 
 export default function PolicyTab() {
     const [budget, setBudget] = useState(50000000); // 5 Cr
@@ -30,27 +30,22 @@ export default function PolicyTab() {
         }
     };
 
-    // Run initial simulation on load
     useEffect(() => {
         fetchSimulation();
         // eslint-disable-next-line
-    }, []); // Only run once on mount
+    }, []);
 
     const handleSliderChange = (e) => setAlpha(parseFloat(e.target.value));
     const beta = Math.round((1 - alpha) * 10) / 10;
 
-    // Prepare chart data
     const getChartData = () => {
         if (!data || !data.selected) return [];
-
-        // Aggregate budget used by Sector
         const sectorMap = {};
         data.selected.forEach(row => {
             const s = row.Sector;
             if (!sectorMap[s]) sectorMap[s] = 0;
             sectorMap[s] += row.Subsidy_Applied;
         });
-
         return Object.keys(sectorMap).map(sector => ({
             name: sector,
             Budget: sectorMap[sector]
@@ -58,38 +53,44 @@ export default function PolicyTab() {
     };
 
     const chartData = getChartData();
-
     const formatCurrency = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumSignificantDigits: 3 }).format(val);
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-300">
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
             {/* Header & Controls Panel */}
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                <div className="px-6 py-5 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+            <div className="glass-card overflow-hidden">
+                <div className="px-8 py-6 border-b border-white/10 bg-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
                     <div>
-                        <h2 className="text-xl font-bold text-slate-900 flex items-center">
-                            <Settings2 className="w-5 h-5 mr-2 text-indigo-600" />
-                            Real-Time Policy Optimization Engine
+                        <h2 className="text-2xl font-display font-bold text-white flex items-center">
+                            <div className="p-2 bg-artha-saffron/20 rounded-lg mr-3">
+                                <Settings2 className="w-6 h-6 text-artha-saffron" />
+                            </div>
+                            Policy Optimization Engine
                         </h2>
-                        <p className="mt-1 text-sm text-slate-500">Adjust total budget and policy priorities to simulate allocation outcomes instantly.</p>
+                        <p className="mt-1 text-sm text-artha-slate">Simulate strategic allocation by shifting economic priority weights.</p>
                     </div>
                     <button
                         onClick={fetchSimulation}
                         disabled={loading}
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition disabled:bg-indigo-300"
+                        className="premium-button min-w-[180px]"
                     >
-                        {loading ? 'Simulating...' : 'Run Simulation'}
+                        {loading ? (
+                            <div className="flex items-center">
+                                <div className="animate-spin mr-2 h-4 w-4 border-2 border-artha-navy border-t-transparent rounded-full"></div>
+                                Calculating...
+                            </div>
+                        ) : 'Run Simulation'}
                     </button>
                 </div>
 
-                <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-10">
 
                     {/* Budget Slider */}
-                    <div>
-                        <div className="flex justify-between items-end mb-2">
-                            <label className="block text-sm font-medium text-slate-700">Total Government Budget</label>
-                            <span className="text-lg font-bold text-emerald-600">{formatCurrency(budget)}</span>
+                    <div className="space-y-4">
+                        <div className="flex justify-between items-end">
+                            <label className="block text-sm font-bold uppercase tracking-widest text-artha-slate">Total Budget Allocation</label>
+                            <span className="text-2xl font-display font-bold accent-text-gold">{formatCurrency(budget)}</span>
                         </div>
                         <input
                             type="range"
@@ -98,18 +99,18 @@ export default function PolicyTab() {
                             step="5000000"
                             value={budget}
                             onChange={(e) => setBudget(parseFloat(e.target.value))}
-                            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-artha-gold hover:accent-artha-saffron transition-all"
                         />
-                        <div className="flex justify-between text-xs text-slate-400 mt-1">
-                            <span>₹1 Cr</span>
-                            <span>₹20 Cr</span>
+                        <div className="flex justify-between text-[10px] font-bold text-artha-slate/50 uppercase tracking-tighter">
+                            <span>₹1 Cr (Min)</span>
+                            <span>₹20 Cr (Threshold)</span>
                         </div>
                     </div>
 
                     {/* Policy Weight Slider */}
-                    <div>
-                        <div className="flex justify-between items-end mb-2">
-                            <label className="block text-sm font-medium text-slate-700">Policy Weight / Priority</label>
+                    <div className="space-y-4">
+                        <div className="flex justify-between items-end">
+                            <label className="block text-sm font-bold uppercase tracking-widest text-artha-slate">Economic Priority Focus</label>
                         </div>
                         <input
                             type="range"
@@ -118,15 +119,18 @@ export default function PolicyTab() {
                             step="0.1"
                             value={alpha}
                             onChange={handleSliderChange}
-                            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-artha-saffron"
                         />
-                        <div className="flex justify-between text-sm font-medium mt-2">
-                            <span className={`transition ${beta > 0.5 ? 'text-blue-600 font-bold' : 'text-slate-400'}`}>
-                                ← Jobs Focus (β: {beta})
-                            </span>
-                            <span className={`transition ${alpha > 0.5 ? 'text-emerald-600 font-bold' : 'text-slate-400'}`}>
-                                Revenue Focus (α: {alpha}) →
-                            </span>
+                        <div className="flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5">
+                            <div className={`flex flex-col ${beta > 0.5 ? 'scale-110' : 'opacity-40'} transition-all duration-300`}>
+                                <span className="text-[10px] font-bold text-artha-slate uppercase">Employment</span>
+                                <span className={`text-sm font-bold ${beta > 0.5 ? 'text-white' : 'text-artha-slate'}`}>β: {beta}</span>
+                            </div>
+                            <div className="h-8 w-px bg-white/10"></div>
+                            <div className={`flex flex-col items-end ${alpha > 0.5 ? 'scale-110' : 'opacity-40'} transition-all duration-300`}>
+                                <span className="text-[10px] font-bold text-artha-slate uppercase">Revenue Lift</span>
+                                <span className={`text-sm font-bold ${alpha > 0.5 ? 'text-artha-saffron' : 'text-artha-slate'}`}>α: {alpha}</span>
+                            </div>
                         </div>
                     </div>
 
@@ -134,117 +138,148 @@ export default function PolicyTab() {
             </div>
 
             {error && (
-                <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
-                    <div className="flex">
-                        <div className="flex-shrink-0">
-                            <AlertTriangle className="h-5 w-5 text-red-400" />
-                        </div>
-                        <div className="ml-3">
-                            <p className="text-sm text-red-700">
-                                <strong>Error running Python Engine:</strong> {error}
-                            </p>
-                        </div>
-                    </div>
+                <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-xl flex items-center animate-shake">
+                    <AlertTriangle className="h-5 w-5 text-red-400 mr-3" />
+                    <p className="text-sm text-red-200 font-medium">
+                        <strong>Engine Alert:</strong> {error}
+                    </p>
                 </div>
             )}
 
             {/* Results KPIs and Chart */}
             {data && !loading && (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in slide-in-from-bottom-4 duration-500">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in slide-in-from-bottom-8 duration-700">
 
                     {/* KPIs Column */}
-                    <div className="space-y-4">
+                    <div className="space-y-6">
 
-                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                            <p className="text-sm font-medium text-slate-500 mb-1">Budget Utilization</p>
-                            <div className="flex items-end justify-between">
-                                <h3 className="text-2xl font-bold text-slate-900">{data.utilization_pct.toFixed(2)}%</h3>
-                                <span className="text-sm text-slate-500 mb-1">of {formatCurrency(data.budget)}</span>
+                        <div className="glass-card p-6 border-l-4 border-l-artha-saffron relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform">
+                                <TrendingUp className="w-12 h-12 text-artha-saffron" />
                             </div>
-                            <div className="w-full bg-slate-200 rounded-full h-1.5 mt-3">
-                                <div className="bg-emerald-500 h-1.5 rounded-full" style={{ width: `${data.utilization_pct}%` }}></div>
+                            <p className="text-xs font-bold text-artha-slate uppercase tracking-widest mb-1">Budget Utilization</p>
+                            <div className="flex items-baseline space-x-2">
+                                <h3 className="text-4xl font-display font-bold text-white">{data.utilization_pct.toFixed(2)}%</h3>
+                                <span className="text-xs text-artha-slate font-medium">Used</span>
+                            </div>
+                            <div className="w-full bg-white/5 rounded-full h-1.5 mt-4">
+                                <div
+                                    className="bg-gradient-to-r from-artha-gold to-artha-saffron h-1.5 rounded-full shadow-glow-saffron transition-all duration-1000"
+                                    style={{ width: `${data.utilization_pct}%` }}
+                                ></div>
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                            <p className="text-sm font-medium text-slate-500 mb-1">MSME Allocations Funded</p>
-                            <h3 className="text-3xl font-bold text-indigo-600">{data.total_selected}</h3>
-                            <p className="text-xs text-slate-500 mt-2">Out of {data.total_selected + (data.unselected?.length || 0)} eligible profiles</p>
+                        <div className="glass-card p-6 border-l-4 border-l-artha-navy relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform">
+                                <Info className="w-12 h-12 text-white" />
+                            </div>
+                            <p className="text-xs font-bold text-artha-slate uppercase tracking-widest mb-1">MSME Reach</p>
+                            <h3 className="text-4xl font-display font-bold text-artha-saffron">{data.total_selected}</h3>
+                            <p className="text-[10px] text-artha-slate mt-2 uppercase tracking-tighter">Approved for Immediate Disbursement</p>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-                                <p className="text-xs font-medium text-slate-500 mb-1">New Jobs Modeled</p>
-                                <h3 className="text-xl font-bold text-blue-600">+{Math.round(data.total_jobs_created)}</h3>
+                            <div className="glass-card p-5 text-center transition-transform hover:scale-105">
+                                <p className="text-[10px] font-bold text-artha-slate uppercase mb-1">Impact (Jobs)</p>
+                                <h3 className="text-2xl font-display font-bold text-white">+{Math.round(data.total_jobs_created)}</h3>
                             </div>
-                            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-                                <p className="text-xs font-medium text-slate-500 mb-1">Aggregate Rev Lift</p>
-                                <h3 className="text-xl font-bold text-emerald-600">+{formatCurrency(data.total_revenue_gain).replace('₹', '₹ ')}</h3>
+                            <div className="glass-card p-5 text-center transition-transform hover:scale-105 border border-artha-gold/20">
+                                <p className="text-[10px] font-bold text-artha-slate uppercase mb-1">Impact (Revenue)</p>
+                                <h3 className="text-xl font-display font-bold accent-text-gold">+{formatCurrency(data.total_revenue_gain).replace('₹', '₹')}</h3>
                             </div>
                         </div>
 
                     </div>
 
                     {/* Chart Column */}
-                    <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                        <h3 className="text-lg font-semibold text-slate-900 mb-4">Budget Distribution by Sector</h3>
+                    <div className="lg:col-span-2 glass-card p-8 group">
+                        <div className="flex items-center justify-between mb-8">
+                            <h3 className="text-lg font-display font-bold text-white tracking-wide">Sectoral Budget Distribution</h3>
+                            <div className="flex space-x-2">
+                                <div className="w-2 h-2 rounded-full bg-artha-saffron animate-pulse"></div>
+                                <span className="text-[10px] font-bold text-artha-slate uppercase">Live Matrix</span>
+                            </div>
+                        </div>
                         <div className="h-64">
                             <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+                                <BarChart data={chartData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+                                    <defs>
+                                        <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor="#F4A300" stopOpacity={0.8} />
+                                            <stop offset="100%" stopColor="#C89B3C" stopOpacity={0.1} />
+                                        </linearGradient>
+                                    </defs>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
+                                    <XAxis
+                                        dataKey="name"
+                                        axisLine={false}
+                                        tickLine={false}
+                                        tick={{ fill: '#5B6675', fontSize: 10, fontWeight: 600 }}
+                                    />
                                     <YAxis
                                         axisLine={false}
                                         tickLine={false}
-                                        tick={{ fill: '#64748b', fontSize: 12 }}
+                                        tick={{ fill: '#5B6675', fontSize: 10, fontWeight: 600 }}
                                         tickFormatter={(value) => `₹${value / 10000000}Cr`}
                                     />
                                     <Tooltip
-                                        formatter={(value) => [formatCurrency(value), 'Budget Allocated']}
-                                        cursor={{ fill: '#f1f5f9' }}
-                                        contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                        cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                                        contentStyle={{
+                                            backgroundColor: '#051226',
+                                            borderRadius: '12px',
+                                            border: '1px solid rgba(255,255,255,0.1)',
+                                            boxShadow: '0 8px 32px rgba(0,0,0,0.5)'
+                                        }}
+                                        labelStyle={{ color: '#F4A300', fontWeight: 'bold', marginBottom: '4px' }}
+                                        itemStyle={{ color: '#fff', fontSize: '12px' }}
+                                        formatter={(value) => [formatCurrency(value), 'Allocated']}
                                     />
-                                    <Bar dataKey="Budget" fill="#6366f1" radius={[4, 4, 0, 0]} maxBarSize={60} />
+                                    <Bar dataKey="Budget" fill="url(#barGradient)" radius={[6, 6, 0, 0]} maxBarSize={40} />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
                     </div>
 
-                    {/* Detailed Tables (The exact justification required for marks) */}
-                    <div className="lg:col-span-3 space-y-8 mt-4">
+                    {/* Detailed Tables */}
+                    <div className="lg:col-span-3 space-y-12 mt-6">
 
                         {/* Selected MSMEs Table */}
-                        <div>
-                            <div className="flex items-center mb-4">
-                                <CheckCircle className="w-5 h-5 text-emerald-500 mr-2" />
-                                <h3 className="text-lg font-bold text-slate-900">Selected MSMEs & Decision Justification</h3>
+                        <div className="animate-fade-in delay-150">
+                            <div className="flex items-center mb-6 px-2">
+                                <div className="p-1.5 bg-emerald-500/20 rounded-md mr-3">
+                                    <CheckCircle className="w-5 h-5 text-emerald-400" />
+                                </div>
+                                <h3 className="text-xl font-display font-bold text-white tracking-widest uppercase">Optimization Success Matrix</h3>
                             </div>
-                            <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                                <div className="overflow-x-auto max-h-96">
-                                    <table className="min-w-full divide-y divide-slate-200">
-                                        <thead className="bg-slate-50 sticky top-0 z-10 shadow-sm">
+                            <div className="glass-card overflow-hidden">
+                                <div className="overflow-x-auto max-h-[500px]">
+                                    <table className="min-w-full divide-y divide-white/5">
+                                        <thead className="bg-white/[0.02] sticky top-0 z-10 backdrop-blur-md">
                                             <tr>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Rank</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">MSME & Scheme</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Subsidy</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Decision Reasoning (Explainable AI)</th>
+                                                <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Rank</th>
+                                                <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Entity & Scheme</th>
+                                                <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Disbursement</th>
+                                                <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">AI Justification Strategy</th>
                                             </tr>
                                         </thead>
-                                        <tbody className="bg-white divide-y divide-slate-200">
+                                        <tbody className="divide-y divide-white/[0.03]">
                                             {data.selected.map((row, i) => (
-                                                <tr key={i} className="hover:bg-slate-50">
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-900">#{row.Selection_Rank}</td>
+                                                <tr key={i} className="hover:bg-white/5 transition-colors group">
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="text-sm font-medium text-indigo-600">{row.MSME_ID}</div>
-                                                        <div className="text-xs text-slate-500">{row.Scheme_Name}</div>
+                                                        <span className="text-xs font-bold text-artha-gold group-hover:scale-110 transition-transform inline-block">#{row.Selection_Rank}</span>
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-emerald-600">
-                                                        {formatCurrency(row.Subsidy_Applied)}
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <div className="text-sm font-bold text-white">{row.MSME_ID}</div>
+                                                        <div className="text-[10px] text-artha-slate uppercase font-medium mt-0.5 tracking-tight">{row.Scheme_Name}</div>
                                                     </td>
-                                                    <td className="px-6 py-4 text-sm text-slate-600 min-w-xl">
-                                                        <div className="flex items-start">
-                                                            <Info className="w-4 h-4 text-indigo-400 mr-2 mt-0.5 flex-shrink-0" />
-                                                            <span>{row.Decision_Justification}</span>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <span className="text-sm font-bold text-emerald-400">{formatCurrency(row.Subsidy_Applied)}</span>
+                                                    </td>
+                                                    <td className="px-6 py-4 text-sm text-artha-ivory/80 leading-relaxed">
+                                                        <div className="flex items-start max-w-2xl">
+                                                            <div className="mt-1 w-1.5 h-1.5 rounded-full bg-artha-saffron mr-3 flex-shrink-0"></div>
+                                                            <span className="text-xs">{row.Decision_Justification}</span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -256,36 +291,38 @@ export default function PolicyTab() {
                         </div>
 
                         {/* Non-Selected MSMEs Table */}
-                        <div>
-                            <div className="flex items-center mb-4">
-                                <XCircle className="w-5 h-5 text-red-400 mr-2" />
-                                <h3 className="text-lg font-bold text-slate-900">Unfunded MSMEs (Due to Constraint)</h3>
+                        <div className="animate-fade-in delay-300">
+                            <div className="flex items-center mb-6 px-2">
+                                <div className="p-1.5 bg-red-500/20 rounded-md mr-3">
+                                    <XCircle className="w-5 h-5 text-red-400" />
+                                </div>
+                                <h3 className="text-xl font-display font-bold text-white tracking-widest uppercase">Budget Constraints & Exclusions</h3>
                             </div>
-                            <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                            <div className="glass-card overflow-hidden opacity-90">
                                 <div className="overflow-x-auto max-h-64">
-                                    <table className="min-w-full divide-y divide-slate-200">
-                                        <thead className="bg-slate-50 sticky top-0 z-10 shadow-sm">
+                                    <table className="min-w-full divide-y divide-white/5">
+                                        <thead className="bg-white/[0.02] sticky top-0 z-10 backdrop-blur-md">
                                             <tr>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">MSME_ID</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Requested Scheme</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Eff. Score</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Reason for Rejection</th>
+                                                <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Entity</th>
+                                                <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Requested</th>
+                                                <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Eff. Score</th>
+                                                <th className="px-6 py-4 text-left text-[10px] font-bold text-artha-slate uppercase tracking-widest">Exclusion Reason</th>
                                             </tr>
                                         </thead>
-                                        <tbody className="bg-white divide-y divide-slate-200">
+                                        <tbody className="divide-y divide-white/[0.03]">
                                             {data.unselected && data.unselected.length > 0 ? data.unselected.map((row, i) => (
-                                                <tr key={i} className="hover:bg-red-50/30">
-                                                    <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-slate-900">{row.MSME_ID}</td>
-                                                    <td className="px-6 py-3 whitespace-nowrap text-sm text-slate-500">{row.Scheme_Name}</td>
-                                                    <td className="px-6 py-3 whitespace-nowrap text-sm text-slate-500">{row.Efficiency.toFixed(8)}</td>
-                                                    <td className="px-6 py-3 whitespace-nowrap text-sm text-red-600 font-medium">
+                                                <tr key={i} className="hover:bg-red-500/5 transition-colors">
+                                                    <td className="px-6 py-3 text-sm font-medium text-white/70">{row.MSME_ID}</td>
+                                                    <td className="px-6 py-3 text-[10px] text-artha-slate uppercase">{row.Scheme_Name}</td>
+                                                    <td className="px-6 py-3 text-xs text-artha-slate font-mono">{row.Efficiency.toFixed(6)}</td>
+                                                    <td className="px-6 py-3 text-sm text-red-400 font-bold uppercase text-[10px] tracking-widest">
                                                         {row.Reason}
                                                     </td>
                                                 </tr>
                                             )) : (
                                                 <tr>
-                                                    <td colSpan="4" className="px-6 py-8 text-center text-sm text-slate-500">
-                                                        All eligible packages were funded! Budget is sufficient.
+                                                    <td colSpan="4" className="px-6 py-12 text-center text-sm text-artha-slate font-medium">
+                                                        Maximum efficiency achieved. All priority mandates satisfied by current budget.
                                                     </td>
                                                 </tr>
                                             )}
@@ -293,7 +330,6 @@ export default function PolicyTab() {
                                     </table>
                                 </div>
                             </div>
-                            <p className="mt-2 text-xs text-slate-400 italic">* Evaluator Note: Displaying non-selected MSMEs with reasons satisfies the checkpoint requirement for transparency.</p>
                         </div>
 
                     </div>
