@@ -11,7 +11,8 @@ import { LayoutDashboard, Settings, Database, Brain, Menu, X, Sparkles, LogOut, 
 
 function Dashboard() {
   const { user, logout, isPolicyMaker, isMSME } = useAuth();
-  const [activeTab, setActiveTab] = useState(isPolicyMaker ? 'policy' : 'schemes');
+  const defaultTab = user?.role === 'policymaker' ? 'data' : 'schemes';
+  const [activeTab, setActiveTab] = useState(defaultTab);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Policy Maker tabs
@@ -149,14 +150,14 @@ function Dashboard() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div>
           {/* Policy Maker Views */}
-          {isPolicyMaker && activeTab === 'data' && <DataTab />}
-          {isPolicyMaker && activeTab === 'model' && <ModelTab />}
-          {isPolicyMaker && activeTab === 'advisory' && <AdvisoryTab />}
-          {isPolicyMaker && activeTab === 'policy' && <PolicyTab />}
+          {user?.role === 'policymaker' && activeTab === 'data' && <DataTab />}
+          {user?.role === 'policymaker' && activeTab === 'model' && <ModelTab />}
+          {user?.role === 'policymaker' && activeTab === 'advisory' && <AdvisoryTab />}
+          {user?.role === 'policymaker' && activeTab === 'policy' && <PolicyTab />}
           
           {/* MSME Views */}
-          {isMSME && activeTab === 'schemes' && <SchemeBrowser />}
-          {isMSME && activeTab === 'applications' && <ApplicationTracker />}
+          {user?.role === 'msme' && activeTab === 'schemes' && <SchemeBrowser />}
+          {user?.role === 'msme' && activeTab === 'applications' && <ApplicationTracker />}
         </div>
       </main>
 
